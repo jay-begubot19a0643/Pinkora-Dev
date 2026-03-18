@@ -1,0 +1,5 @@
+1. Professional Look, Dynamic portfolio page (Black, white, old rose pink theme design)
+
+On this Main Page:
+
+There is a navigation text:  Home, Services, Projects, Clients, About me

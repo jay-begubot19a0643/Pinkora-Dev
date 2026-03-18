@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects — Smart Store Monitoring | Pinkora</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Explore my portfolio projects including Smart Store Monitoring System with CCTV, POS integration, and real-time analytics." />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <a class="brand" href="mainpage.html">
+        <img src="images/pinkora_dev.png" alt="Pinkora" class="brand-logo">
+      </a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="mainpage.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li class="nav-dropdown">
+            <a href="about_me.html">About me</a>
+            <ul class="dropdown-menu">
+              <li><a href="about_me.html#developer">Developer</a></li>
+              <li><a href="about_me.html#mission">My Mission</a></li>
+              <li><a href="about_me.html#build">What I Build</a></li>
+              <li><a href="about_me.html#approach">My Approach</a></li>
+              <li><a href="about_me.html#future">Looking Ahead</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contacts</a></li>
+          <li><a href="account.html" class="nav-account-link">👤 My Account</a></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="projects-hero">
+    <div class="container">
+      <h1 class="projects-hero-title">My Projects</h1>
+      <p class="projects-hero-subtitle">Building solutions that empower businesses, enhance security, and drive innovation through technology.</p>
+    </div>
+  </section>
+
+  <section class="project-featured" id="smart-monitoring">
+    <div class="container">
+      <div class="project-badge">Featured Project</div>
+      <h2 class="project-main-title">Smart Store Monitoring System</h2>
+      <p class="project-tagline">Real-time CCTV integration, POS correlation, and intelligent analytics for retail operations</p>
+      
+      <div class="project-hero-image">
+        <iframe width="100%" height="600" src="https://www.youtube.com/embed/jnUGORZ1tUo?start=77" title="Smart Store Monitoring System Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius: 12px;"></iframe>
+      </div>
+
+      <div class="project-overview">
+        <h3>Overview</h3>
+        <p>The Smart Store Monitoring System is an integrated solution that combines CCTV surveillance, point-of-sale data, and intelligent analytics to provide store owners with comprehensive visibility into their operations. This system transforms raw video feeds and transaction data into actionable insights, helping businesses reduce shrinkage, optimize staffing, improve customer experience, and enhance security.</p>
+        <p>Built with a cross-platform architecture using Flutter for the frontend and a robust backend service layer, this system operates seamlessly across desktop, mobile, and cloud environments with full offline-first capabilities.</p>
+      </div>
+
+      <div class="project-features">
+        <h3>Key Features</h3>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📹</div>
+            <h4>Multi-Camera CCTV Integration</h4>
+            <p>Connect multiple RTSP/HTTP camera streams with synchronized playback, DVR-style controls, and grid/single views. Supports local video files and live streaming with automatic reconnection.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🛒</div>
+            <h4>POS Transaction Correlation</h4>
+            <p>Automatically link video footage to point-of-sale transactions by timestamp. Review any transaction with synchronized video playback for dispute resolution and fraud detection.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🚨</div>
+            <h4>Real-Time Alerts & Notifications</h4>
+            <p>Instant notifications for suspicious activity, motion detection, door sensor triggers, checkout anomalies, and inventory discrepancies. Multi-channel alerting via email, SMS, and webhooks.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h4>Analytics Dashboard</h4>
+            <p>Comprehensive metrics including footfall counting, customer dwell time, conversion rates, peak hours analysis, heatmaps, and shrinkage tracking with visual charts and trend analysis.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h4>Forensic Playback & Search</h4>
+            <p>Time-based video search with frame-accurate scrubbing, bookmarking critical events, exporting clips, and generating incident reports with embedded screenshots and metadata.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h4>Role-Based Access Control</h4>
+            <p>Secure multi-user system with granular permissions for administrators, store managers, cashiers, and auditors. Each role sees only relevant data and controls.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">☁️</div>
+            <h4>Offline-First with Cloud Sync</h4>
+            <p>Local SQLite persistence ensures operation during network outages. Automatic cloud synchronization when connectivity is restored with conflict resolution and versioning.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h4>Cross-Platform Compatibility</h4>
+            <p>Runs on Windows, macOS, Android, and iOS with responsive UI adaptation. Desktop apps for management, mobile apps for remote monitoring and alerts.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-workflow">
+        <h3>How It Works</h3>
+        <div class="workflow-steps">
+          <div class="workflow-step">
+            <div class="step-number">01</div>
+            <div class="step-content">
+              <h4>Data Ingestion</h4>
+              <p>The system continuously ingests multiple data streams: RTSP/HTTP camera feeds, POS transaction events via webhooks or database polling, and sensor data from door contacts, motion detectors, and weight scales.</p>
+              <div class="step-image">
+                <img src="images/monitoring-ingestion.jpg" alt="Data Ingestion Flow">
+              </div>
+            </div>
+          </div>
+          
+          <div class="workflow-step">
+            <div class="step-number">02</div>
+            <div class="step-content">
+              <h4>Timestamp Correlation</h4>
+              <p>All incoming events are timestamped with synchronized clocks. The correlation engine links POS transactions to corresponding video frames, sensor triggers to camera footage, and creates a unified timeline of all store activity.</p>
+              <div class="step-image">
+                <img src="images/monitoring-correlation.jpg" alt="Timestamp Correlation">
+              </div>
+            </div>
+          </div>
+          
+          <div class="workflow-step">
+            <div class="step-number">03</div>
+            <div class="step-content">
+              <h4>Analysis & Detection</h4>
+              <p>The analytics engine processes video streams and transaction data to detect patterns: people counting via motion detection, dwell time calculation, anomaly detection for unusual checkout behavior, inventory variance alerts, and suspicious activity flags.</p>
+              <div class="step-image">
+                <img src="images/monitoring-analysis.jpg" alt="Analytics Processing">
+              </div>
+            </div>
+          </div>
+          
+          <div class="workflow-step">
+            <div class="step-number">04</div>
+            <div class="step-content">
+              <h4>Alerting & Dashboard</h4>
+              <p>Critical events trigger real-time alerts sent to configured channels. All metrics flow into the live dashboard showing current camera feeds, recent transactions, active alerts, and key performance indicators updated in real-time.</p>
+              <div class="step-image">
+                <img src="images/monitoring-dashboard.jpg" alt="Live Dashboard">
+              </div>
+            </div>
+          </div>
+          
+          <div class="workflow-step">
+            <div class="step-number">05</div>
+            <div class="step-content">
+              <h4>Storage & Sync</h4>
+              <p>Video segments and events are stored locally in a versioned SQLite database for instant access and offline reliability. Background sync processes upload data to cloud storage for long-term retention, cross-store analytics, and remote access.</p>
+              <div class="step-image">
+                <img src="images/monitoring-sync.jpg" alt="Cloud Synchronization">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-tech-stack">
+        <h3>Technology Stack</h3>
+        <div class="tech-categories">
+          <div class="tech-category">
+            <h4>Frontend & UI</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">Flutter</span>
+              <span class="tech-tag">Dart</span>
+              <span class="tech-tag">Material Design</span>
+              <span class="tech-tag">Responsive UI</span>
+              <span class="tech-tag">Custom Widgets</span>
+            </div>
+          </div>
+          <div class="tech-category">
+            <h4>Video & Streaming</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">RTSP Protocol</span>
+              <span class="tech-tag">HTTP Live Streaming</span>
+              <span class="tech-tag">FFmpeg</span>
+              <span class="tech-tag">Video Codecs</span>
+              <span class="tech-tag">VLC Integration</span>
+            </div>
+          </div>
+          <div class="tech-category">
+            <h4>Backend & Services</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">SQLite</span>
+              <span class="tech-tag">Database Migration</span>
+              <span class="tech-tag">Service Layer</span>
+              <span class="tech-tag">Event Sourcing</span>
+              <span class="tech-tag">RESTful APIs</span>
+            </div>
+          </div>
+          <div class="tech-category">
+            <h4>Desktop Integration</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">Windows FFI</span>
+              <span class="tech-tag">macOS Native</span>
+              <span class="tech-tag">Desktop Plugins</span>
+              <span class="tech-tag">Native Notifications</span>
+            </div>
+          </div>
+          <div class="tech-category">
+            <h4>Architecture & Testing</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">Dependency Injection (GetIt)</span>
+              <span class="tech-tag">Widget Testing</span>
+              <span class="tech-tag">Unit Tests</span>
+              <span class="tech-tag">Modular Design</span>
+              <span class="tech-tag">Clean Architecture</span>
+            </div>
+          </div>
+          <div class="tech-category">
+            <h4>DevOps & Deployment</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">Automated Build Scripts</span>
+              <span class="tech-tag">CI/CD Pipeline</span>
+              <span class="tech-tag">Version Control</span>
+              <span class="tech-tag">Release Management</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-metrics">
+        <h3>Key Metrics & Insights</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-value">Real-Time</div>
+            <div class="metric-label">Live Monitoring</div>
+            <p>Instant visibility into up to 16 simultaneous camera feeds</p>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">< 2s</div>
+            <div class="metric-label">Alert Latency</div>
+            <p>From event detection to notification delivery</p>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">100%</div>
+            <div class="metric-label">Offline Capable</div>
+            <p>Full functionality maintained during network outages</p>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">30 Days</div>
+            <div class="metric-label">Local Storage</div>
+            <p>Configurable retention for video and transaction data</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-screenshots">
+        <h3>Screenshots & Interface</h3>
+        <div class="screenshots-grid">
+          <div class="screenshot-item">
+            <img src="images/monitoring-screen-1.jpg" alt="Dashboard Overview">
+            <p class="screenshot-caption">Main Dashboard with Live Feeds</p>
+          </div>
+          <div class="screenshot-item">
+            <img src="images/monitoring-screen-2.jpg" alt="Transaction View">
+            <p class="screenshot-caption">POS Transaction Correlation</p>
+          </div>
+          <div class="screenshot-item">
+            <img src="images/monitoring-screen-3.jpg" alt="Analytics">
+            <p class="screenshot-caption">Analytics & Metrics Dashboard</p>
+          </div>
+          <div class="screenshot-item">
+            <img src="images/monitoring-screen-4.jpg" alt="Playback">
+            <p class="screenshot-caption">Video Playback & Forensics</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-cta">
+        <h3>Interested in This Solution?</h3>
+        <p>Whether you need a custom store monitoring system or want to learn more about this project, I'd love to discuss how similar technology can benefit your business.</p>
+        <div class="cta-buttons">
+          <a href="contact.html" class="btn primary">Get In Touch</a>
+          <a href="about_me.html" class="btn muted">Learn More About Me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>&copy; 2026 Pinkora. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <!-- AI Assistant Widget -->
+  <div class="ai-assistant-widget">
+    <button class="ai-assistant-toggle" id="aiAssistantToggle" aria-label="Open AI Assistant">
+      <img src="images/pinkora_assistant.png" alt="Pinkora Assistant" class="assistant-avatar">
+      <div class="assistant-pulse"></div>
+    </button>
+    
+    <div class="ai-assistant-panel" id="aiAssistantPanel">
+      <div class="assistant-header">
+        <div class="assistant-profile">
+          <div class="assistant-avatar-circle">
+            <img src="images/pinkora_assistant.png" alt="Pinkora Assistant">
+          </div>
+          <div class="assistant-info">
+            <h3>Pinkora Assistant</h3>
+            <span class="assistant-status">Online</span>
+          </div>
+        </div>
+        <button class="assistant-close" id="aiAssistantClose" aria-label="Close Assistant">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="assistant-messages" id="assistantMessages">
+        <div class="assistant-message bot">
+          <div class="message-avatar">
+            <img src="images/pinkora_assistant.png" alt="AI">
+          </div>
+          <div class="message-bubble">
+            <p>Hi! I'm your Pinkora assistant. I can help answer questions about our services, projects, and expertise. What would you like to know?</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="assistant-suggestions" id="assistantSuggestions">
+        <button class="suggestion-chip" data-question="What services does Pinkora offer?">What services do you offer?</button>
+        <button class="suggestion-chip" data-question="Tell me about the Smart Store Monitoring project">Smart Store Monitoring</button>
+        <button class="suggestion-chip" data-question="How can I contact you?">Contact information</button>
+      </div>
+      
+      <div class="assistant-input-area">
+        <input type="text" class="assistant-input" id="assistantInput" placeholder="Ask me anything..." />
+        <button class="assistant-send" id="assistantSend" aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

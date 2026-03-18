@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clients — Pinkora</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Trusted by businesses, organizations, and communities worldwide." />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <a class="brand" href="mainpage.html">
+        <img src="images/pinkora_dev.png" alt="Pinkora" class="brand-logo">
+      </a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="mainpage.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li class="nav-dropdown">
+            <a href="about_me.html">About me</a>
+            <ul class="dropdown-menu">
+              <li><a href="about_me.html#developer">Developer</a></li>
+              <li><a href="about_me.html#mission">My Mission</a></li>
+              <li><a href="about_me.html#build">What I Build</a></li>
+              <li><a href="about_me.html#approach">My Approach</a></li>
+              <li><a href="about_me.html#future">Looking Ahead</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contacts</a></li>
+          <li><a href="account.html" class="nav-account-link">👤 My Account</a></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <h1 class="hero-title">Our Clients</h1>
+      <p class="hero-sub">Building trust through reliable solutions.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="clients-intro">
+      <p style="color:var(--muted);font-size:1.1rem;line-height:1.8;margin:40px 0;max-width:800px;margin-left:auto;margin-right:auto;">
+        We work with forward-thinking businesses and organizations that are committed to innovation and growth. Our clients trust us to deliver solutions that make a real impact on their operations and bottom line.
+      </p>
+    </section>
+
+    <section class="clients-grid">
+      <div class="client-card">
+        <div class="client-logo-placeholder">
+          🏬
+        </div>
+        <h3>Ready-to-Wear Orly Store</h3>
+        <p class="client-location">
+          <span class="location-icon">📍</span>
+          Santo Tomas, Biñan, Laguna
+        </p>
+        <p class="client-description">
+          Developing a comprehensive AI-Powered Bilingual Point-of-sale and Advanced inventory management system for retail operations. Creating integrated solutions to streamline store operations, track inventory across locations, and provide real-time sales analytics.
+        </p>
+        <div class="client-services">
+          <span class="service-badge">POS System</span>
+          <span class="service-badge">Inventory Management</span>
+          <span class="service-badge">Sales Analytics</span>
+          <span class="service-badge">Advanced Inventory</span>
+          <span class="service-badge">AI-Powered</span>
+          <span class="service-badge">Bilingual Support</span>
+          <span class="service-badge">Supplier Management</span>
+          <span class="service-badge">Customer Management</span>
+          <span class="service-badge">Sales Forecasting</span>
+
+        </div>
+        <p class="client-status">
+          <span class="status-badge active">Currently Developing</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="clients-cta">
+      <h2>Let's Build Something Together</h2>
+      <p>If you're looking for a dedicated team to transform your business with technology, we'd love to hear from you.</p>
+      <a class="btn primary" href="contact.html">Start Your Project</a>
+      <a class="btn muted" href="services.html">Explore Our Services</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> Pinkora — All rights reserved.</small>
+    </div>
+  </footer>
+
+  <!-- AI Assistant Widget -->
+  <div class="ai-assistant-widget">
+    <button class="ai-assistant-toggle" id="aiAssistantToggle" aria-label="Open AI Assistant">
+      <img src="images/pinkora_assistant.png" alt="Pinkora Assistant" class="assistant-avatar">
+      <div class="assistant-pulse"></div>
+    </button>
+    
+    <div class="ai-assistant-panel" id="aiAssistantPanel">
+      <div class="assistant-header">
+        <div class="assistant-profile">
+          <div class="assistant-avatar-circle">
+            <img src="images/pinkora_assistant.png" alt="Pinkora Assistant">
+          </div>
+          <div class="assistant-info">
+            <h3>Pinkora Assistant</h3>
+            <span class="assistant-status">Online</span>
+          </div>
+        </div>
+        <button class="assistant-close" id="aiAssistantClose" aria-label="Close Assistant">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="assistant-messages" id="assistantMessages">
+        <div class="assistant-message bot">
+          <div class="message-avatar">
+            <img src="images/pinkora_assistant.png" alt="AI">
+          </div>
+          <div class="message-bubble">
+            <p>Hi! I'm your Pinkora assistant. I can help answer questions about our services, projects, and expertise. What would you like to know?</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="assistant-suggestions" id="assistantSuggestions">
+        <button class="suggestion-chip" data-question="What services does Pinkora offer?">What services do you offer?</button>
+        <button class="suggestion-chip" data-question="Tell me about the Smart Store Monitoring project">Smart Store Monitoring</button>
+        <button class="suggestion-chip" data-question="How can I contact you?">Contact information</button>
+      </div>
+      
+      <div class="assistant-input-area">
+        <input type="text" class="assistant-input" id="assistantInput" placeholder="Ask me anything..." />
+        <button class="assistant-send" id="assistantSend" aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

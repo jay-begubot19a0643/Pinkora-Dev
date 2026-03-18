@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pinkora — Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Professional portfolio — Projects, Services, Clients, About" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <a class="brand" href="mainpage.html">
+        <img src="images/pinkora_dev.png" alt="Pinkora" class="brand-logo">
+      </a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="mainpage.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li class="nav-dropdown">
+            <a href="about_me.html">About me</a>
+            <ul class="dropdown-menu">
+              <li><a href="about_me.html#developer">Developer</a></li>
+              <li><a href="about_me.html#mission">My Mission</a></li>
+              <li><a href="about_me.html#build">What I Build</a></li>
+              <li><a href="about_me.html#approach">My Approach</a></li>
+              <li><a href="about_me.html#future">Looking Ahead</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contacts</a></li>
+          <li><a href="account.html" class="nav-account-link">👤 My Account</a></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="video-embed">
+    <div class="video-container">
+      <video class="hero-video-player" autoplay muted loop playsinline preload="auto">
+        <source src="main_video1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="video-fallback"></div>
+    </div>
+  </section>
+
+  <section class="social-media">
+    <div class="social-scroll">
+      <div class="social-track">
+        <a href="https://www.facebook.com/gubotjaybe26" target="" rel="noopener noreferrer" class="social-link" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+        <a href="https://tiktok.com" target="" rel="noopener  noreferrer" class="social-link" title="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+          </svg>
+        </a>
+        <a href="https://www.youtube.com/@Pinkora_Dev" target="" rel="noopener noreferrer" class="social-link" title="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </a>
+        <a href="https://linkedin.com" target="" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.722-2.004 1.418-.103.249-.129.597-.129.945v5.442h-3.554s.045-8.842 0-9.769h3.554v1.383c.43-.664 1.199-1.608 2.925-1.608 2.137 0 3.74 1.397 3.74 4.393v5.601zM5.337 9.341c-1.144 0-1.915-.758-1.915-1.708 0-.962.77-1.714 1.942-1.714 1.175 0 1.915.752 1.938 1.714 0 .95-.763 1.708-1.965 1.708zm1.586 11.111H3.73V9.684h3.193v10.768zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <h1 class="hero-title">Clarity. Performance. Growth.</h1>
+        <p class="hero-sub">I design and implement business systems that transform complexity into clarity, streamline workflows, and create structures that empower organizations to scale with confidence.</p>
+        <p class="hero-cta">
+          <a class="btn primary" href="projects.html">View Projects</a>
+          <a class="btn muted" href="services.html">Our Services</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="projects container">
+      <h2 class="section-title">Selected Projects</h2>
+      <div id="projects-grid" class="projects-grid" aria-live="polite"></div>
+      <p class="more-link"><a href="projects.html">See all projects →</a></p>
+    </section>
+
+    <section class="testimonials container">
+      <h2 class="section-title">Clients</h2>
+      <p>Trusted by great teams — see <a href="clients.html">our clients</a> for examples.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> Pinkora — All rights reserved.</small>
+    </div>
+  </footer>
+
+  <!-- AI Assistant Widget -->
+  <div class="ai-assistant-widget">
+    <button class="ai-assistant-toggle" id="aiAssistantToggle" aria-label="Open AI Assistant">
+      <img src="images/pinkora_assistant.png" alt="Pinkora Assistant" class="assistant-avatar">
+      <div class="assistant-pulse"></div>
+    </button>
+    
+    <div class="ai-assistant-panel" id="aiAssistantPanel">
+      <div class="assistant-header">
+        <div class="assistant-profile">
+          <div class="assistant-avatar-circle">
+            <img src="images/pinkora_assistant.png" alt="Pinkora Assistant">
+          </div>
+          <div class="assistant-info">
+            <h3>Pinkora Assistant</h3>
+            <span class="assistant-status">Online</span>
+          </div>
+        </div>
+        <button class="assistant-close" id="aiAssistantClose" aria-label="Close Assistant">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="assistant-messages" id="assistantMessages">
+        <div class="assistant-message bot">
+          <div class="message-avatar">
+            <img src="images/pinkora_assistant.png" alt="AI">
+          </div>
+          <div class="message-bubble">
+            <p>Hi! I'm your Pinkora assistant. I can help answer questions about our services, projects, and expertise. What would you like to know?</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="assistant-suggestions" id="assistantSuggestions">
+        <button class="suggestion-chip" data-question="What services does Pinkora offer?">What services do you offer?</button>
+        <button class="suggestion-chip" data-question="Tell me about the Smart Store Monitoring project">Smart Store Monitoring</button>
+        <button class="suggestion-chip" data-question="How can I contact you?">Contact information</button>
+      </div>
+      
+      <div class="assistant-input-area">
+        <input type="text" class="assistant-input" id="assistantInput" placeholder="Ask me anything..." />
+        <button class="assistant-send" id="assistantSend" aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

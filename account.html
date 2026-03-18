@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Account — Pinkora</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Manage your Pinkora account, projects, and subscriptions." />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <a class="brand" href="mainpage.html">
+        <img src="images/pinkora_dev.png" alt="Pinkora" class="brand-logo">
+      </a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="mainpage.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li class="nav-dropdown">
+            <a href="about_me.html">About me</a>
+            <ul class="dropdown-menu">
+              <li><a href="about_me.html#developer">Developer</a></li>
+              <li><a href="about_me.html#mission">My Mission</a></li>
+              <li><a href="about_me.html#build">What I Build</a></li>
+              <li><a href="about_me.html#approach">My Approach</a></li>
+              <li><a href="about_me.html#future">Looking Ahead</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contacts</a></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <h1 class="hero-title">My Account</h1>
+      <p class="hero-sub">Sign in to access your projects, purchases, and subscriptions.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- Not Signed In View -->
+    <section id="authSection" class="auth-section">
+      <div class="auth-container">
+        <div class="auth-box">
+          <h2>Welcome to Pinkora</h2>
+          <p>Create an account or sign in to get started</p>
+          
+          <div style="display: flex; gap: 10px; margin: 20px 0;">
+            <button class="btn btn-primary" onclick="openLoginModal()" style="flex: 1;">Login</button>
+            <button class="btn btn-secondary" onclick="openSignUpModal()" style="flex: 1;">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Signed In View -->
+    <section id="userDashboard" class="user-dashboard" style="display: none;">
+      <div class="dashboard-header">
+        <img id="userPhoto" src="" alt="Profile" style="width: 60px; height: 60px; border-radius: 50%; display: none; margin-right: 15px;">
+        <div>
+          <h2 id="userName">User Name</h2>
+          <p id="userEmail">user@email.com</p>
+        </div>
+        <button class="btn btn-danger" onclick="logout()" style="margin-left: auto;">Logout</button>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dashboard-card">
+          <h3>📁 My Projects</h3>
+          <p>View your purchased projects</p>
+          <a href="projects.html" class="card-link">View Projects →</a>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>💳 Purchases & Payments</h3>
+          <p>View your purchase history and transactions</p>
+          <button class="card-link" onclick="alert('Coming soon')">View History →</button>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>⭐ Subscriptions</h3>
+          <p>Manage your active subscriptions</p>
+          <button class="card-link" onclick="alert('Coming soon')">Manage →</button>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>💬 Feedback & Comments</h3>
+          <p>Share your feedback or comments</p>
+          <button class="card-link" onclick="openFeedbackModal()">Leave Feedback →</button>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>⚙️ Account Settings</h3>
+          <p>Update your profile and preferences</p>
+          <button class="card-link" onclick="alert('Coming soon')">Settings →</button>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>🔐 Security & Privacy</h3>
+          <p>Manage your account security</p>
+          <button class="card-link" onclick="alert('Coming soon')">Security →</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+      <h2>Login to Your Account</h2>
+      <p>Don't have an account? <button class="link-btn" onclick="closeLoginModal(); openSignUpModal();" style="background:none; border:none; color:var(--primary-color); cursor:pointer; text-decoration:underline;">Sign up here</button></p>
+      
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div id="signupModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeSignUpModal()">&times;</button>
+      <h2>Create Account</h2>
+      <p>Already have an account? <button class="link-btn" onclick="closeSignUpModal(); openLoginModal();" style="background:none; border:none; color:var(--primary-color); cursor:pointer; text-decoration:underline;">Sign in here</button></p>
+      
+      <form id="signupForm" class="auth-form">
+        <div class="form-group">
+          <label for="signupName">Full Name</label>
+          <input type="text" id="signupName" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+          <label for="signupEmail">Email Address</label>
+          <input type="email" id="signupEmail" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" placeholder="••••••••" minlength="6" required>
+          <small>Password must be at least 6 characters</small>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" required> I agree to the Terms & Conditions
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div id="feedbackModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeFeedbackModal()">&times;</button>
+      <h2>Share Your Feedback</h2>
+      
+      <form id="feedbackForm" class="auth-form">
+        <div class="form-group">
+          <label for="feedbackMessage">Your Feedback</label>
+          <textarea id="feedbackMessage" rows="5" placeholder="Tell us what you think..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Feedback</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> Pinkora — All rights reserved.</small>
+    </div>
+  </footer>
+
+  <!-- Load scripts -->
+  <script src="script.js"></script>
+  <script src="auth.js"></script>
+
+  <script>
+    // Set year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
