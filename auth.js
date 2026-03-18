@@ -3,6 +3,7 @@ const API_URL = '/api';
 
 // Current user state
 let currentUser = null;
+let authToken = localStorage.getItem('authToken') || null;
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Setup form handlers
   setupSignUpForm();
+  setupLoginForm();
   setupFeedbackForm();
   setupThemeToggle();
   setupSignOut();
@@ -33,10 +35,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Check if user is already logged in
 async function checkAuthStatus() {
+  if (!authToken) {
+    updateUIBasedOnAuth(null);
+    return;
+  }
+
   try {
-    const response = await fetch(`${API_URL}/auth-check.php`, {
+    const response = await fetch(`${API_URL}/auth/check`, {
       method: 'GET',
-      credentials: 'include'
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      }
     });
     
     const data = await response.json();
@@ -46,12 +56,63 @@ async function checkAuthStatus() {
       updateUIBasedOnAuth(currentUser);
       loadUserData(currentUser);
     } else {
+      // Token invalid, clear it
+      localStorage.removeItem('authToken');
+      authToken = null;
       updateUIBasedOnAuth(null);
     }
   } catch (error) {
     console.error('Auth check error:', error);
     updateUIBasedOnAuth(null);
   }
+}
+
+// Setup Login Form
+function setupLoginForm() {
+  const form = document.getElementById('loginForm');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('loginEmail')?.value.trim();
+    const password = document.getElementById('loginPassword')?.value;
+
+    if (!email || !password) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        authToken = data.data.token;
+        localStorage.setItem('authToken', authToken);
+        currentUser = {
+          id: data.data.id,
+          name: data.data.name,
+          email: data.data.email
+        };
+        alert('Login successful!');
+        closeLoginModal();
+        updateUIBasedOnAuth(currentUser);
+        loadUserData(currentUser);
+        form.reset();
+      } else {
+        alert('Login failed: ' + data.message);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Login failed. Please try again.');
+    }
+  });
 }
 
 // Setup Sign Up Form
@@ -71,17 +132,23 @@ function setupSignUpForm() {
       return;
     }
 
+    if (password.length < 6) {
+      alert('Password must be at least 6 characters');
+      return;
+    }
+
     try {
-      const response = await fetch(`${API_URL}/register.php`, {
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify({ name, email, password })
       });
 
       const data = await response.json();
       
       if (data.success) {
+        authToken = data.data.token;
+        localStorage.setItem('authToken', authToken);
         currentUser = {
           id: data.data.user_id,
           name: data.data.name,
@@ -110,19 +177,31 @@ function setupFeedbackForm() {
   feedbackForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    if (!currentUser) {
+    if (!currentUser || !authToken) {
       alert('Please sign in to submit feedback');
       return;
     }
 
-    const type = document.getElementById('feedbackType').value;
-    const message = document.getElementById('feedbackMessage').value;
+    const type = document.getElementById('feedbackType')?.value || 'other';
+    const message = document.getElementById('feedbackMessage')?.value;
+
+    if (!message) {
+      alert('Please enter your feedback');
+      return;
+    }
+
+    if (message.length < 10) {
+      alert('Feedback must be at least 10 characters');
+      return;
+    }
 
     try {
-      const response = await fetch(`${API_URL}/submit-feedback.php`, {
+      const response = await fetch(`${API_URL}/submit-feedback`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`
+        },
         body: JSON.stringify({ type, message })
       });
 
@@ -192,6 +271,19 @@ function closeSignUpModal() {
   if (form) form.reset();
 }
 
+// Login Modal Functions
+function openLoginModal() {
+  const modal = document.getElementById('loginModal');
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeLoginModal() {
+  const modal = document.getElementById('loginModal');
+  if (modal) modal.style.display = 'none';
+  const form = document.getElementById('loginForm');
+  if (form) form.reset();
+}
+
 function showFeedbackForm() {
   const modal = document.getElementById('feedbackModal');
   if (modal) modal.style.display = 'flex';
@@ -227,18 +319,21 @@ function setupSignOut() {
 
   signOutBtn.addEventListener('click', async () => {
     try {
-      const response = await fetch(`${API_URL}/logout.php`, {
+      // Clear token from storage
+      localStorage.removeItem('authToken');
+      authToken = null;
+      currentUser = null;
+      
+      // Optional: Call logout endpoint
+      await fetch(`${API_URL}/auth/logout`, {
         method: 'POST',
-        credentials: 'include'
-      });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        currentUser = null;
-        updateUIBasedOnAuth(null);
-        alert('You have been signed out');
-      }
+        headers: {
+          'Authorization': `Bearer ${authToken}`
+        }
+      }).catch(() => {}); // Ignore errors on logout
+
+      updateUIBasedOnAuth(null);
+      alert('You have been signed out');
     } catch (error) {
       console.error('Sign Out Error:', error);
     }
