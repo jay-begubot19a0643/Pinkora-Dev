@@ -1,15 +1,17 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+// Initialize Supabase
+const supabase = require('./api/config-supabase');
+
 // Validate required environment variables
-const requiredEnvVars = ['JWT_SECRET'];
+const requiredEnvVars = ['JWT_SECRET', 'SUPABASE_URL', 'SUPABASE_ANON_KEY'];
 const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
 
 if (missingEnvVars.length > 0) {
   console.error('❌ Missing required environment variables:', missingEnvVars.join(', '));
-  console.error('Please create a .env file with the required variables.');
+  console.error('Please set these in your .env file or Vercel environment variables.');
   process.exit(1);
 }
 
@@ -20,23 +22,24 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/pinkora_db', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('✅ MongoDB connected'))
-.catch(err => {
-  console.error('⚠️  MongoDB connection error:', err.message);
-  console.log('📌 Server will continue without database - features requiring DB will not work');
-  console.log('💡 To enable MongoDB: Install MongoDB locally or provide MONGODB_URI in .env');
-});
+// Test Supabase Connection
+(async () => {
+  try {
+    const { data, error } = await supabase.from('users').select('*').limit(1);
+    if (error) throw error;
+    console.log('✅ Supabase connected successfully');
+  } catch (err) {
+    console.error('⚠️  Supabase connection error:', err.message);
+    console.log('📌 Server will start but database operations may fail');
+    console.log('💡 Make sure SUPABASE_URL and SUPABASE_ANON_KEY are set correctly');
+  }
+})();
 
 // Routes
-app.use('/api/auth', require('./api/routes/auth'));
-app.use('/api', require('./api/routes/feedback'));
-app.use('/api', require('./api/routes/contact'));
-app.use('/api', require('./api/routes/recommendations'));
+app.use('/api/auth', require('./api/routes/auth-supabase'));
+app.use('/api', require('./api/routes/feedback-supabase'));
+app.use('/api', require('./api/routes/contact-supabase'));
+app.use('/api', require('./api/routes/recommendations-supabase'));
 
 // Health check
 app.get('/api/health', (req, res) => {
