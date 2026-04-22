@@ -150,7 +150,7 @@ function setupSignUpForm() {
         authToken = data.data.token;
         localStorage.setItem('authToken', authToken);
         currentUser = {
-          id: data.data.user_id,
+          id: data.data.id,
           name: data.data.name,
           email: data.data.email
         };

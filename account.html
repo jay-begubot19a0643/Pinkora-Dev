@@ -66,23 +66,23 @@
           <h2>Welcome to Pinkora</h2>
           <p>Create an account or sign in to get started</p>
           
-          <div style="display: flex; gap: 10px; margin: 20px 0;">
-            <button class="btn btn-primary" onclick="openLoginModal()" style="flex: 1;">Login</button>
-            <button class="btn btn-secondary" onclick="openSignUpModal()" style="flex: 1;">Sign Up</button>
+          <div class="auth-buttons-container">
+            <button class="btn btn-primary flex-button" onclick="openLoginModal()">Login</button>
+            <button class="btn btn-secondary flex-button" onclick="openSignUpModal()">Sign Up</button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Signed In View -->
-    <section id="userDashboard" class="user-dashboard" style="display: none;">
+    <section id="userDashboard" class="user-dashboard hidden">
       <div class="dashboard-header">
-        <img id="userPhoto" src="" alt="Profile" style="width: 60px; height: 60px; border-radius: 50%; display: none; margin-right: 15px;">
+        <img id="userPhoto" src="" alt="Profile" class="user-photo">
         <div>
           <h2 id="userName">User Name</h2>
           <p id="userEmail">user@email.com</p>
         </div>
-        <button class="btn btn-danger" onclick="logout()" style="margin-left: auto;">Logout</button>
+        <button class="btn btn-danger logout-button" onclick="logout()">Logout</button>
       </div>
 
       <div class="dashboard-grid">
@@ -126,11 +126,11 @@
   </main>
 
   <!-- Login Modal -->
-  <div id="loginModal" class="modal" style="display:none;">
+  <div id="loginModal" class="modal hidden">
     <div class="modal-content">
       <button class="modal-close" onclick="closeLoginModal()">&times;</button>
       <h2>Login to Your Account</h2>
-      <p>Don't have an account? <button class="link-btn" onclick="closeLoginModal(); openSignUpModal();" style="background:none; border:none; color:var(--primary-color); cursor:pointer; text-decoration:underline;">Sign up here</button></p>
+      <p>Don't have an account? <button class="link-btn" onclick="closeLoginModal(); openSignUpModal();">Sign up here</button></p>
       
       <form id="loginForm" class="auth-form">
         <div class="form-group">
@@ -147,13 +147,13 @@
   </div>
 
   <!-- Sign Up Modal -->
-  <div id="signupModal" class="modal" style="display:none;">
+  <div id="signUpModal" class="modal hidden">
     <div class="modal-content">
       <button class="modal-close" onclick="closeSignUpModal()">&times;</button>
       <h2>Create Account</h2>
-      <p>Already have an account? <button class="link-btn" onclick="closeSignUpModal(); openLoginModal();" style="background:none; border:none; color:var(--primary-color); cursor:pointer; text-decoration:underline;">Sign in here</button></p>
+      <p>Already have an account? <button class="link-btn" onclick="closeSignUpModal(); openLoginModal();">Sign in here</button></p>
       
-      <form id="signupForm" class="auth-form">
+      <form id="signUpForm" class="auth-form">
         <div class="form-group">
           <label for="signupName">Full Name</label>
           <input type="text" id="signupName" placeholder="John Doe" required>
@@ -178,7 +178,7 @@
   </div>
 
   <!-- Feedback Modal -->
-  <div id="feedbackModal" class="modal" style="display:none;">
+  <div id="feedbackModal" class="modal hidden">
     <div class="modal-content">
       <button class="modal-close" onclick="closeFeedbackModal()">&times;</button>
       <h2>Share Your Feedback</h2>

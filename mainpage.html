@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pinkora — Portfolio</title>
+  <title>Pinkora Dev — Portfolio</title>
   <link rel="stylesheet" href="styles.css">
   <meta name="description" content="Professional portfolio — Projects, Services, Clients, About" />
 </head>
@@ -11,9 +11,9 @@
   <header class="site-header">
     <div class="container header-row">
       <a class="brand" href="mainpage.html">
-        <img src="images/pinkora_dev.png" alt="Pinkora" class="brand-logo">
+        <img src="images/pinkora_dev.png" alt="Pinkora Dev" class="brand-logo">
       </a>
-      <nav class="main-nav">
+      <nav class="main-nav"> 
         <ul>
           <li><a href="mainpage.html">Home</a></li>
           <li><a href="services.html">Services</a></li>
@@ -54,7 +54,7 @@
 
   <section class="video-embed">
     <div class="video-container">
-      <video class="hero-video-player" autoplay muted loop playsinline preload="auto">
+      <video class=\"hero-video-player\" autoplay muted loop preload=\"auto\">
         <source src="main_video1.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -110,6 +110,77 @@
     <section class="testimonials container">
       <h2 class="section-title">Clients</h2>
       <p>Trusted by great teams — see <a href="clients.html">our clients</a> for examples.</p>
+    </section>
+
+    <section class="recommendations container">
+      <div class="recommendations-header">
+        <h2 class="section-title">User Recommendations</h2>
+        <p class="recommendations-subtitle">Real feedback from users who've experienced our services</p>
+      </div>
+
+      <div class="recommendations-wrapper">
+        <!-- Logged-in user form -->
+        <div id="recommendationFormContainer" class="recommendation-form-container hidden">
+          <div class="recommendation-form-card">
+            <h3>Share Your Experience</h3>
+            <form id="recommendationForm" class="recommendation-form">
+              <div class="form-group">
+                <label for="serviceName">Which service did you experience?</label>
+                <select id="serviceName" name="serviceName" required>
+                  <option value="">Select a service</option>
+                  <option value="POS System">POS System</option>
+                  <option value="Inventory Management">Inventory Management</option>
+                  <option value="Sales Analytics">Sales Analytics</option>
+                  <option value="Business Dashboard">Business Dashboard</option>
+                  <option value="Video Monitoring">Video Monitoring</option>
+                  <option value="Mobile App">Mobile App</option>
+                  <option value="Web Development">Web Development</option>
+                  <option value="System Integration">System Integration</option>
+                  <option value="Cloud Solutions">Cloud Solutions</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="rating">Rate your experience</label>
+                <div class="rating-input">
+                  <input type="radio" id="star5" name="rating" value="5" required>
+                  <label for="star5" title="5 stars">★</label>
+                  <input type="radio" id="star4" name="rating" value="4">
+                  <label for="star4" title="4 stars">★</label>
+                  <input type="radio" id="star3" name="rating" value="3">
+                  <label for="star3" title="3 stars">★</label>
+                  <input type="radio" id="star2" name="rating" value="2">
+                  <label for="star2" title="2 stars">★</label>
+                  <input type="radio" id="star1" name="rating" value="1">
+                  <label for="star1" title="1 star">★</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="comment">Your comment (min 10 characters)</label>
+                <textarea id="comment" name="comment" placeholder="Share your experience with us..." minlength="10" maxlength="1000" required></textarea>
+                <small id="charCount">0 / 1000</small>
+              </div>
+
+              <button type="submit" class="btn primary recommendation-submit-btn">Submit Recommendation</button>
+              <p id="formMessage" class="form-message"></p>
+            </form>
+          </div>
+        </div>
+
+        <!-- Login prompt for non-authenticated users -->
+        <div id="loginPrompt" class="login-prompt-card">
+          <h3>Share Your Experience</h3>
+          <p>Create an account to share your feedback and help other users learn about our services.</p>
+          <a href="account.html" class="btn primary">Sign In or Create Account</a>
+        </div>
+
+        <!-- Recommendations Display -->
+        <div id="recommendationsContainer" class="recommendations-grid">
+          <div class="loading-spinner">Loading recommendations...</div>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -175,5 +246,6 @@
   </div>
 
   <script src="script.js"></script>
+  <script src="recommendations.js"></script>
 </body>
 </html>

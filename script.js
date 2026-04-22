@@ -151,6 +151,9 @@ document.addEventListener('DOMContentLoaded', () => {
       videoContainer.classList.add('no-video');
     }
   }
+  
+  // Initialize Recommendations
+  initRecommendations();
 });
 
 // AI Assistant Functionality
