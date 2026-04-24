@@ -3007,7 +3007,7 @@ button:focus-visible,
 
 .clients-grid{
 	display:grid;
-	grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));
+	grid-template-columns:repeat(2, 1fr);
 	gap:32px;
 	margin:60px 0;
 	padding:0;
