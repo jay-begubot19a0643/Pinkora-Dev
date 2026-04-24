@@ -9,7 +9,7 @@
     "build": "echo 'Build complete'"
   },
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   },
   "keywords": [
     "portfolio",
@@ -19,15 +19,17 @@
   "author": "Pinkora Dev",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
     "@supabase/supabase-js": "^2.38.0",
     "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "nodemailer": "^6.9.6"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "@types/node": "^25.6.0",
+    "nodemon": "^3.0.1",
+    "typescript": "^6.0.3"
   }
 }
