@@ -46,8 +46,18 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date() });
 });
 
+// Serve homepage
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/mainpage.html');
+});
+
 // Static files (serve frontend)
 app.use(express.static(__dirname));
+
+// Serve HTML files for any .html request
+app.get('/:file.html', (req, res) => {
+  res.sendFile(__dirname + '/' + req.params.file + '.html');
+});
 
 // 404 handler
 app.use((req, res) => {
