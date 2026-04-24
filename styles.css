@@ -1906,6 +1906,7 @@ button:focus-visible,
 	position:relative;
 	width:100%;
 	height:500px;
+	aspect-ratio:16/9;
 	border-radius:var(--border-radius);
 	overflow:hidden;
 	margin-bottom:64px;
@@ -1914,7 +1915,10 @@ button:focus-visible,
 }
 
 .project-iframe{
+	width:100%;
+	height:100%;
 	border-radius:12px;
+	border:none;
 }
 
 .project-image-main{
@@ -2300,7 +2304,11 @@ button:focus-visible,
 @media (max-width:768px){
 	.projects-hero{padding:48px 0 40px}
 	.project-featured{padding:48px 0}
-	.project-hero-image{height:300px}
+	.project-hero-image{
+		height:auto;
+		aspect-ratio:16/9;
+		margin-bottom:40px;
+	}
 	.features-grid{grid-template-columns:1fr}
 	.workflow-steps::before{
 		left:20px;
@@ -2318,6 +2326,20 @@ button:focus-visible,
 	.tech-categories{grid-template-columns:1fr}
 	.metrics-grid{grid-template-columns:1fr}
 	.screenshots-grid{grid-template-columns:1fr}
+}
+
+/* Mobile Optimized Projects Page */
+@media (max-width:480px){
+	.projects-hero{padding:32px 0 24px}
+	.projects-hero-title{font-size:1.8rem}
+	.project-featured{padding:32px 0}
+	.project-hero-image{
+		height:auto;
+		aspect-ratio:16/9;
+		margin-bottom:28px;
+	}
+	.project-main-title{font-size:1.5rem}
+	.project-tagline{font-size:0.95rem}
 }
 
 /* AI Assistant Widget */
