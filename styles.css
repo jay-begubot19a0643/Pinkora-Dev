@@ -565,41 +565,6 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
 	animation: headline-fade-slide-up 1s ease-out, headline-gradient-shift 4s ease-in-out infinite !important;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.3em;
-	justify-content: center;
-}
-
-/* Individual hero words with staggered animation */
-.hero-word {
-	display: inline-block;
-	opacity: 0;
-	transform: translateY(40px);
-	animation: headline-fade-slide-up 0.8s ease-out forwards;
-}
-
-.hero-word:nth-child(1) {
-	animation-delay: 0.2s;
-}
-
-.hero-word:nth-child(2) {
-	animation-delay: 0.6s;
-}
-
-.hero-word:nth-child(3) {
-	animation-delay: 1s;
-}
-
-/* Hover effect for hero words */
-.hero-word {
-	transition: all 0.3s ease;
-	cursor: default;
-}
-
-.hero-word:hover {
-	transform: translateY(-5px) scale(1.05);
-	filter: drop-shadow(0 4px 12px rgba(183, 110, 121, 0.4));
 }
 
 /* Section title with underline animation */
@@ -827,6 +792,37 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
 	opacity: 0;
 	transform: translateY(30px);
 	transition: opacity 0.8s ease-out 0.1s, transform 0.8s ease-out 0.1s;
+}
+
+/* Hero section - always visible on load with animations */
+.hero {
+	opacity: 1 !important;
+	transform: none !important;
+}
+
+.hero.scroll-reveal {
+	opacity: 1 !important;
+}
+
+.hero.scroll-reveal.visible {
+	opacity: 1 !important;
+}
+
+.hero .scroll-reveal h1,
+.hero h1 {
+	opacity: 1 !important;
+	transform: none !important;
+}
+
+.hero .hero-sub,
+.hero .hero-cta {
+	opacity: 1 !important;
+	transform: none !important;
+}
+
+.hero p {
+	opacity: 1 !important;
+	transform: none !important;
 }
 
 .scroll-reveal.visible h1,

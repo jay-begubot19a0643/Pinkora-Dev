@@ -128,7 +128,7 @@ function initHamburgerMenu() {
 function initScrollReveal() {
   // Add scroll-reveal class to all relevant elements
   const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-  const sections = document.querySelectorAll('section');
+  const sections = document.querySelectorAll('section:not(.hero)'); // Exclude hero section
   
   // Get all grid and container elements
   const grids = document.querySelectorAll(
@@ -144,7 +144,7 @@ function initScrollReveal() {
     '.screenshot-item, .recommendation-item, .client-card'
   );
 
-  // Mark sections as scroll-reveal containers
+  // Mark sections as scroll-reveal containers (excluding hero)
   sections.forEach(section => {
     if (!section.classList.contains('scroll-reveal')) {
       section.classList.add('scroll-reveal');
@@ -165,12 +165,18 @@ function initScrollReveal() {
     }
   });
 
-  // Mark headings as scroll-reveal if their parents aren't already
+  // Mark headings as scroll-reveal if their parents aren't already (excluding hero)
   headings.forEach(heading => {
-    if (!heading.closest('.scroll-reveal')) {
+    if (!heading.closest('.hero') && !heading.closest('.scroll-reveal')) {
       heading.classList.add('scroll-reveal');
     }
   });
+
+  // Make hero section immediately visible
+  const heroSection = document.querySelector('.hero');
+  if (heroSection) {
+    heroSection.classList.add('visible');
+  }
 
   // Create Intersection Observer
   const observerOptions = {
