@@ -62,17 +62,11 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/mainpage.html');
 });
 
-// Serve HTML files for any .html request
-app.get('/:file.html', (req, res) => {
-  res.sendFile(__dirname + '/' + req.params.file + '.html');
-});
+// Let express.static handle everything else
+app.use(express.static(__dirname));
 
-// 404 handler - but first check if file exists
+// 404 handler - for routes that weren't found
 app.use((req, res) => {
-  // Check if it looks like a file request (has a dot)
-  if (req.path.includes('.')) {
-    return res.status(404).json({ success: false, message: 'File not found' });
-  }
   res.status(404).json({ success: false, message: 'Not found' });
 });
 
