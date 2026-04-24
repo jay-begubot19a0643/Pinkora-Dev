@@ -11,6 +11,7 @@
           "script.js",
           "auth.js",
           "recommendations.js",
+          "*.mp4",
           "images/**",
           "api/**"
         ]
