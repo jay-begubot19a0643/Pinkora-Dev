@@ -4,31 +4,26 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/server.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
+      "dest": "/server.js"
     },
     {
       "src": "/images/(.*)",
       "dest": "/images/$1"
     },
     {
-      "src": "/styles.css",
-      "dest": "/styles.css"
-    },
-    {
-      "src": "/(.+\\.js)$",
+      "src": "/(.*\\.css)$",
       "dest": "/$1"
     },
     {
-      "src": "/(.+\\.html)$",
+      "src": "/(.*\\.js)$",
       "dest": "/$1"
     },
     {
-      "src": "^/$",
-      "dest": "/mainpage.html"
+      "src": "/(.*\\.html)$",
+      "dest": "/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "/.*",
       "dest": "/server.js"
     }
   ]
