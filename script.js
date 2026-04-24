@@ -124,6 +124,85 @@ function initHamburgerMenu() {
   });
 }
 
+// Initialize Scroll Reveal Animations
+function initScrollReveal() {
+  // Add scroll-reveal class to all relevant elements
+  const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  const sections = document.querySelectorAll('section');
+  
+  // Get all grid and container elements
+  const grids = document.querySelectorAll(
+    '.services-grid, .projects-grid, .mission-grid, .skills-grid, ' +
+    '.features-grid, .workflow-steps, .tech-categories, .metrics-grid, ' +
+    '.screenshots-grid, .recommendations-grid, .principle-grid, ' +
+    '.clients-grid, .testimonials-grid'
+  );
+  
+  const cards = document.querySelectorAll(
+    '.project-card, .service-card, .mission-card, .principle-card, .skill-item, ' +
+    '.feature-card, .workflow-step, .tech-category, .metric-card, ' +
+    '.screenshot-item, .recommendation-item, .client-card'
+  );
+
+  // Mark sections as scroll-reveal containers
+  sections.forEach(section => {
+    if (!section.classList.contains('scroll-reveal')) {
+      section.classList.add('scroll-reveal');
+    }
+  });
+
+  // Mark grids as scroll-reveal containers
+  grids.forEach(grid => {
+    if (!grid.classList.contains('scroll-reveal')) {
+      grid.classList.add('scroll-reveal');
+    }
+  });
+
+  // Mark cards as scroll-reveal if their parents aren't already
+  cards.forEach(card => {
+    if (!card.closest('.scroll-reveal')) {
+      card.classList.add('scroll-reveal');
+    }
+  });
+
+  // Mark headings as scroll-reveal if their parents aren't already
+  headings.forEach(heading => {
+    if (!heading.closest('.scroll-reveal')) {
+      heading.classList.add('scroll-reveal');
+    }
+  });
+
+  // Create Intersection Observer
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  // Observe all scroll-reveal elements and check initial visibility
+  document.querySelectorAll('.scroll-reveal').forEach(element => {
+    observer.observe(element);
+    
+    // Check if element is already visible on page load
+    const rect = element.getBoundingClientRect();
+    const isInViewport = (
+      rect.top <= window.innerHeight - 100 &&
+      rect.bottom >= 0
+    );
+    
+    if (isInViewport) {
+      element.classList.add('visible');
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   renderProjects();
   
@@ -138,6 +217,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Initialize Hamburger Menu
   initHamburgerMenu();
+  
+  // Initialize Scroll Reveal Animations
+  initScrollReveal();
   
   // Initialize AI Assistant
   initAIAssistant();

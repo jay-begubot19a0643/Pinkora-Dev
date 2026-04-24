@@ -444,6 +444,617 @@ body {
 	0%{ left:-150%; }
 	100%{ left:150%; }
 }
+
+/* ============================================
+   HEADLINE TRANSITION ANIMATIONS
+   ============================================ */
+
+/* Fade-in with slide-up animation */
+@keyframes headline-fade-slide-up {
+	0% {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Slide-in from left animation */
+@keyframes headline-slide-in-left {
+	0% {
+		opacity: 0;
+		transform: translateX(-40px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+/* Underline reveal animation */
+@keyframes headline-underline-reveal {
+	0% {
+		width: 0;
+		opacity: 0;
+	}
+	100% {
+		width: 100%;
+		opacity: 1;
+	}
+}
+
+/* Scale and fade animation */
+@keyframes headline-scale-fade {
+	0% {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+/* Text color wave animation */
+@keyframes headline-color-wave {
+	0%, 100% {
+		background-position: 0% center;
+	}
+	50% {
+		background-position: 100% center;
+	}
+}
+
+/* Gradient text animation */
+@keyframes headline-gradient-shift {
+	0% {
+		background-position: 0% center;
+	}
+	50% {
+		background-position: 100% center;
+	}
+	100% {
+		background-position: 0% center;
+	}
+}
+
+/* ============================================
+   HEADLINE ELEMENTS STYLING
+   ============================================ */
+
+/* All H1 elements */
+h1 {
+	animation: headline-fade-slide-up 0.8s ease-out;
+	position: relative;
+}
+
+/* All H2 elements */
+h2 {
+	animation: headline-slide-in-left 0.8s ease-out;
+	position: relative;
+	transition: all 0.3s ease;
+}
+
+/* All H3 elements */
+h3 {
+	animation: headline-scale-fade 0.6s ease-out;
+	position: relative;
+	transition: all 0.3s ease;
+}
+
+/* H4, H5, H6 - subtle animations */
+h4, h5, h6 {
+	animation: headline-fade-slide-up 0.6s ease-out;
+	position: relative;
+}
+
+/* Hover effects for headlines */
+h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
+	transform: translateX(4px);
+	transition: transform 0.2s ease;
+}
+
+/* Hero title with gradient animation */
+.hero-title {
+	animation: headline-fade-slide-up 1s ease-out !important;
+	background: linear-gradient(135deg, var(--text) 0%, var(--accent) 50%, var(--accent-2) 100%);
+	background-size: 200% 200%;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	animation: headline-fade-slide-up 1s ease-out, headline-gradient-shift 4s ease-in-out infinite !important;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.3em;
+	justify-content: center;
+}
+
+/* Individual hero words with staggered animation */
+.hero-word {
+	display: inline-block;
+	opacity: 0;
+	transform: translateY(40px);
+	animation: headline-fade-slide-up 0.8s ease-out forwards;
+}
+
+.hero-word:nth-child(1) {
+	animation-delay: 0.2s;
+}
+
+.hero-word:nth-child(2) {
+	animation-delay: 0.6s;
+}
+
+.hero-word:nth-child(3) {
+	animation-delay: 1s;
+}
+
+/* Hover effect for hero words */
+.hero-word {
+	transition: all 0.3s ease;
+	cursor: default;
+}
+
+.hero-word:hover {
+	transform: translateY(-5px) scale(1.05);
+	filter: drop-shadow(0 4px 12px rgba(183, 110, 121, 0.4));
+}
+
+/* Section title with underline animation */
+.section-title {
+	animation: headline-slide-in-left 0.8s ease-out !important;
+}
+
+.section-title::after {
+	animation: headline-underline-reveal 0.8s ease-out 0.3s forwards;
+	width: 0;
+	animation-fill-mode: forwards;
+}
+
+/* About hero title */
+.about-hero-title {
+	animation: headline-fade-slide-up 1s ease-out !important;
+}
+
+/* Projects hero title */
+.projects-hero-title {
+	animation: headline-fade-slide-up 1s ease-out !important;
+}
+
+/* Project page specific titles and content */
+.project-main-title {
+	animation: headline-fade-slide-up 0.8s ease-out 0.1s backwards !important;
+}
+
+.project-tagline {
+	animation: headline-fade-slide-up 0.8s ease-out 0.2s backwards !important;
+}
+
+.project-badge {
+	animation: headline-scale-fade 0.6s ease-out 0.15s backwards !important;
+}
+
+.project-hero-image {
+	animation: headline-fade-slide-up 0.8s ease-out 0.3s backwards !important;
+}
+
+/* Project overview and features headings */
+.project-overview > h3,
+.project-features > h3,
+.project-workflow > h3,
+.project-tech-stack > h3,
+.project-metrics > h3,
+.project-screenshots > h3,
+.project-cta > h3 {
+	animation: headline-slide-in-left 0.8s ease-out !important;
+}
+
+/* Feature card specific */
+.feature-card h4 {
+	animation: headline-scale-fade 0.6s ease-out !important;
+	transition: all 0.3s ease;
+}
+
+.feature-card h4:hover {
+	color: var(--accent);
+	transform: translateY(-2px);
+}
+
+.feature-icon {
+	animation: headline-scale-fade 0.5s ease-out !important;
+	font-size: 2rem;
+	display: inline-block;
+}
+
+/* Workflow step styling */
+.workflow-step .step-number {
+	animation: headline-scale-fade 0.6s ease-out !important;
+	transition: all 0.3s ease;
+}
+
+.workflow-step h4 {
+	animation: headline-slide-in-left 0.6s ease-out 0.1s backwards !important;
+}
+
+.workflow-step:hover .step-number {
+	transform: scale(1.1) rotate(5deg);
+	color: var(--accent);
+}
+
+/* Tech category styling */
+.tech-category h4 {
+	animation: headline-scale-fade 0.6s ease-out !important;
+	transition: all 0.3s ease;
+}
+
+.tech-category h4:hover {
+	color: var(--accent);
+	transform: translateX(4px);
+}
+
+.tech-tag {
+	animation: headline-scale-fade 0.5s ease-out !important;
+	display: inline-block;
+}
+
+/* Metrics card */
+.metric-card .metric-value {
+	animation: headline-fade-slide-up 0.7s ease-out !important;
+	transition: all 0.3s ease;
+	font-size: 1.8rem;
+	font-weight: 700;
+	color: var(--accent);
+}
+
+.metric-card .metric-label {
+	animation: headline-fade-slide-up 0.7s ease-out 0.1s backwards !important;
+	display: block;
+	transition: all 0.3s ease;
+}
+
+.metric-card:hover .metric-value {
+	transform: scale(1.05);
+}
+
+/* Screenshot item */
+.screenshot-item img {
+	animation: headline-scale-fade 0.6s ease-out !important;
+	transition: all 0.3s ease;
+}
+
+.screenshot-item img:hover {
+	transform: scale(1.02);
+}
+
+.screenshot-caption {
+	animation: headline-fade-slide-up 0.6s ease-out 0.1s backwards !important;
+}
+
+/* CTA section */
+.project-cta {
+	animation: headline-fade-slide-up 0.8s ease-out !important;
+}
+
+/* Service cards heading */
+.service-card h3 {
+	animation: headline-scale-fade 0.6s ease-out !important;
+	transition: all 0.3s ease;
+}
+
+.service-card h3:hover {
+	color: var(--accent);
+	transform: translateY(-2px);
+}
+
+/* Project card heading */
+.project-content h3 {
+	animation: headline-scale-fade 0.6s ease-out !important;
+	transition: all 0.3s ease;
+}
+
+.project-content h3:hover {
+	color: var(--accent);
+	transform: translateX(4px);
+}
+
+/* Mission card heading */
+.mission-card h3 {
+	animation: headline-scale-fade 0.6s ease-out !important;
+	transition: all 0.3s ease;
+	color: var(--accent);
+}
+
+.mission-card h3:hover {
+	transform: translateY(-3px);
+	text-shadow: 0 4px 12px rgba(183, 110, 121, 0.3);
+}
+
+/* Skill item heading */
+.skill-item strong {
+	animation: headline-scale-fade 0.6s ease-out !important;
+	display: block;
+	transition: all 0.3s ease;
+}
+
+.skill-item strong:hover {
+	color: var(--accent);
+	transform: translateX(4px);
+}
+
+/* Principle card heading */
+.principle-card h3 {
+	animation: headline-scale-fade 0.6s ease-out !important;
+	transition: all 0.3s ease;
+}
+
+.principle-card h3:hover {
+	color: var(--accent);
+	transform: translateY(-2px);
+}
+
+/* ============================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================ */
+
+/* Hidden state before scroll into view */
+.scroll-reveal {
+	opacity: 0;
+	transform: translateY(40px);
+	transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state after scroll into view */
+.scroll-reveal.visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Staggered animation for child elements */
+.scroll-reveal.visible .scroll-reveal {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Header animations */
+.scroll-reveal h1,
+.scroll-reveal h2,
+.scroll-reveal h3,
+.scroll-reveal h4,
+.scroll-reveal h5,
+.scroll-reveal h6 {
+	opacity: 0;
+	transform: translateY(30px);
+	transition: opacity 0.8s ease-out 0.1s, transform 0.8s ease-out 0.1s;
+}
+
+.scroll-reveal.visible h1,
+.scroll-reveal.visible h2,
+.scroll-reveal.visible h3,
+.scroll-reveal.visible h4,
+.scroll-reveal.visible h5,
+.scroll-reveal.visible h6 {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Paragraph animations */
+.scroll-reveal p {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s;
+}
+
+.scroll-reveal.visible p {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Card animations */
+.scroll-reveal .project-card,
+.scroll-reveal .service-card,
+.scroll-reveal .mission-card,
+.scroll-reveal .principle-card,
+.scroll-reveal .skill-item {
+	opacity: 0;
+	transform: translateY(30px) scale(0.95);
+	transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-reveal.visible .project-card,
+.scroll-reveal.visible .service-card,
+.scroll-reveal.visible .mission-card,
+.scroll-reveal.visible .principle-card,
+.scroll-reveal.visible .skill-item {
+	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+/* Staggered card reveal */
+.scroll-reveal.visible .project-card:nth-child(1),
+.scroll-reveal.visible .service-card:nth-child(1),
+.scroll-reveal.visible .mission-card:nth-child(1),
+.scroll-reveal.visible .principle-card:nth-child(1),
+.scroll-reveal.visible .skill-item:nth-child(1) {
+	transition-delay: 0.1s;
+}
+
+.scroll-reveal.visible .project-card:nth-child(2),
+.scroll-reveal.visible .service-card:nth-child(2),
+.scroll-reveal.visible .mission-card:nth-child(2),
+.scroll-reveal.visible .principle-card:nth-child(2),
+.scroll-reveal.visible .skill-item:nth-child(2) {
+	transition-delay: 0.2s;
+}
+
+.scroll-reveal.visible .project-card:nth-child(3),
+.scroll-reveal.visible .service-card:nth-child(3),
+.scroll-reveal.visible .mission-card:nth-child(3),
+.scroll-reveal.visible .principle-card:nth-child(3),
+.scroll-reveal.visible .skill-item:nth-child(3) {
+	transition-delay: 0.3s;
+}
+
+.scroll-reveal.visible .project-card:nth-child(n+4),
+.scroll-reveal.visible .service-card:nth-child(n+4),
+.scroll-reveal.visible .mission-card:nth-child(n+4),
+.scroll-reveal.visible .principle-card:nth-child(n+4),
+.scroll-reveal.visible .skill-item:nth-child(n+4) {
+	transition-delay: 0.4s;
+}
+
+/* Section animations */
+.section-header {
+	opacity: 0;
+	transform: translateX(-30px);
+	transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-reveal.visible .section-header {
+	opacity: 1;
+	transform: translateX(0);
+}
+
+/* List item animations */
+.scroll-reveal li {
+	opacity: 0;
+	transform: translateX(-20px);
+	transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-reveal.visible li {
+	opacity: 1;
+	transform: translateX(0);
+}
+
+/* Staggered list items */
+.scroll-reveal.visible li:nth-child(1) {
+	transition-delay: 0.1s;
+}
+
+.scroll-reveal.visible li:nth-child(2) {
+	transition-delay: 0.15s;
+}
+
+.scroll-reveal.visible li:nth-child(3) {
+	transition-delay: 0.2s;
+}
+
+.scroll-reveal.visible li:nth-child(n+4) {
+	transition-delay: 0.25s;
+}
+
+/* Project-specific card animations */
+.scroll-reveal .feature-card,
+.scroll-reveal .workflow-step,
+.scroll-reveal .tech-category,
+.scroll-reveal .metric-card,
+.scroll-reveal .screenshot-item,
+.scroll-reveal .recommendation-item,
+.scroll-reveal .client-card {
+	opacity: 0;
+	transform: translateY(30px) scale(0.95);
+	transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-reveal.visible .feature-card,
+.scroll-reveal.visible .workflow-step,
+.scroll-reveal.visible .tech-category,
+.scroll-reveal.visible .metric-card,
+.scroll-reveal.visible .screenshot-item,
+.scroll-reveal.visible .recommendation-item,
+.scroll-reveal.visible .client-card {
+	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+/* Staggered animation for feature cards */
+.scroll-reveal.visible .feature-card:nth-child(1),
+.scroll-reveal.visible .metric-card:nth-child(1),
+.scroll-reveal.visible .screenshot-item:nth-child(1),
+.scroll-reveal.visible .recommendation-item:nth-child(1),
+.scroll-reveal.visible .client-card:nth-child(1) {
+	transition-delay: 0.1s;
+}
+
+.scroll-reveal.visible .feature-card:nth-child(2),
+.scroll-reveal.visible .metric-card:nth-child(2),
+.scroll-reveal.visible .screenshot-item:nth-child(2),
+.scroll-reveal.visible .recommendation-item:nth-child(2),
+.scroll-reveal.visible .client-card:nth-child(2) {
+	transition-delay: 0.2s;
+}
+
+.scroll-reveal.visible .feature-card:nth-child(3),
+.scroll-reveal.visible .metric-card:nth-child(3),
+.scroll-reveal.visible .screenshot-item:nth-child(3),
+.scroll-reveal.visible .recommendation-item:nth-child(3),
+.scroll-reveal.visible .client-card:nth-child(3) {
+	transition-delay: 0.3s;
+}
+
+.scroll-reveal.visible .feature-card:nth-child(4),
+.scroll-reveal.visible .metric-card:nth-child(4),
+.scroll-reveal.visible .screenshot-item:nth-child(4),
+.scroll-reveal.visible .recommendation-item:nth-child(4),
+.scroll-reveal.visible .client-card:nth-child(4) {
+	transition-delay: 0.4s;
+}
+
+.scroll-reveal.visible .feature-card:nth-child(n+5),
+.scroll-reveal.visible .metric-card:nth-child(n+5),
+.scroll-reveal.visible .screenshot-item:nth-child(n+5),
+.scroll-reveal.visible .recommendation-item:nth-child(n+5),
+.scroll-reveal.visible .client-card:nth-child(n+5) {
+	transition-delay: 0.5s;
+}
+
+/* Workflow step specific animation */
+.scroll-reveal.visible .workflow-step:nth-child(1) {
+	transition-delay: 0.1s;
+}
+
+.scroll-reveal.visible .workflow-step:nth-child(2) {
+	transition-delay: 0.25s;
+}
+
+.scroll-reveal.visible .workflow-step:nth-child(3) {
+	transition-delay: 0.4s;
+}
+
+.scroll-reveal.visible .workflow-step:nth-child(4) {
+	transition-delay: 0.55s;
+}
+
+.scroll-reveal.visible .workflow-step:nth-child(5) {
+	transition-delay: 0.7s;
+}
+
+/* Tech category animation */
+.scroll-reveal.visible .tech-category:nth-child(1) {
+	transition-delay: 0.1s;
+}
+
+.scroll-reveal.visible .tech-category:nth-child(2) {
+	transition-delay: 0.2s;
+}
+
+.scroll-reveal.visible .tech-category:nth-child(3) {
+	transition-delay: 0.3s;
+}
+
+.scroll-reveal.visible .tech-category:nth-child(4) {
+	transition-delay: 0.4s;
+}
+
+.scroll-reveal.visible .tech-category:nth-child(5) {
+	transition-delay: 0.5s;
+}
+
+.scroll-reveal.visible .tech-category:nth-child(6) {
+	transition-delay: 0.6s;
+}
 [data-theme="light"] .project-badge,
 [data-theme="light"] .service-badge,
 [data-theme="light"] .status-badge{
