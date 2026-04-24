@@ -22,6 +22,17 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files FIRST
+app.use(express.static(__dirname, {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.css')) {
+      res.set('Content-Type', 'text/css');
+    } else if (path.endsWith('.js')) {
+      res.set('Content-Type', 'application/javascript');
+    }
+  }
+}));
+
 // Test Supabase Connection
 (async () => {
   try {
@@ -51,16 +62,17 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/mainpage.html');
 });
 
-// Static files (serve frontend)
-app.use(express.static(__dirname));
-
 // Serve HTML files for any .html request
 app.get('/:file.html', (req, res) => {
   res.sendFile(__dirname + '/' + req.params.file + '.html');
 });
 
-// 404 handler
+// 404 handler - but first check if file exists
 app.use((req, res) => {
+  // Check if it looks like a file request (has a dot)
+  if (req.path.includes('.')) {
+    return res.status(404).json({ success: false, message: 'File not found' });
+  }
   res.status(404).json({ success: false, message: 'Not found' });
 });
 
