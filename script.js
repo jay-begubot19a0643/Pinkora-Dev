@@ -582,3 +582,39 @@ function showFormError(message) {
   }, 5000);
 }
 
+
+// Intro Transition Logic
+function initIntroTransition() {
+  const intro = document.getElementById('intro-transition');
+  const heroVideo = document.getElementById('heroVideo');
+  
+  if (!intro) return;
+
+  // After 3 seconds (animation duration), fade out the intro and start the video
+  setTimeout(() => {
+    intro.classList.add('fade-out');
+    if (heroVideo) {
+      heroVideo.play().catch(error => {
+        console.log('Video autoplay blocked, user interaction required.');
+      });
+    }
+  }, 3500);
+}
+
+// Intro Transition Logic
+function initIntroTransition() {
+  const intro = document.getElementById('intro-transition');
+  const heroVideo = document.getElementById('heroVideo');
+  
+  if (!intro) return;
+
+  // After 3 seconds (animation duration), fade out the intro and start the video
+  setTimeout(() => {
+    intro.classList.add('fade-out');
+    if (heroVideo) {
+      heroVideo.play().catch(error => {
+        console.log('Video autoplay blocked, user interaction required.');
+      });
+    }
+  }, 3500);
+}
