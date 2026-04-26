@@ -25,4 +25,4 @@ database-setup.sql
 .env*.local
 *.mp4
 !Intro-1.mp4
-!Web_development.mp4
+!web-development.mp4
