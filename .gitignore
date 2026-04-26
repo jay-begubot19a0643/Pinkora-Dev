@@ -24,3 +24,5 @@ database-setup.sql
 .vercel
 .env*.local
 *.mp4
+!Intro-1.mp4
+!Web_development.mp4
