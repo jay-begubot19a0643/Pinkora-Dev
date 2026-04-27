@@ -22,6 +22,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve React dist folder (for production build)
+const path = require('path');
+if (process.env.NODE_ENV !== 'development') {
+  app.use(express.static(path.join(__dirname, 'dist')));
+}
+
 // Serve static files FIRST
 app.use(express.static(__dirname, {
   setHeaders: (res, path) => {
@@ -59,11 +65,23 @@ app.get('/api/health', (req, res) => {
 
 // Serve homepage
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/mainpage.html');
+  if (process.env.NODE_ENV !== 'development') {
+    // Production: serve React app
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
+  } else {
+    // Development: serve old mainpage.html
+    res.sendFile(__dirname + '/mainpage.html');
+  }
 });
 
-// Let express.static handle everything else
-app.use(express.static(__dirname));
+// SPA fallback: redirect unmatched routes to index.html for React
+app.use((req, res, next) => {
+  if (!req.path.startsWith('/api') && process.env.NODE_ENV !== 'development') {
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
+  } else {
+    next();
+  }
+});
 
 // 404 handler - for routes that weren't found
 app.use((req, res) => {
