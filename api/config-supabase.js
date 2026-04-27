@@ -4,9 +4,10 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('❌ Missing Supabase environment variables');
+  console.error('⚠️ Missing Supabase environment variables');
   console.error('Please set SUPABASE_URL and SUPABASE_ANON_KEY');
-  process.exit(1);
+  module.exports = null;
+  return;
 }
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);

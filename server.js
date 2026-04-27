@@ -10,9 +10,8 @@ const requiredEnvVars = ['JWT_SECRET', 'SUPABASE_URL', 'SUPABASE_ANON_KEY'];
 const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
 
 if (missingEnvVars.length > 0) {
-  console.error('❌ Missing required environment variables:', missingEnvVars.join(', '));
+  console.error('⚠️ Missing required environment variables:', missingEnvVars.join(', '));
   console.error('Please set these in your .env file or Vercel environment variables.');
-  process.exit(1);
 }
 
 const app = express();
@@ -40,6 +39,11 @@ app.use(express.static(__dirname, {
 // Test Supabase Connection
 (async () => {
   try {
+    if (!supabase) {
+      console.log('⚠️ Supabase client not initialized. Skipping connection test.');
+      return;
+    }
+
     const { data, error } = await supabase.from('users').select('*').limit(1);
     if (error) throw error;
     console.log('✅ Supabase connected successfully');
@@ -87,8 +91,11 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+}
 
 module.exports = app;
