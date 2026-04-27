@@ -5,9 +5,7 @@
   "functions": {
     "server.js": {
       "runtime": "nodejs20.x",
-      "includeFiles": [
-        "api/**"
-      ]
+      "includeFiles": "api/**"
     }
   },
   "routes": [
