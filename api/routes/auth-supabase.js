@@ -186,6 +186,37 @@ router.get('/check', auth, async (req, res) => {
   }
 });
 
+// Auth Status (no auth required - for frontend to check if user is logged in)
+router.get('/status', (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    
+    if (!token) {
+      return res.json({
+        success: true,
+        isAuthenticated: false,
+        data: null
+      });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    res.json({
+      success: true,
+      isAuthenticated: true,
+      data: {
+        userId: decoded.userId
+      }
+    });
+  } catch (error) {
+    res.json({
+      success: true,
+      isAuthenticated: false,
+      data: null
+    });
+  }
+});
+
 // Logout (client-side token cleanup)
 router.post('/logout', auth, async (req, res) => {
   try {

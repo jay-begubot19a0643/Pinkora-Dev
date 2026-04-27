@@ -18,9 +18,12 @@ function App() {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch('/api/auth/check')
+      const response = await fetch('/api/auth/status')
       if (response.ok) {
-        setIsAuthenticated(true)
+        const data = await response.json()
+        if (data.isAuthenticated) {
+          setIsAuthenticated(true)
+        }
       }
     } catch (error) {
       console.error('Auth check failed:', error)
