@@ -1,0 +1,15 @@
+.contact {
+  padding: 3rem 2rem;
+  min-height: calc(100vh - 60px);
+}
+
+.contact h1 {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.contact p {
+  color: #666;
+  font-size: 1.1rem;
+}
