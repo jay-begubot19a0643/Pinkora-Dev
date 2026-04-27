@@ -4,7 +4,7 @@
   "description": "Full-stack portfolio with Node.js backend and MongoDB",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "npm run build && node server.js",
     "server": "nodemon server.js",
     "dev": "vite",
     "build": "vite build",
