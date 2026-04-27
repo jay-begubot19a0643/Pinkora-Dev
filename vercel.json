@@ -5,14 +5,13 @@
       "src": "server.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": "api/**"
-      }
-    },
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
+        "includeFiles": [
+          "api/**",
+          "*.html",
+          "*.css",
+          "*.js",
+          "images/**"
+        ]
       }
     }
   ],
@@ -26,7 +25,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "server.js"
     }
   ]
 }
