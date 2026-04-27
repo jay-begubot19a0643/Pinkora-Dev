@@ -65,18 +65,9 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date() });
 });
 
-// Serve homepage (React SPA)
+// Serve homepage (original UI)
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
-});
-
-// SPA fallback: redirect unmatched routes to index.html for React
-app.use((req, res, next) => {
-  if (!req.path.startsWith('/api')) {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
-  } else {
-    next();
-  }
+  res.sendFile(path.join(__dirname, 'mainpage.html'));
 });
 
 // 404 handler - for routes that weren't found
