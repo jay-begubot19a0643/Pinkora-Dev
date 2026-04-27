@@ -2,22 +2,15 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "dist/**",
-          "api/**",
-          "*.html",
-          "styles.css",
-          "images/**",
-          "*.mp4"
-        ]
-      }
+  "installCommand": "npm install",
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "server.js": {
+      "runtime": "nodejs20.x"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
@@ -25,11 +18,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "dist/$1"
-    },
-    {
-      "src": "/",
-      "dest": "dist/index.html"
+      "dest": "/index.html"
     }
   ]
 }
