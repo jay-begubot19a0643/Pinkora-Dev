@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import Navbar from './components/Navbar'
+import Header from './components/Header'
+import Footer from './components/Footer'
 import Home from './pages/Home'
-import About from './pages/About'
-import Services from './pages/Services'
-import Projects from './pages/Projects'
-import Contact from './pages/Contact'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('home')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [theme, setTheme] = useState('dark')
 
   useEffect(() => {
-    // Check if user is authenticated
     checkAuth()
+    // Load theme preference
+    const savedTheme = localStorage.getItem('theme') || 'dark'
+    setTheme(savedTheme)
+    document.documentElement.setAttribute('data-theme', savedTheme)
   }, [])
 
   const checkAuth = async () => {
@@ -30,27 +30,20 @@ function App() {
     }
   }
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return <Home />
-      case 'about':
-        return <About />
-      case 'services':
-        return <Services />
-      case 'projects':
-        return <Projects />
-      case 'contact':
-        return <Contact />
-      default:
-        return <Home />
-    }
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark'
+    setTheme(newTheme)
+    localStorage.setItem('theme', newTheme)
+    document.documentElement.setAttribute('data-theme', newTheme)
   }
 
   return (
     <>
-      <Navbar onNavigate={setCurrentPage} isAuthenticated={isAuthenticated} />
-      {renderPage()}
+      <Header theme={theme} onThemeToggle={toggleTheme} isAuthenticated={isAuthenticated} />
+      <main>
+        <Home isAuthenticated={isAuthenticated} />
+      </main>
+      <Footer />
     </>
   )
 }
