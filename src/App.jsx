@@ -18,7 +18,7 @@ function App() {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch('/api/auth-check')
+      const response = await fetch('/api/auth/check')
       if (response.ok) {
         setIsAuthenticated(true)
       }
