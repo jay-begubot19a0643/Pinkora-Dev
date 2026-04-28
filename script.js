@@ -211,37 +211,29 @@ function initScrollReveal() {
 
 // Mobile dropdown toggles for nav (create toggles dynamically)
 function initDropdownToggles() {
+  // Make the About link itself toggle the submenu on mobile (tap to open)
   document.querySelectorAll('.nav-dropdown').forEach(li => {
-    // create toggle button if missing
-    let toggle = li.querySelector('.dropdown-toggle');
+    const link = li.querySelector(':scope > a');
     const menu = li.querySelector('.dropdown-menu');
-    if (!toggle) {
-      toggle = document.createElement('button');
-      toggle.className = 'dropdown-toggle';
-      toggle.type = 'button';
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Toggle submenu');
-      toggle.innerHTML = '<span class="chev">⌄</span>';
-      // insert toggle right after the link
-      const link = li.querySelector('a');
-      if (link) link.after(toggle);
-      else li.insertBefore(toggle, menu);
-    }
+    if (!link || !menu) return;
 
-    // ensure menu collapsed by default on mobile
-    if (menu && window.matchMedia('(max-width: 768px)').matches) {
+    // collapse menus by default on mobile
+    if (window.matchMedia('(max-width: 768px)').matches) {
       menu.style.display = 'none';
+      li.classList.remove('open');
     }
 
-    toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = li.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      if (menu) {
-        if (isOpen) {
+    link.addEventListener('click', (e) => {
+      // only intercept clicks on small screens
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        const isOpen = li.classList.contains('open');
+        if (!isOpen) {
+          // first tap: open submenu and prevent navigation
+          e.preventDefault();
+          li.classList.add('open');
           menu.style.display = 'flex';
         } else {
-          menu.style.display = 'none';
+          // second tap will navigate normally
         }
       }
     });
@@ -252,12 +244,23 @@ function initDropdownToggles() {
     document.querySelectorAll('.nav-dropdown.open').forEach(openLi => {
       if (!openLi.contains(e.target)) {
         openLi.classList.remove('open');
-        const t = openLi.querySelector('.dropdown-toggle');
-        if (t) t.setAttribute('aria-expanded', 'false');
         const m = openLi.querySelector('.dropdown-menu');
         if (m) m.style.display = 'none';
       }
     });
+  });
+
+  // Reset menus when resizing to desktop
+  window.addEventListener('resize', () => {
+    if (window.matchMedia('(min-width: 769px)').matches) {
+      document.querySelectorAll('.nav-dropdown').forEach(li => {
+        li.classList.remove('open');
+        const m = li.querySelector('.dropdown-menu');
+        if (m) m.style.display = '';
+      });
+    } else {
+      document.querySelectorAll('.nav-dropdown .dropdown-menu').forEach(m => m.style.display = 'none');
+    }
   });
 }
 
