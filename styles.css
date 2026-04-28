@@ -646,6 +646,7 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
 	margin: 0 auto 0.5rem;
 	display: inline-block;
 	white-space: nowrap;
+	text-transform: uppercase;
 }
 
 /* Typed text and cursor styling */
