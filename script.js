@@ -107,7 +107,23 @@ function initHamburgerMenu() {
   // Close menu when clicking a link
   const navLinks = mainNav.querySelectorAll('a');
   navLinks.forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
+      // On small screens, if this link is the parent "About" link, open submenu first
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        const parentLi = link.closest('.nav-dropdown');
+        if (parentLi) {
+          const menu = parentLi.querySelector('.dropdown-menu');
+          if (menu && !parentLi.classList.contains('open')) {
+            // First tap: open submenu and do not close the nav
+            e.preventDefault();
+            parentLi.classList.add('open');
+            menu.style.display = 'flex';
+            return;
+          }
+        }
+      }
+
+      // Default behavior: close mobile nav after navigation
       hamburgerMenu.classList.remove('active');
       mainNav.classList.remove('active');
       hamburgerMenu.setAttribute('aria-expanded', false);
