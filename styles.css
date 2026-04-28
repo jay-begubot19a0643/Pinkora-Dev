@@ -644,6 +644,39 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
 	100% { opacity: 0; }
 }
 
+/* Center and enlarge hero title for visibility */
+.hero {
+	padding: 5rem 0 3rem;
+}
+
+.hero .hero-inner {
+	text-align: center;
+}
+
+.hero-title {
+	font-size: clamp(2.8rem, 6vw, 5.5rem);
+	font-weight: 700;
+	line-height: 1.02;
+	margin: 0 auto 0.5rem;
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.hero-sub {
+	max-width: 62ch;
+	margin: 0.75rem auto 1.25rem;
+	font-size: 1.05rem;
+}
+
+.rotator { min-width: 14ch; }
+
+@media (max-width: 480px) {
+	.hero { padding: 3.5rem 1rem 2rem; }
+	.hero-title { font-size: clamp(2rem, 10vw, 3.2rem); white-space: normal; }
+	.rotator { min-width: 10ch; }
+	.hero-sub { font-size: 0.98rem; padding: 0 0.5rem; }
+}
+
 /* Section title with underline animation */
 .section-title {
 	animation: headline-slide-in-left 0.8s ease-out !important;
