@@ -61,6 +61,54 @@ function renderProjects() {
   });
 }
 
+// Hero typing effect (replaces existing rotator spans with a typed text + cursor)
+function initHeroTyper() {
+  const rotator = document.querySelector('.rotator');
+  if (!rotator) return;
+
+  const words = ['Clarity.', 'Performance.', 'Growth.'];
+  let current = 0;
+  let charIndex = 0;
+  let typing = true;
+
+  // Replace rotator content with typed span and cursor
+  rotator.innerHTML = '<span class="typed" aria-hidden="true"></span><span class="typed-cursor" aria-hidden="true"></span>';
+  const typedEl = rotator.querySelector('.typed');
+
+  const typeSpeed = 70; // ms per character
+  const deleteSpeed = 35;
+  const holdDelay = 1400; // pause after word typed
+
+  function step() {
+    const word = words[current];
+
+    if (typing) {
+      if (charIndex < word.length) {
+        typedEl.textContent += word.charAt(charIndex);
+        charIndex++;
+        setTimeout(step, typeSpeed);
+      } else {
+        typing = false;
+        setTimeout(step, holdDelay);
+      }
+    } else {
+      if (charIndex > 0) {
+        typedEl.textContent = word.substring(0, charIndex - 1);
+        charIndex--;
+        setTimeout(step, deleteSpeed);
+      } else {
+        // move to next word
+        current = (current + 1) % words.length;
+        typing = true;
+        setTimeout(step, typeSpeed);
+      }
+    }
+  }
+
+  // start
+  step();
+}
+
 // Theme Toggle Functionality
 function initThemeToggle() {
   const themeToggle = document.getElementById('themeToggle');
@@ -317,6 +365,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Initialize Contact Form
   initContactForm();
+
+  // Initialize hero typing effect
+  initHeroTyper();
   
   // Handle video autoplay
   const video = document.querySelector('.hero-video-player');
