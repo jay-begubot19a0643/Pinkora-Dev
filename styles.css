@@ -283,12 +283,12 @@ body {
 	background:linear-gradient(90deg, rgba(183,110,121,0.2), rgba(183,110,121,0.15));
 }
 [data-theme="light"] .dropdown-menu{
-	background:rgba(248, 251, 255, 0.72);
+	background:rgba(248, 251, 255, 0.55);
 	border:1px solid rgba(71,85,105,0.2);
 	border-top:1px solid rgba(183,110,121,0.3);
 	box-shadow:0 8px 32px rgba(0,0,0,0.12);
-	-webkit-backdrop-filter:blur(24px) saturate(170%);
-	backdrop-filter:blur(24px) saturate(170%);
+	-webkit-backdrop-filter:blur(18px) saturate(160%);
+	backdrop-filter:blur(18px) saturate(160%);
 }
 [data-theme="light"] .dropdown-menu a{
 	color:#0f172a;
@@ -1229,7 +1229,7 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
 	position:absolute;
 	top:100%;
 	left:0;
-	background:rgba(10, 14, 20, 0.56);
+	background:rgba(10, 14, 20, 0.42);
 	border:1px solid rgba(71,85,105,0.3);
 	border-top:1px solid rgba(183,110,121,0.2);
 	border-radius:0 0 12px 12px;
@@ -1240,8 +1240,8 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
 	transform:translateY(-10px);
 	transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	z-index:1000;
-	-webkit-backdrop-filter:blur(28px) saturate(180%);
-	backdrop-filter:blur(28px) saturate(180%);
+	-webkit-backdrop-filter:blur(20px) saturate(170%);
+	backdrop-filter:blur(20px) saturate(170%);
 	box-shadow:0 8px 32px rgba(0,0,0,0.5);
 	display:flex;
 	flex-direction:column;
@@ -4875,9 +4875,9 @@ button:focus-visible,
 		top: 60px;
 		left: 0;
 		right: 0;
-		background: linear-gradient(180deg, rgba(11,11,11,0.78) 0%, rgba(11,11,11,0.52) 100%);
-		-webkit-backdrop-filter: blur(16px) saturate(165%);
-		backdrop-filter: blur(16px) saturate(165%);
+		background: linear-gradient(180deg, rgba(11,11,11,0.88) 0%, rgba(11,11,11,0.68) 100%);
+		-webkit-backdrop-filter: blur(26px) saturate(185%);
+		backdrop-filter: blur(26px) saturate(185%);
 		border-bottom: 1px solid rgba(71,85,105,0.2);
 		flex-direction: column;
 		align-items: stretch;
@@ -5041,9 +5041,9 @@ button:focus-visible,
 		top: 65px;
 		left: 0;
 		right: 0;
-		background: linear-gradient(180deg, rgba(11,11,11,0.78) 0%, rgba(11,11,11,0.52) 100%);
-		-webkit-backdrop-filter: blur(16px) saturate(165%);
-		backdrop-filter: blur(16px) saturate(165%);
+		background: linear-gradient(180deg, rgba(11,11,11,0.88) 0%, rgba(11,11,11,0.68) 100%);
+		-webkit-backdrop-filter: blur(26px) saturate(185%);
+		backdrop-filter: blur(26px) saturate(185%);
 		border-bottom: 1px solid rgba(71,85,105,0.2);
 		flex-direction: column;
 		align-items: stretch;
@@ -5060,9 +5060,9 @@ button:focus-visible,
 	}
 
 	[data-theme="light"] .main-nav {
-		background: linear-gradient(180deg, rgba(240,244,248,0.82) 0%, rgba(250,251,252,0.58) 100%);
-		-webkit-backdrop-filter: blur(16px) saturate(160%);
-		backdrop-filter: blur(16px) saturate(160%);
+		background: linear-gradient(180deg, rgba(240,244,248,0.92) 0%, rgba(250,251,252,0.80) 100%);
+		-webkit-backdrop-filter: blur(26px) saturate(180%);
+		backdrop-filter: blur(26px) saturate(180%);
 	}
 	
 	.main-nav.active {
@@ -5099,7 +5099,7 @@ button:focus-visible,
 	
 	.dropdown-menu {
 		position: static;
-		background: rgba(71,85,105,0.16);
+		background: rgba(71,85,105,0.32);
 		border: none;
 		border-top: 1px solid rgba(71,85,105,0.15);
 		border-radius: 0;
@@ -5109,8 +5109,8 @@ button:focus-visible,
 		visibility: visible;
 		transform: none;
 		box-shadow: none;
-		-webkit-backdrop-filter: blur(14px) saturate(150%);
-		backdrop-filter: blur(14px) saturate(150%);
+		-webkit-backdrop-filter: blur(24px) saturate(185%);
+		backdrop-filter: blur(24px) saturate(185%);
 		display: none;
 		flex-direction: column;
 		max-height: 0;
@@ -5118,9 +5118,9 @@ button:focus-visible,
 	}
 
 	[data-theme="light"] .dropdown-menu {
-		background: rgba(240,244,248,0.58);
-		-webkit-backdrop-filter: blur(14px) saturate(150%);
-		backdrop-filter: blur(14px) saturate(150%);
+		background: rgba(240,244,248,0.80);
+		-webkit-backdrop-filter: blur(24px) saturate(185%);
+		backdrop-filter: blur(24px) saturate(185%);
 	}
 	
 	.nav-dropdown:hover .dropdown-menu {
@@ -5254,9 +5254,9 @@ button:focus-visible,
 		top: 70px;
 		left: 0;
 		right: 0;
-		background: linear-gradient(180deg, rgba(11,11,11,0.78) 0%, rgba(11,11,11,0.52) 100%);
-		-webkit-backdrop-filter: blur(16px) saturate(165%);
-		backdrop-filter: blur(16px) saturate(165%);
+		background: linear-gradient(180deg, rgba(11,11,11,0.88) 0%, rgba(11,11,11,0.68) 100%);
+		-webkit-backdrop-filter: blur(26px) saturate(185%);
+		backdrop-filter: blur(26px) saturate(185%);
 		border-bottom: 1px solid rgba(71,85,105,0.2);
 		flex-direction: column;
 		align-items: stretch;
@@ -5273,9 +5273,9 @@ button:focus-visible,
 	}
 
 	[data-theme="light"] .main-nav {
-		background: linear-gradient(180deg, rgba(240,244,248,0.82) 0%, rgba(250,251,252,0.58) 100%);
-		-webkit-backdrop-filter: blur(16px) saturate(160%);
-		backdrop-filter: blur(16px) saturate(160%);
+		background: linear-gradient(180deg, rgba(240,244,248,0.92) 0%, rgba(250,251,252,0.80) 100%);
+		-webkit-backdrop-filter: blur(26px) saturate(180%);
+		backdrop-filter: blur(26px) saturate(180%);
 	}
 	
 	.main-nav.active {
@@ -5312,7 +5312,7 @@ button:focus-visible,
 	
 	.dropdown-menu {
 		position: static;
-		background: rgba(71,85,105,0.16);
+		background: rgba(71,85,105,0.32);
 		border: none;
 		border-top: 1px solid rgba(71,85,105,0.15);
 		border-radius: 0;
@@ -5322,8 +5322,8 @@ button:focus-visible,
 		visibility: visible;
 		transform: none;
 		box-shadow: none;
-		-webkit-backdrop-filter: blur(14px) saturate(150%);
-		backdrop-filter: blur(14px) saturate(150%);
+		-webkit-backdrop-filter: blur(24px) saturate(185%);
+		backdrop-filter: blur(24px) saturate(185%);
 		display: none;
 		flex-direction: column;
 		max-height: 0;
@@ -5332,9 +5332,9 @@ button:focus-visible,
 	}
 
 	[data-theme="light"] .dropdown-menu {
-		background: rgba(240,244,248,0.58);
-		-webkit-backdrop-filter: blur(14px) saturate(150%);
-		backdrop-filter: blur(14px) saturate(150%);
+		background: rgba(240,244,248,0.80);
+		-webkit-backdrop-filter: blur(24px) saturate(185%);
+		backdrop-filter: blur(24px) saturate(185%);
 	}
 	
 	.nav-dropdown:hover .dropdown-menu {
@@ -5633,9 +5633,9 @@ button:focus-visible,
 	}
 	
 	.dropdown-menu {
-		background: rgba(15,15,15,0.46);
-		-webkit-backdrop-filter: blur(14px) saturate(150%);
-		backdrop-filter: blur(14px) saturate(150%);
+		background: rgba(15,15,15,0.66);
+		-webkit-backdrop-filter: blur(24px) saturate(185%);
+		backdrop-filter: blur(24px) saturate(185%);
 	}
 }
 
@@ -5646,9 +5646,9 @@ button:focus-visible,
 	}
 	
 	.dropdown-menu {
-		background: rgba(248,249,250,0.56);
-		-webkit-backdrop-filter: blur(14px) saturate(150%);
-		backdrop-filter: blur(14px) saturate(150%);
+		background: rgba(248,249,250,0.78);
+		-webkit-backdrop-filter: blur(24px) saturate(185%);
+		backdrop-filter: blur(24px) saturate(185%);
 	}
 }
 
