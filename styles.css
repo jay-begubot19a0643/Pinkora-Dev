@@ -5066,6 +5066,17 @@ button:focus-visible,
   /* keep legacy toggle hidden if present */
   .dropdown-toggle { display: none; }
 }
+
+/* Style for injected Visit About item on mobile */
+@media (max-width: 768px) {
+	.dropdown-go-about {
+		font-weight: 600;
+		color: var(--accent);
+		background: linear-gradient(90deg, rgba(183,110,121,0.06), transparent);
+		border-left: 4px solid rgba(183,110,121,0.18);
+		padding: 12px 20px;
+	}
+}
 		bottom: 12px;
 		right: 12px;
 	}

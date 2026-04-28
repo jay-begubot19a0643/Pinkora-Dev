@@ -230,10 +230,21 @@ function initDropdownToggles() {
         if (!isOpen) {
           // first tap: open submenu and prevent navigation
           e.preventDefault();
+          // If not already present, inject a "Visit About" link at the top of the menu
+          const existingGo = menu.querySelector('.dropdown-go-about');
+          if (!existingGo) {
+            const goLi = document.createElement('li');
+            const goA = document.createElement('a');
+            goA.className = 'dropdown-go-about';
+            goA.href = link.getAttribute('href') || '#';
+            goA.textContent = 'Visit About';
+            goLi.appendChild(goA);
+            menu.prepend(goLi);
+          }
           li.classList.add('open');
           menu.style.display = 'flex';
         } else {
-          // second tap will navigate normally
+          // second tap will navigate normally (no preventDefault)
         }
       }
     });
