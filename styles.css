@@ -5028,6 +5028,60 @@ button:focus-visible,
 	}
 	
 	.ai-assistant-widget {
+
+/* Mobile-specific dropdown toggle behavior */
+@media (max-width: 768px) {
+	.nav-dropdown {
+		position: relative;
+	}
+
+	/* show an inline toggle button next to the About link */
+	.nav-dropdown .dropdown-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		margin-left: 8px;
+		padding: 6px 8px;
+		background: transparent;
+		border: none;
+		color: var(--text);
+		font-size: 1rem;
+		cursor: pointer;
+	}
+
+	/* hide desktop hover behavior and keep dropdown static/collapsed */
+	.nav-dropdown:hover .dropdown-menu { display: none; }
+
+	.nav-dropdown .dropdown-menu {
+		display: none; /* controlled via .open class or inline style */
+		position: static;
+		transform: none;
+		opacity: 1;
+		visibility: visible;
+		background: linear-gradient(135deg, rgba(71,85,105,0.12), rgba(183,110,121,0.06));
+		border: none;
+		border-top: 1px solid rgba(71,85,105,0.08);
+		border-radius: 0;
+		flex-direction: column;
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.28s ease;
+		width: 100%;
+	}
+
+	.nav-dropdown.open .dropdown-menu {
+		display: flex;
+		max-height: 500px;
+		padding: 8px 0;
+	}
+
+	.nav-dropdown .dropdown-menu a {
+		padding: 12px 20px;
+	}
+
+	/* ensure the toggle is hidden on larger screens */
+	.dropdown-toggle { display: none; }
+}
 		bottom: 12px;
 		right: 12px;
 	}

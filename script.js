@@ -209,6 +209,58 @@ function initScrollReveal() {
   });
 }
 
+// Mobile dropdown toggles for nav (create toggles dynamically)
+function initDropdownToggles() {
+  document.querySelectorAll('.nav-dropdown').forEach(li => {
+    // create toggle button if missing
+    let toggle = li.querySelector('.dropdown-toggle');
+    const menu = li.querySelector('.dropdown-menu');
+    if (!toggle) {
+      toggle = document.createElement('button');
+      toggle.className = 'dropdown-toggle';
+      toggle.type = 'button';
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Toggle submenu');
+      toggle.innerHTML = '<span class="chev">⌄</span>';
+      // insert toggle right after the link
+      const link = li.querySelector('a');
+      if (link) link.after(toggle);
+      else li.insertBefore(toggle, menu);
+    }
+
+    // ensure menu collapsed by default on mobile
+    if (menu && window.matchMedia('(max-width: 768px)').matches) {
+      menu.style.display = 'none';
+    }
+
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = li.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (menu) {
+        if (isOpen) {
+          menu.style.display = 'flex';
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // Close any open dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.nav-dropdown.open').forEach(openLi => {
+      if (!openLi.contains(e.target)) {
+        openLi.classList.remove('open');
+        const t = openLi.querySelector('.dropdown-toggle');
+        if (t) t.setAttribute('aria-expanded', 'false');
+        const m = openLi.querySelector('.dropdown-menu');
+        if (m) m.style.display = 'none';
+      }
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   renderProjects();
   
@@ -223,6 +275,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Initialize Hamburger Menu
   initHamburgerMenu();
+  
+  // Initialize dropdown toggles (mobile)
+  initDropdownToggles();
   
   // Initialize Scroll Reveal Animations
   initScrollReveal();
