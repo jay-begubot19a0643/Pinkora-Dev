@@ -668,12 +668,10 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
 .typed { font-weight: 900; }
 .typed-cursor {
 	display: inline-block;
-	width: 0.12ch;
-	background: currentColor;
-	margin-left: 0.28ch;
-	vertical-align: bottom;
-	height: 1em;
-	animation: blinkCursor 1s steps(2) infinite;
+  width: 2px;
+  border-left: 2px solid currentColor;
+  margin-left: 0.08ch;
+  vertical-align: text-bottom;
 }
 
 @keyframes blinkCursor {
