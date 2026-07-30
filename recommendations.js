@@ -91,7 +91,8 @@ function attachFormListeners() {
       if (data.success) {
         showMessage(formMessage, 'Thank you! Your recommendation has been submitted.', 'success');
         recommendationForm.reset();
-        document.querySelector('input[name="rating"]:checked')?.checked = false;
+        const selectedRating = document.querySelector('input[name="rating"]:checked');
+        if (selectedRating) selectedRating.checked = false;
         
         // Refresh recommendations list
         setTimeout(() => {
