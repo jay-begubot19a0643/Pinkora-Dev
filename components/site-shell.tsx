@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 const links = [
@@ -18,6 +18,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
@@ -25,6 +26,31 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     setTheme(nextTheme);
     document.documentElement.dataset.theme = nextTheme;
   }, []);
+
+  useEffect(() => {
+    const root = contentRef.current;
+    if (!root || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const sections = Array.from(root.querySelectorAll<HTMLElement>('main:not(.next-landing-experience) > section'));
+    const items = Array.from(root.querySelectorAll<HTMLElement>(
+      'main:not(.next-landing-experience) .next-card-grid > article, main:not(.next-landing-experience) .next-flow-grid > div, main:not(.next-landing-experience) .next-about-intro > div, main:not(.next-landing-experience) .next-about-intro > img, main:not(.next-landing-experience) .next-contact-layout > div, main:not(.next-landing-experience) .next-contact-layout > aside',
+    ));
+
+    sections.forEach((element) => element.classList.add('next-scroll-reveal'));
+    items.forEach((element, index) => {
+      element.classList.add('next-scroll-reveal', 'next-scroll-reveal-item');
+      element.style.setProperty('--scroll-reveal-delay', `${(index % 6) * 65}ms`);
+    });
+
+    const targets = [...new Set([...sections, ...items])];
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => entry.target.classList.toggle('is-visible', entry.isIntersecting)),
+      { threshold: 0.12, rootMargin: '0px 0px -7% 0px' },
+    );
+
+    targets.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [pathname]);
 
   function toggleTheme() {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
@@ -37,8 +63,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     <div className="next-site-shell">
       <header className="next-header">
         <div className="next-container next-header-inner">
-          <Link href="/" className="next-brand" aria-label="Pinkora Dev home">
-            <img src="/images/pinkora_dev.png" alt="Pinkora Dev" />
+          <Link href="/" className="next-brand" aria-label="JVerse home">
+            <img className="next-brand-logo next-brand-logo-dark" src="/darkmode-logo.png" alt="JVerse" />
+            <img className="next-brand-logo next-brand-logo-light" src="/whitemode-logo.png" alt="" aria-hidden="true" />
           </Link>
           <button
             className="next-menu-button"
@@ -73,10 +100,10 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </nav>
         </div>
       </header>
-      {children}
+      <div ref={contentRef} className="next-page-content">{children}</div>
       <footer className="next-footer">
         <div className="next-container">
-          <span>© {new Date().getFullYear()} Pinkora Dev. Built with intention.</span>
+          <span>© {new Date().getFullYear()} JVerse. Built with intention.</span>
           <Link href="/contact">Start a project</Link>
         </div>
       </footer>

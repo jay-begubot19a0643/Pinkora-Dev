@@ -3,7 +3,7 @@ import './globals.css';
 import { SiteShell } from '@/components/site-shell';
 
 export const metadata: Metadata = {
-  title: { default: 'Pinkora Dev', template: '%s | Pinkora Dev' },
+  title: { default: 'JVerse', template: '%s | JVerse' },
   description: 'Thoughtful digital systems, websites, and tools for growing teams.',
 };
 

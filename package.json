@@ -1,14 +1,15 @@
 {
-  "name": "pinkora-dev",
+  "name": "jverse",
   "version": "1.0.0",
-  "description": "Pinkora Dev portfolio built with React and Next.js",
+  "description": "JVerse portfolio built with React and Next.js",
   "main": "server.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "server": "nodemon server.js",
-    "legacy:dev": "nodemon server.js"
+    "server": "next dev",
+    "legacy:dev": "nodemon server.js",
+    "legacy:server": "nodemon server.js"
   },
   "engines": {
     "node": "24.x"
@@ -18,7 +19,7 @@
     "nextjs",
     "supabase"
   ],
-  "author": "Pinkora Dev",
+  "author": "JVerse",
   "license": "MIT",
   "dependencies": {
     "@supabase/supabase-js": "^2.38.0",

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { HeroVideo } from '@/components/hero-video';
 import { LandingExperience } from '@/components/landing-experience';
 
 const projects = [
@@ -10,14 +11,10 @@ const projects = [
 export default function HomePage() {
   return (
     <LandingExperience>
-      <section className="next-video-hero">
-        <video autoPlay muted loop playsInline preload="auto" aria-label="Pinkora Dev introduction">
-          <source src="/Intro-1.mp4" type="video/mp4" />
-        </video>
-      </section>
+      <HeroVideo />
       <section className="next-home-intro next-container next-reveal">
-        <span className="next-eyebrow">Digital systems with purpose</span>
-        <h1>Clarity for the work that matters.</h1>
+        <span className="next-eyebrow">Hi, I&apos;m Jay-Be Gubot</span>
+        <h1>Welcome to my JVerse.</h1>
         <p>I design business systems that transform complexity into clear, scalable experiences for teams and customers.</p>
         <div className="next-actions">
           <Link href="/projects" className="next-button next-button-primary">View projects</Link>

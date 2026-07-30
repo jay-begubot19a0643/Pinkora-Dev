@@ -1,8 +1,8 @@
-# Pinkora Dev — Software Stack
+# JVerse — Software Stack
 
 ## Overview
 
-Pinkora Dev is a full-stack portfolio and business-solutions website. It presents services, projects, clients, developer information, contact options, and account features through a responsive React interface. The application supports both dark and light themes.
+JVerse is a full-stack portfolio and business-solutions website. It presents services, projects, clients, developer information, contact options, and account features through a responsive React interface. The application supports both dark and light themes.
 
 The active application is built with Next.js. Its frontend pages and backend API routes live in the same project and are deployed together.
 
@@ -47,7 +47,7 @@ Runtime assets are served from the `public/` directory:
 
 - `public/Intro-1.mp4` — landing-page video
 - `public/web-development.mp4` — service video
-- `public/images/` — Pinkora logo, assistant image, and developer photos
+- `public/images/` — Brand assets, assistant image, and developer photos
 
 ## Backend API
 

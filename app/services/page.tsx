@@ -13,7 +13,7 @@ export default function ServicesPage() {
     <main>
       <PageHero eyebrow="What we do" title="Systems built around your business." description="Professional software development services shaped around real needs, clear outcomes, and long-term growth." />
       <section className="next-section next-container">
-        <p className="next-lead">Pinkora builds practical digital products that make operations smoother and information easier to act on. Every engagement starts by understanding the work behind the screen.</p>
+        <p className="next-lead">JVerse builds practical digital products that make operations smoother and information easier to act on. Every engagement starts by understanding the work behind the screen.</p>
         <div className="next-card-grid next-service-grid">
           {services.map((service) => <article className="next-service-card" key={service.title}><span className="next-service-icon">{service.icon}</span><h2>{service.title}</h2><p>{service.text}</p><ul>{service.features.map((feature) => <li key={feature}>{feature}</li>)}</ul></article>)}
         </div>

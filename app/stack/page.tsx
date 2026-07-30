@@ -12,7 +12,7 @@ const layers = [
 export default function StackPage() {
   return (
     <main>
-      <PageHero eyebrow="Application architecture" title="The software stack behind Pinkora Dev." description="A full-stack Next.js application that brings the frontend, API layer, data, and deployment workflow into one maintainable codebase." />
+      <PageHero eyebrow="Application architecture" title="The software stack behind JVerse." description="A full-stack Next.js application that brings the frontend, API layer, data, and deployment workflow into one maintainable codebase." />
       <section className="next-section next-container">
         <div className="next-section-heading"><div><span className="next-eyebrow">Core technologies</span><h2>One focused stack, built to grow.</h2></div><p>Each layer has a clear responsibility, making the application easier to maintain, extend, and deploy.</p></div>
         <div className="next-card-grid next-stack-grid">
@@ -22,7 +22,7 @@ export default function StackPage() {
       <section className="next-callout next-stack-flow">
         <div className="next-container"><span className="next-eyebrow">How it works</span><h2>From visitor action to reliable response.</h2><div className="next-flow-grid"><div><strong>01</strong><span>React interface</span><p>A visitor interacts with a Next.js page or form.</p></div><div><strong>02</strong><span>Server route</span><p>A Next.js API handler validates and processes the request.</p></div><div><strong>03</strong><span>Supabase data</span><p>Validated data is stored or returned from the database.</p></div><div><strong>04</strong><span>Clear feedback</span><p>The interface receives a useful, timely response.</p></div></div></div>
       </section>
-      <section className="next-section next-container"><div className="next-cta-card"><span className="next-eyebrow">About this application</span><h2>Built as a modern, full-stack portfolio platform.</h2><p>Pinkora Dev combines a professional portfolio experience with secure account, contact, feedback, and recommendation capabilities—all in one Next.js application.</p></div></section>
+      <section className="next-section next-container"><div className="next-cta-card"><span className="next-eyebrow">About this application</span><h2>Built as a modern, full-stack portfolio platform.</h2><p>JVerse combines a professional portfolio experience with secure account, contact, feedback, and recommendation capabilities—all in one Next.js application.</p></div></section>
     </main>
   );
 }
