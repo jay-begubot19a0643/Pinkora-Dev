@@ -1,32 +1,3 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "api/**",
-          "*.html",
-          "*.css",
-          "*.js",
-          "*.mp4",
-          "images/**"
-        ]
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "server.js"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "server.js"
-    }
-  ]
+  "framework": "nextjs"
 }

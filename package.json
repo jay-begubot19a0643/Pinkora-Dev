@@ -1,20 +1,22 @@
 {
   "name": "pinkora-dev",
   "version": "1.0.0",
-  "description": "Full-stack portfolio with Node.js backend and MongoDB",
+  "description": "Pinkora Dev portfolio built with React and Next.js",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "server": "nodemon server.js",
-    "dev": "nodemon server.js"
+    "legacy:dev": "nodemon server.js"
   },
   "engines": {
     "node": "24.x"
   },
   "keywords": [
     "portfolio",
-    "express",
-    "mongodb"
+    "nextjs",
+    "supabase"
   ],
   "author": "Pinkora Dev",
   "license": "MIT",
@@ -26,13 +28,17 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
+    "next": "^16.2.12",
     "nodemailer": "^6.9.6",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "vite": "^8.0.10"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.6.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "nodemon": "^3.0.1",
     "typescript": "^6.0.3"
   }

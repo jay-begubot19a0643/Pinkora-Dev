@@ -157,7 +157,7 @@ function initHamburgerMenu() {
   navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       // On small screens, if this link is the parent "About" link, open submenu first
-      if (window.matchMedia('(max-width: 768px)').matches) {
+      if (window.matchMedia('(max-width: 1024px)').matches) {
         const parentLi = link.closest('.nav-dropdown');
         if (parentLi) {
           const menu = parentLi.querySelector('.dropdown-menu');
@@ -180,7 +180,7 @@ function initHamburgerMenu() {
   
   // Close menu on window resize to desktop
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
+    if (window.innerWidth > 1024) {
       hamburgerMenu.classList.remove('active');
       mainNav.classList.remove('active');
       hamburgerMenu.setAttribute('aria-expanded', false);
@@ -282,14 +282,14 @@ function initDropdownToggles() {
     if (!link || !menu) return;
 
     // collapse menus by default on mobile
-    if (window.matchMedia('(max-width: 768px)').matches) {
+    if (window.matchMedia('(max-width: 1024px)').matches) {
       menu.style.display = 'none';
       li.classList.remove('open');
     }
 
     link.addEventListener('click', (e) => {
       // only intercept clicks on small screens
-      if (window.matchMedia('(max-width: 768px)').matches) {
+      if (window.matchMedia('(max-width: 1024px)').matches) {
         const isOpen = li.classList.contains('open');
         if (!isOpen) {
           // first tap: open submenu and prevent navigation
@@ -327,7 +327,7 @@ function initDropdownToggles() {
 
   // Reset menus when resizing to desktop
   window.addEventListener('resize', () => {
-    if (window.matchMedia('(min-width: 769px)').matches) {
+    if (window.matchMedia('(min-width: 1025px)').matches) {
       document.querySelectorAll('.nav-dropdown').forEach(li => {
         li.classList.remove('open');
         const m = li.querySelector('.dropdown-menu');
