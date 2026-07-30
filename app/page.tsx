@@ -1,11 +1,12 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { HeroVideo } from '@/components/hero-video';
 import { LandingExperience } from '@/components/landing-experience';
 
 const projects = [
-  ['Smart Store Monitoring', 'Connected CCTV, POS activity, and analytics in one retail command center.', '/projects'],
-  ['Business Dashboards', 'Clear, decision-ready views of sales, inventory, and operational performance.', '/services'],
-  ['Custom Web Systems', 'Fast, focused applications designed around real workflows and growth.', '/contact'],
+  { title: 'Smart Monitoring System', description: 'Connected CCTV, POS activity, and analytics in one retail command center.', href: '/projects', image: '/images/smart-monitoring-system.png', imageAlt: 'Smart Monitoring System logo' },
+  { title: 'EduKonekta', description: 'A multi-tenant education platform with a PWA shell, modular API, and secure school-scoped data.', href: '/projects', image: '/images/edukonekta.png', imageAlt: 'EduKonekta logo' },
+  { title: 'Custom Web Systems', description: 'Fast, focused applications designed around real workflows and growth.', href: '/contact' },
 ];
 
 export default function HomePage() {
@@ -32,12 +33,15 @@ export default function HomePage() {
           <p>Systems and experiences that make everyday work clearer, faster, and more useful.</p>
         </div>
         <div className="next-card-grid next-project-grid">
-          {projects.map(([title, description, href], index) => (
+          {projects.map((project, index) => {
+            const { title, description, href } = project;
+            return (
             <Link className="next-project-card next-reveal" href={href} key={title} style={{ transitionDelay: `${index * 90}ms` }}>
-              <div className={`next-project-art art-${index + 1}`}><span>0{index + 1}</span></div>
+              <div className={`next-project-art art-${index + 1} ${project.image ? 'has-logo' : ''}`}>{project.image ? <Image className="next-project-logo" src={project.image} alt={project.imageAlt ?? ''} fill sizes="(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 33vw" /> : <span>0{index + 1}</span>}</div>
               <div><h3>{title}</h3><p>{description}</p><span className="next-text-link">Explore project →</span></div>
             </Link>
-          ))}
+            );
+          })}
         </div>
       </section>
       <section className="next-callout next-reveal">
