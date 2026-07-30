@@ -1,0 +1,14 @@
+# The Next.js App Router in app/api is the active backend.
+# Ignore the legacy Express backend so Vercel does not deploy it as extra functions.
+/api/
+/server.js
+
+# Legacy static application files; the Next.js app uses app/ and public/ instead.
+/*.html
+/auth.js
+/script.js
+/recommendations.js
+/styles.css
+/images/
+/Intro-1.mp4
+/web-development.mp4
