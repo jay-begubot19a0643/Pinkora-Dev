@@ -172,3 +172,14 @@ html[data-theme='light'] .next-brand-logo-light { display: block; }
 
 .next-assistant { gap: 8px; }.next-assistant-greeting { position: relative; padding: 8px 12px; border: 1px solid rgba(var(--accent-rgb), .36); border-radius: 12px; color: var(--text); background: color-mix(in srgb, var(--surface-strong) 94%, transparent); box-shadow: 0 12px 28px rgba(0,0,0,.2); font-size: .76rem; font-weight: 750; }.next-assistant-greeting::after { content: ''; position: absolute; right: 22px; bottom: -6px; width: 10px; height: 10px; border-right: 1px solid rgba(var(--accent-rgb), .36); border-bottom: 1px solid rgba(var(--accent-rgb), .36); background: var(--surface-strong); transform: rotate(45deg); }
 @media (prefers-reduced-motion: no-preference) { .next-assistant:not(.is-open) .next-assistant-launcher { animation: next-assistant-alert 2.4s ease-in-out infinite; }.next-assistant-greeting { animation: next-assistant-greeting 2.4s ease-in-out infinite; } }
+
+/* Supabase and Google account authentication */
+.next-google-button { display: flex; align-items: center; justify-content: center; gap: 11px; width: 100%; min-height: 48px; padding: 11px 18px; border: 1px solid var(--line); border-radius: 12px; color: var(--text); background: var(--surface-strong); box-shadow: 0 8px 20px rgba(0,0,0,.08); cursor: pointer; font-weight: 750; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.next-google-button:hover { transform: translateY(-2px); border-color: rgba(var(--blue-rgb), .52); box-shadow: 0 12px 28px rgba(var(--blue-rgb), .14); }
+.next-google-button:disabled { cursor: not-allowed; opacity: .65; transform: none; }
+.next-google-mark { display: inline-grid; width: 25px; height: 25px; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: conic-gradient(from -45deg, #4285f4 0 25%, #34a853 0 42%, #fbbc05 0 65%, #ea4335 0 84%, #4285f4 0); background-clip: text; color: transparent; font-family: Arial, sans-serif; font-size: 1rem; font-weight: 900; }
+.next-auth-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; }
+.next-auth-divider::before, .next-auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.next-auth-callback { min-height: 70vh; display: grid; place-items: center; }
+.next-auth-callback .next-account-card { text-align: center; }
+.next-auth-callback-message { margin: 18px auto 24px; color: var(--muted); }

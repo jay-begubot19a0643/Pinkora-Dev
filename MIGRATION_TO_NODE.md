@@ -1,4 +1,4 @@
-# Pinkora Dev - Node.js Backend Migration
+# JVerse - Node.js Backend Migration
 
 This document explains the migration from PHP to Node.js/Express backend and deployment to Vercel.
 
