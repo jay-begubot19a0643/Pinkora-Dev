@@ -32,10 +32,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
-    const nextTheme = savedTheme ?? 'dark';
-    setTheme(nextTheme);
-    document.documentElement.dataset.theme = nextTheme;
+    setTheme('dark');
+    document.documentElement.dataset.theme = 'dark';
+    localStorage.removeItem('theme');
   }, []);
 
   useEffect(() => {
@@ -101,7 +100,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(nextTheme);
     document.documentElement.dataset.theme = nextTheme;
-    localStorage.setItem('theme', nextTheme);
   }
 
   return (
