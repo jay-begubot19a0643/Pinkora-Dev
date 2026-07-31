@@ -1,5 +1,11 @@
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import { PageHero } from '@/components/page-hero';
+
+export const metadata: Metadata = {
+  title: 'Who Am I',
+  description: 'Learn about Jay-Be Gubot, the developer and founder behind JVerse.',
+};
 
 const principles = [
   ['01', 'Make complexity useful', 'The best technology removes friction and gives people a clearer path through their work.'],

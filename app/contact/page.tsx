@@ -1,5 +1,11 @@
+import type { Metadata } from 'next';
 import { ContactForm } from '@/components/contact-form';
 import { PageHero } from '@/components/page-hero';
+
+export const metadata: Metadata = {
+  title: 'Get in Touch',
+  description: 'Contact JVerse to discuss a website, software system, or digital workflow.',
+};
 
 export default function ContactPage() {
   return (

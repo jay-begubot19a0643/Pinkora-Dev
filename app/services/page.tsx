@@ -1,5 +1,11 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { PageHero } from '@/components/page-hero';
+
+export const metadata: Metadata = {
+  title: 'Solutions',
+  description: 'Discover JVerse web development, business systems, mobile apps, and system integration solutions.',
+};
 
 const services = [
   { icon: '⌘', title: 'Web Development', text: 'High-performing websites and web applications that feel focused, fast, and easy to use.', features: ['Business websites', 'E-commerce platforms', 'Real-time dashboards'] },

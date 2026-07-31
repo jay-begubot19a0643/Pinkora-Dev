@@ -1,6 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { PageHero } from '@/components/page-hero';
+
+export const metadata: Metadata = {
+  title: 'Portfolio',
+  description: 'Explore JVerse portfolio projects, including Smart Monitoring System and EduKonekta.',
+};
 
 const monitoringFeatures = [
   ['01', 'Retail operations in one place', 'Point-of-sale checkout, product and barcode management, inventory movement, sales reporting, customer loyalty, suppliers, purchase orders, and delivery workflows work together in one system.'],

@@ -1,4 +1,10 @@
+import type { Metadata } from 'next';
 import { PageHero } from '@/components/page-hero';
+
+export const metadata: Metadata = {
+  title: 'Tools & Platforms',
+  description: 'Explore the frontend, backend, data, security, and deployment tools behind JVerse.',
+};
 
 const layers = [
   { icon: '◫', title: 'Frontend', tools: 'Next.js 16 · React 19 · TypeScript', text: 'App Router pages provide fast, responsive, component-based user experiences across the portfolio, contact, and account flows.' },

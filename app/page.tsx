@@ -1,9 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import { HeroVideo } from '@/components/hero-video';
 import { LandingExperience } from '@/components/landing-experience';
 import { FeedbackSection } from '@/components/feedback-section';
 import { InnovationOverview } from '@/components/innovation-overview';
+
+export const metadata: Metadata = {
+  title: 'Overview Page',
+  description: 'JVerse is Jay-Be Gubot’s portfolio for practical digital systems, software solutions, and community innovation.',
+};
 
 const projects = [
   { title: 'Smart Monitoring System', description: 'Connected CCTV, POS activity, and analytics in one retail command center.', href: '/projects', image: '/images/smart-monitoring-system.png', imageAlt: 'Smart Monitoring System logo' },

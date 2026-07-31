@@ -1,5 +1,11 @@
+import type { Metadata } from 'next';
 import { InnovationHub } from '@/components/innovation-hub';
 import { PageHero } from '@/components/page-hero';
+
+export const metadata: Metadata = {
+  title: 'Voices of Innovation',
+  description: 'Join JVerse’s community challenge board for real-world ideas, answers, and leaderboards.',
+};
 
 export default function VoicesOfInnovationPage() {
   return (

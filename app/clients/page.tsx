@@ -1,6 +1,12 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { FeedbackSection } from '@/components/feedback-section';
 import { PageHero } from '@/components/page-hero';
+
+export const metadata: Metadata = {
+  title: 'Collaborations',
+  description: 'Explore JVerse collaborations, trusted client work, and community feedback.',
+};
 
 const clients = [
   {
