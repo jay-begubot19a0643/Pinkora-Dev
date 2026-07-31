@@ -59,7 +59,7 @@ export default function ClientsPage() {
           <span className="next-eyebrow">Work with JVerse</span>
           <h2>Looking for a long-term digital partner?</h2>
           <p>We&apos;d love to learn about the work your team is ready to improve.</p>
-          <Link href="/contact" className="next-button next-button-primary">Get in touch</Link>
+          <Link href="/get-in-touch" className="next-button next-button-primary">Get in touch</Link>
         </div>
       </section>
     </main>

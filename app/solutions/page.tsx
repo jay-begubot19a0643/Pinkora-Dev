@@ -24,7 +24,7 @@ export default function ServicesPage() {
           {services.map((service) => <article className="next-service-card" key={service.title}><span className="next-service-icon">{service.icon}</span><h2>{service.title}</h2><p>{service.text}</p><ul>{service.features.map((feature) => <li key={feature}>{feature}</li>)}</ul></article>)}
         </div>
       </section>
-      <section className="next-section next-container"><div className="next-cta-card"><span className="next-eyebrow">Have a project in mind?</span><h2>Let&apos;s turn the next good idea into a useful product.</h2><p>Tell us what needs to work better. We&apos;ll help map the right path forward.</p><Link href="/contact" className="next-button next-button-primary">Start a project</Link></div></section>
+      <section className="next-section next-container"><div className="next-cta-card"><span className="next-eyebrow">Have a project in mind?</span><h2>Let&apos;s turn the next good idea into a useful product.</h2><p>Tell us what needs to work better. We&apos;ll help map the right path forward.</p><Link href="/get-in-touch" className="next-button next-button-primary">Start a project</Link></div></section>
     </main>
   );
 }

@@ -6,12 +6,12 @@ import { usePathname } from 'next/navigation';
 import { KuyaJayAssistant } from '@/components/kuya-jay-assistant';
 
 const links = [
-  { href: '/', label: 'Overview Page' },
-  { href: '/services', label: 'Solutions' },
-  { href: '/clients', label: 'Collaborations' },
-  { href: '/about', label: 'Who Am I' },
-  { href: '/stack', label: 'Tools & Platforms' },
-  { href: '/contact', label: 'Get in Touch' },
+  { href: '/overview', label: 'Overview Page' },
+  { href: '/solutions', label: 'Solutions' },
+  { href: '/collaborations', label: 'Collaborations' },
+  { href: '/who-am-i', label: 'Who Am I' },
+  { href: '/tools-and-platforms', label: 'Tools & Platforms' },
+  { href: '/get-in-touch', label: 'Get in Touch' },
 ];
 
 const portfolioLinks = [
@@ -106,7 +106,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     <div className="next-site-shell">
       <header className="next-header">
         <div className="next-container next-header-inner">
-          <Link href="/" className="next-brand" aria-label="JVerse home">
+          <Link href="/overview" className="next-brand" aria-label="JVerse overview">
             <img className="next-brand-logo next-brand-logo-dark" src="/darkmode-logo.png" alt="JVerse" />
             <img className="next-brand-logo next-brand-logo-light" src="/whitemode-logo.png" alt="" aria-hidden="true" />
           </Link>
@@ -154,7 +154,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 </Link>
               ))}
               {accountUser && <span className="next-account-greeting">Hi, {accountUser.name.split(' ')[0]}</span>}
-              <Link href={accountUser ? '/account' : '/account?mode=register'} className="next-account-link" onClick={() => setMenuOpen(false)}>
+              <Link href={accountUser ? '/my-account' : '/my-account?mode=register'} className="next-account-link" onClick={() => setMenuOpen(false)}>
                 {accountUser ? 'My Account' : 'Sign up'}
               </Link>
             </div>
@@ -168,7 +168,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <footer className="next-footer">
         <div className="next-container">
           <span>© {new Date().getFullYear()} JVerse. Built with intention.</span>
-          <Link href="/contact">Start a project</Link>
+          <Link href="/get-in-touch">Start a project</Link>
         </div>
       </footer>
       <KuyaJayAssistant />

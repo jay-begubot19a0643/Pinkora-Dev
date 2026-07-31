@@ -176,7 +176,7 @@ export function InnovationHub() {
             <div className="next-innovation-form-footer"><span>Your name will appear on the public leaderboard.</span><button className="next-button next-button-primary" disabled={pending}>{pending ? 'Submitting…' : 'Submit answer'}</button></div>
           </form>
         ) : (
-          <div className="next-innovation-signin"><div><strong>Bring your idea to the board.</strong><span>Sign in to submit answers and vote for the ideas you find most valuable.</span></div><Link href="/account?mode=register" className="next-button next-button-primary">Sign up to participate</Link></div>
+          <div className="next-innovation-signin"><div><strong>Bring your idea to the board.</strong><span>Sign in to submit answers and vote for the ideas you find most valuable.</span></div><Link href="/my-account?mode=register" className="next-button next-button-primary">Sign up to participate</Link></div>
         )}
       </section>
 
@@ -191,7 +191,7 @@ export function InnovationHub() {
             <article className="next-innovation-answer" key={answer.userId}>
               <div className="next-innovation-place"><strong>Top {answer.rank}</strong><span>{badges[index]}</span></div>
               <div className="next-innovation-answer-body"><div><span className="next-innovation-user">{answer.username}</span><span className="next-innovation-level">{answer.level}</span><span className="next-innovation-points">{answer.points} points</span></div><p>{answer.answer}</p>{answer.aiFeedback && <small>Rubric note: {answer.aiFeedback}</small>}</div>
-              <div className="next-innovation-vote"><strong>{answer.votes}</strong><span>votes</span>{isSignedIn ? <button type="button" disabled={pending} onClick={() => vote(answer.answerId)}>Vote</button> : <Link href="/account?mode=register">Sign in to vote</Link>}</div>
+              <div className="next-innovation-vote"><strong>{answer.votes}</strong><span>votes</span>{isSignedIn ? <button type="button" disabled={pending} onClick={() => vote(answer.answerId)}>Vote</button> : <Link href="/my-account?mode=register">Sign in to vote</Link>}</div>
             </article>
           ))}
         </div>

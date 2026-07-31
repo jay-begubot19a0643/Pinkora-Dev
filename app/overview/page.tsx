@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const projects = [
   { title: 'Smart Monitoring System', description: 'Connected CCTV, POS activity, and analytics in one retail command center.', href: '/portfolio', image: '/images/smart-monitoring-system.png', imageAlt: 'Smart Monitoring System logo' },
   { title: 'EduKonekta', description: 'A multi-tenant education platform with a PWA shell, modular API, and secure school-scoped data.', href: '/portfolio', image: '/images/edukonekta.png', imageAlt: 'EduKonekta logo' },
-  { title: 'Custom Web Systems', description: 'Fast, focused applications designed around real workflows and growth.', href: '/contact' },
+  { title: 'Custom Web Systems', description: 'Fast, focused applications designed around real workflows and growth.', href: '/get-in-touch' },
 ];
 
 export default function HomePage() {
@@ -27,7 +27,7 @@ export default function HomePage() {
         <p>I design business systems that transform complexity into clear, scalable experiences for teams and customers.</p>
         <div className="next-actions">
           <Link href="/portfolio" className="next-button next-button-primary">View portfolio</Link>
-          <Link href="/services" className="next-button next-button-secondary">Explore solutions</Link>
+          <Link href="/solutions" className="next-button next-button-secondary">Explore solutions</Link>
         </div>
         <div className="next-proof-grid">
           <div><strong>01</strong><span>Strategy-led builds</span></div>
@@ -54,7 +54,7 @@ export default function HomePage() {
       </section>
       <InnovationOverview />
       <section className="next-callout next-reveal">
-        <div className="next-container"><span className="next-eyebrow">Built for better work</span><h2>Technology should feel like an advantage.</h2><p>Every project starts with the people using it, then turns that insight into a reliable digital system.</p><Link href="/contact" className="next-text-link">Start a conversation ↗</Link></div>
+        <div className="next-container"><span className="next-eyebrow">Built for better work</span><h2>Technology should feel like an advantage.</h2><p>Every project starts with the people using it, then turns that insight into a reliable digital system.</p><Link href="/get-in-touch" className="next-text-link">Start a conversation ↗</Link></div>
       </section>
       <FeedbackSection eyebrow="JVerse voices" title="Feedback from the community." description="A few perspectives from people who have shared their JVerse experience." />
     </LandingExperience>

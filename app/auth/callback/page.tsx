@@ -50,7 +50,7 @@ export default function AuthCallbackPage() {
         }
 
         localStorage.setItem('authToken', result.data.token);
-        router.replace('/account?google=success');
+        router.replace('/my-account?google=success');
       } catch (error) {
         setFailed(true);
         setMessage(error instanceof Error ? error.message : 'Google sign-in failed. Please try again.');
@@ -67,7 +67,7 @@ export default function AuthCallbackPage() {
           <span className="next-eyebrow">JVerse account</span>
           <h2>{failed ? 'Sign-in needs attention.' : 'Signing you in.'}</h2>
           <p className="next-auth-callback-message">{message}</p>
-          {failed && <Link className="next-button next-button-secondary" href="/account">Back to account</Link>}
+          {failed && <Link className="next-button next-button-secondary" href="/my-account">Back to account</Link>}
         </div>
       </section>
     </main>

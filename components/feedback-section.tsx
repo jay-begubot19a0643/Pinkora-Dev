@@ -156,7 +156,7 @@ export function FeedbackSection({ allowSubmission = false, eyebrow, title, descr
         ) : (
           <div className="next-feedback-signin">
             <div><strong>Have you worked with JVerse?</strong><span>Create an account or sign in to share feedback with future visitors.</span></div>
-            <Link className="next-button next-button-secondary" href="/account?mode=register">Sign up to share feedback</Link>
+            <Link className="next-button next-button-secondary" href="/my-account?mode=register">Sign up to share feedback</Link>
           </div>
         )
       )}

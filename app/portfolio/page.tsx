@@ -78,7 +78,7 @@ export default function ProjectsPage() {
       </section>
 
       <section className="next-section next-container">
-        <div className="next-cta-card"><span className="next-eyebrow">Your next system</span><h2>Need a solution shaped around your workflow?</h2><p>Let&apos;s design the tools that make your team more capable every day.</p><Link href="/contact" className="next-button next-button-primary">Discuss a project</Link></div>
+        <div className="next-cta-card"><span className="next-eyebrow">Your next system</span><h2>Need a solution shaped around your workflow?</h2><p>Let&apos;s design the tools that make your team more capable every day.</p><Link href="/get-in-touch" className="next-button next-button-primary">Discuss a project</Link></div>
       </section>
     </main>
   );
