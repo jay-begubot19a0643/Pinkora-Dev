@@ -23,7 +23,7 @@ export default function ProjectsPage() {
 
       <section className="next-section next-container">
         <span className="next-label">Featured project</span>
-        <h2 className="next-project-title">Smart Monitoring System</h2>
+        <h2 id="smart-monitoring-system" className="next-project-title">Smart Monitoring System</h2>
         <p className="next-project-summary">A cross-platform retail and business operations system that brings sales, inventory, workforce, monitoring, licensing, and cloud-connected workflows into one dependable application.</p>
         <div className="next-demo-frame"><iframe src="https://www.youtube.com/embed/jnUGORZ1tUo?start=77" title="Smart Store Monitoring System demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen /></div>
       </section>
@@ -51,7 +51,7 @@ export default function ProjectsPage() {
         <div className="next-project-logo-panel"><Image src="/images/edukonekta.png" alt="EduKonekta logo" fill sizes="(max-width: 800px) 100vw, 38vw" /></div>
         <div>
           <span className="next-label">Education technology</span>
-          <h2 className="next-project-title">EduKonekta</h2>
+          <h2 id="edukonekta" className="next-project-title">EduKonekta</h2>
           <p className="next-project-summary">A multi-tenant education platform designed to connect schools through a resilient PWA experience, clear domain boundaries, and secure school-scoped data.</p>
           <p className="next-lead">Its foundation keeps the web interface stateless, the API modular, and shared contracts independent—so the platform can grow without losing clarity.</p>
         </div>

@@ -8,11 +8,18 @@ import { KuyaJayAssistant } from '@/components/kuya-jay-assistant';
 const links = [
   { href: '/', label: 'Overview Page' },
   { href: '/services', label: 'Solutions' },
-  { href: '/projects', label: 'Portfolio' },
   { href: '/clients', label: 'Collaborations' },
   { href: '/about', label: 'Who Am I' },
   { href: '/stack', label: 'Tools & Platforms' },
   { href: '/contact', label: 'Get in Touch' },
+];
+
+const portfolioLinks = [
+  { href: '/projects', label: 'Portfolio overview' },
+  { href: '/projects/voices-of-innovation', label: 'Voices of Innovation' },
+  { href: '/projects/voices-of-innovation#leaderboard', label: 'Leaderboards' },
+  { href: '/projects#smart-monitoring-system', label: "Smart M' System" },
+  { href: '/projects#edukonekta', label: 'EduKonekta' },
 ];
 
 type AccountUser = { id: string; name: string; email: string };
@@ -118,7 +125,27 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </button>
           <nav className={`next-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Primary navigation">
             <div className="next-nav-links">
-              {links.map((link) => (
+              {links.slice(0, 2).map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={pathname === link.href ? 'is-active' : ''}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <div className={`next-nav-dropdown ${pathname.startsWith('/projects') ? 'is-active' : ''}`}>
+                <Link href="/projects" className="next-nav-portfolio-link" onClick={() => setMenuOpen(false)}>Portfolio</Link>
+                <div>
+                  {portfolioLinks.map((link) => (
+                    <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              {links.slice(2).map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
