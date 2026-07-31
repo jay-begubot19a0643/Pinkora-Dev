@@ -12,7 +12,7 @@ const layers = [
 export default function StackPage() {
   return (
     <main>
-      <PageHero eyebrow="Application architecture" title="The software stack behind JVerse." description="A full-stack Next.js application that brings the frontend, API layer, data, and deployment workflow into one maintainable codebase." />
+      <PageHero eyebrow="Tools & Platforms" title="The software stack behind JVerse." description="A full-stack Next.js application that brings the frontend, API layer, data, and deployment workflow into one maintainable codebase." />
       <section className="next-section next-container">
         <div className="next-section-heading"><div><span className="next-eyebrow">Core technologies</span><h2>One focused stack, built to grow.</h2></div><p>Each layer has a clear responsibility, making the application easier to maintain, extend, and deploy.</p></div>
         <div className="next-card-grid next-stack-grid">

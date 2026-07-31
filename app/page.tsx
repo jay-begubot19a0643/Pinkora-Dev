@@ -18,8 +18,8 @@ export default function HomePage() {
         <h1>Welcome to my JVerse.</h1>
         <p>I design business systems that transform complexity into clear, scalable experiences for teams and customers.</p>
         <div className="next-actions">
-          <Link href="/projects" className="next-button next-button-primary">View projects</Link>
-          <Link href="/services" className="next-button next-button-secondary">Explore services</Link>
+          <Link href="/projects" className="next-button next-button-primary">View portfolio</Link>
+          <Link href="/services" className="next-button next-button-secondary">Explore solutions</Link>
         </div>
         <div className="next-proof-grid">
           <div><strong>01</strong><span>Strategy-led builds</span></div>

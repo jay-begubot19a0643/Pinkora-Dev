@@ -3,15 +3,16 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { KuyaJayAssistant } from '@/components/kuya-jay-assistant';
 
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/services', label: 'Services' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/clients', label: 'Clients' },
-  { href: '/about', label: 'About' },
-  { href: '/stack', label: 'Stack' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/', label: 'Overview Page' },
+  { href: '/services', label: 'Solutions' },
+  { href: '/projects', label: 'Portfolio' },
+  { href: '/clients', label: 'Collaborations' },
+  { href: '/about', label: 'Who Am I' },
+  { href: '/stack', label: 'Tools & Platforms' },
+  { href: '/contact', label: 'Get in Touch' },
 ];
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -107,6 +108,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <Link href="/contact">Start a project</Link>
         </div>
       </footer>
+      <KuyaJayAssistant />
     </div>
   );
 }

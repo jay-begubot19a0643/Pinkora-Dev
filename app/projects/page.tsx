@@ -19,7 +19,7 @@ const eduKonektaLayers = [
 export default function ProjectsPage() {
   return (
     <main>
-      <PageHero eyebrow="Selected work" title="Practical technology, thoughtfully connected." description="Solutions that enhance visibility, strengthen operations, and help teams move with confidence." />
+      <PageHero eyebrow="Portfolio" title="Practical technology, thoughtfully connected." description="Solutions that enhance visibility, strengthen operations, and help teams move with confidence." />
 
       <section className="next-section next-container">
         <span className="next-label">Featured project</span>

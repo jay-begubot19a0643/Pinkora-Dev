@@ -34,7 +34,7 @@ const techStack = [
 export default function AboutPage() {
   return (
     <main>
-      <PageHero eyebrow="About JVerse" title="Technology with a practical point of view." description="I build cross-platform systems that help people, businesses, and communities work with more confidence." />
+      <PageHero eyebrow="Who Am I" title="Technology with a practical point of view." description="I build cross-platform systems that help people, businesses, and communities work with more confidence." />
 
       <section className="next-section next-container next-about-intro">
         <div>

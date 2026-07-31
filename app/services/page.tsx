@@ -11,7 +11,7 @@ const services = [
 export default function ServicesPage() {
   return (
     <main>
-      <PageHero eyebrow="What we do" title="Systems built around your business." description="Professional software development services shaped around real needs, clear outcomes, and long-term growth." />
+      <PageHero eyebrow="Solutions" title="Systems built around your business." description="Professional software development services shaped around real needs, clear outcomes, and long-term growth." />
       <section className="next-section next-container">
         <p className="next-lead">JVerse builds practical digital products that make operations smoother and information easier to act on. Every engagement starts by understanding the work behind the screen.</p>
         <div className="next-card-grid next-service-grid">
