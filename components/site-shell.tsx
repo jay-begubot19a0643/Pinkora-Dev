@@ -15,11 +15,11 @@ const links = [
 ];
 
 const portfolioLinks = [
-  { href: '/projects', label: 'Portfolio overview' },
-  { href: '/projects/voices-of-innovation', label: 'Voices of Innovation' },
-  { href: '/projects/voices-of-innovation#leaderboard', label: 'Leaderboards' },
-  { href: '/projects#smart-monitoring-system', label: "Smart M' System" },
-  { href: '/projects#edukonekta', label: 'EduKonekta' },
+  { href: '/portfolio', label: 'Portfolio overview' },
+  { href: '/portfolio/voices-of-innovation', label: 'Voices of Innovation' },
+  { href: '/portfolio/voices-of-innovation#leaderboard', label: 'Leaderboards' },
+  { href: '/portfolio#smart-monitoring-system', label: "Smart M' System" },
+  { href: '/portfolio#edukonekta', label: 'EduKonekta' },
 ];
 
 type AccountUser = { id: string; name: string; email: string };
@@ -133,8 +133,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   {link.label}
                 </Link>
               ))}
-              <div className={`next-nav-dropdown ${pathname.startsWith('/projects') ? 'is-active' : ''}`}>
-                <Link href="/projects" className="next-nav-portfolio-link" onClick={() => setMenuOpen(false)}>Portfolio</Link>
+              <div className={`next-nav-dropdown ${pathname.startsWith('/portfolio') ? 'is-active' : ''}`}>
+                <Link href="/portfolio" className="next-nav-portfolio-link" onClick={() => setMenuOpen(false)}>Portfolio</Link>
                 <div>
                   {portfolioLinks.map((link) => (
                     <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>

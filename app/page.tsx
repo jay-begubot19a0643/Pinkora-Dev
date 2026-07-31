@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 };
 
 const projects = [
-  { title: 'Smart Monitoring System', description: 'Connected CCTV, POS activity, and analytics in one retail command center.', href: '/projects', image: '/images/smart-monitoring-system.png', imageAlt: 'Smart Monitoring System logo' },
-  { title: 'EduKonekta', description: 'A multi-tenant education platform with a PWA shell, modular API, and secure school-scoped data.', href: '/projects', image: '/images/edukonekta.png', imageAlt: 'EduKonekta logo' },
+  { title: 'Smart Monitoring System', description: 'Connected CCTV, POS activity, and analytics in one retail command center.', href: '/portfolio', image: '/images/smart-monitoring-system.png', imageAlt: 'Smart Monitoring System logo' },
+  { title: 'EduKonekta', description: 'A multi-tenant education platform with a PWA shell, modular API, and secure school-scoped data.', href: '/portfolio', image: '/images/edukonekta.png', imageAlt: 'EduKonekta logo' },
   { title: 'Custom Web Systems', description: 'Fast, focused applications designed around real workflows and growth.', href: '/contact' },
 ];
 
@@ -26,7 +26,7 @@ export default function HomePage() {
         <h1>Welcome to my JVerse.</h1>
         <p>I design business systems that transform complexity into clear, scalable experiences for teams and customers.</p>
         <div className="next-actions">
-          <Link href="/projects" className="next-button next-button-primary">View portfolio</Link>
+          <Link href="/portfolio" className="next-button next-button-primary">View portfolio</Link>
           <Link href="/services" className="next-button next-button-secondary">Explore solutions</Link>
         </div>
         <div className="next-proof-grid">

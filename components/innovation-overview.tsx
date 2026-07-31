@@ -77,7 +77,7 @@ export function InnovationOverview() {
         {!loading && entries.length > 3 && <div className="next-innovation-community-ranks"><div><span className="next-eyebrow">All contributors</span><strong>{entries.length} community voices ranked</strong></div><ol>{entries.slice(3).map((entry) => <li key={entry.userId}><b>#{entry.rank}</b><span>{entry.username}</span><small>{entry.answerCount} answer{entry.answerCount === 1 ? '' : 's'}</small><strong>{entry.points} pts</strong></li>)}</ol></div>}
         <div className="next-innovation-overview-footer">
           <p>Every useful answer can give someone a clearer next step. Join the conversation and help shape practical solutions.</p>
-          <Link className="next-button next-button-primary" href="/projects/voices-of-innovation">Explore Voices of Innovation</Link>
+          <Link className="next-button next-button-primary" href="/portfolio/voices-of-innovation">Explore Voices of Innovation</Link>
         </div>
       </div>
     </section>
