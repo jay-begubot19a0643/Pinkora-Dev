@@ -32,7 +32,7 @@ export function InnovationHub() {
   async function loadLeaderboard(nextField = field) {
     setLoading(true);
     try {
-      const response = await fetch(`/api/innovation?field=${encodeURIComponent(nextField)}`);
+      const response = await fetch(`/api/innovation?field=${encodeURIComponent(nextField)}&limit=100`);
       const data = await response.json();
       if (response.ok && data.success) {
         setAnswers(data.data ?? []);
@@ -127,6 +127,28 @@ export function InnovationHub() {
     }
   }
 
+  async function scoreExistingAnswers() {
+    const token = localStorage.getItem('authToken');
+    if (!token) return;
+
+    setPending(true);
+    setStatus('');
+    try {
+      const response = await fetch('/api/innovation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ action: 'rescore', field }),
+      });
+      const data = await response.json();
+      setStatus(data.message ?? 'Unable to score existing answers.');
+      if (response.ok && data.success) void loadLeaderboard(field);
+    } catch {
+      setStatus('Unable to score existing answers. Please try again.');
+    } finally {
+      setPending(false);
+    }
+  }
+
   return (
     <div className="next-innovation-hub">
       <div className="next-innovation-tabs" role="tablist" aria-label="Innovation fields">
@@ -160,12 +182,12 @@ export function InnovationHub() {
 
       <section className="next-innovation-leaderboard" id="leaderboard">
         <div className="next-section-heading"><div><span className="next-eyebrow">{field} leaderboard</span><h2>Ideas leading the conversation.</h2></div><p>Ranks are based on accumulated rubric points for relevance, practical action, clarity, detail, and constructive tone. Everyone can browse; signed-in members can vote once for each featured answer.</p></div>
-        {viewer && <div className="next-innovation-viewer-rank"><span>Your {field} standing</span><strong>Top {viewer.rank}</strong><b>{viewer.points} points</b><small>{viewer.answerCount} answer{viewer.answerCount === 1 ? '' : 's'} scored</small></div>}
+        {viewer && <div className="next-innovation-viewer-rank"><span>Your {field} standing</span><strong>Top {viewer.rank}</strong><b>{viewer.points} points</b><small>{viewer.answerCount} answer{viewer.answerCount === 1 ? '' : 's'} scored</small>{isSignedIn && viewer.points === 0 && <button type="button" disabled={pending} onClick={scoreExistingAnswers}>Score my answers</button>}</div>}
         {status && <p className="next-form-message" role="status">{status}</p>}
         <div className="next-innovation-ranks" aria-live="polite">
           {loading && <p className="next-feedback-empty">Loading {field} ideas…</p>}
           {!loading && answers.length === 0 && <p className="next-feedback-empty">No answers yet. Be the first to add a practical idea for {field}.</p>}
-          {answers.map((answer, index) => (
+          {answers.slice(0, 3).map((answer, index) => (
             <article className="next-innovation-answer" key={answer.userId}>
               <div className="next-innovation-place"><strong>Top {answer.rank}</strong><span>{badges[index]}</span></div>
               <div className="next-innovation-answer-body"><div><span className="next-innovation-user">{answer.username}</span><span className="next-innovation-level">{answer.level}</span><span className="next-innovation-points">{answer.points} points</span></div><p>{answer.answer}</p>{answer.aiFeedback && <small>Rubric note: {answer.aiFeedback}</small>}</div>
@@ -173,6 +195,7 @@ export function InnovationHub() {
             </article>
           ))}
         </div>
+        {!loading && answers.length > 3 && <div className="next-innovation-community-ranks next-innovation-full-ranks"><div><span className="next-eyebrow">Community ranks</span><strong>Every contributor in {field}</strong></div><ol>{answers.slice(3).map((answer) => <li key={answer.userId}><b>#{answer.rank}</b><span>{answer.username}</span><small>{answer.answerCount} answer{answer.answerCount === 1 ? '' : 's'}</small><strong>{answer.points} pts</strong></li>)}</ol></div>}
       </section>
     </div>
   );

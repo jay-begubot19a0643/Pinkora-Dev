@@ -10,6 +10,8 @@ export async function GET(request: NextRequest) {
   try {
     const field = request.nextUrl.searchParams.get('field') ?? 'Business';
     if (!isInnovationField(field)) return NextResponse.json({ success: false, message: 'Invalid field.' }, { status: 400 });
+    const requestedLimit = Number(request.nextUrl.searchParams.get('limit') ?? 3);
+    const limit = Number.isFinite(requestedLimit) ? Math.min(100, Math.max(3, Math.floor(requestedLimit))) : 3;
 
     const viewerId = getUserId(request);
     const { data, error } = await requireSupabase()
@@ -50,7 +52,7 @@ export async function GET(request: NextRequest) {
       .map((item, index) => ({ ...item, rank: index + 1 }));
     const viewer = viewerId ? ranked.find((item) => item.userId === viewerId) ?? null : null;
 
-    return NextResponse.json({ success: true, data: ranked.slice(0, 3), viewer: viewer ? { rank: viewer.rank, points: viewer.points, answerCount: viewer.answerCount } : null });
+    return NextResponse.json({ success: true, data: ranked.slice(0, limit), totalContributors: ranked.length, viewer: viewer ? { rank: viewer.rank, points: viewer.points, answerCount: viewer.answerCount } : null });
   } catch (error) {
     console.error('Innovation leaderboard fetch error:', error);
     return NextResponse.json({ success: false, message: 'Unable to load the leaderboard.' }, { status: 500 });
@@ -109,6 +111,31 @@ export async function POST(request: NextRequest) {
       if (updateError) throw updateError;
 
       return NextResponse.json({ success: true, message: 'Your vote has been counted.', data });
+    }
+
+    if (body.action === 'rescore') {
+      const { field } = body;
+      if (!isInnovationField(field)) return NextResponse.json({ success: false, message: 'Choose a valid field.' }, { status: 400 });
+
+      const { data: existingAnswers, error: existingError } = await db
+        .from('innovation_answers')
+        .select('id, field, level, question, answer')
+        .eq('user_id', userId)
+        .eq('field', field)
+        .eq('ai_score', 0);
+      if (existingError) throw existingError;
+      if (!existingAnswers?.length) return NextResponse.json({ success: false, message: 'You have no unscored answers in this field.' }, { status: 400 });
+
+      let totalPoints = 0;
+      for (const item of existingAnswers) {
+        if (!isInnovationField(item.field) || !isInnovationLevel(item.level)) continue;
+        const score = await scoreInnovationAnswer({ field: item.field, level: item.level, question: item.question, answer: item.answer });
+        const { error: updateError } = await db.from('innovation_answers').update({ ai_score: score.points, ai_feedback: score.feedback }).eq('id', item.id);
+        if (updateError) throw updateError;
+        totalPoints += score.points;
+      }
+
+      return NextResponse.json({ success: true, message: `${existingAnswers.length} existing answer${existingAnswers.length === 1 ? '' : 's'} scored for ${totalPoints} points.`, data: { totalPoints } });
     }
 
     return NextResponse.json({ success: false, message: 'Invalid innovation action.' }, { status: 400 });

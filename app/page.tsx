@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { HeroVideo } from '@/components/hero-video';
 import { LandingExperience } from '@/components/landing-experience';
 import { FeedbackSection } from '@/components/feedback-section';
+import { InnovationOverview } from '@/components/innovation-overview';
 
 const projects = [
   { title: 'Smart Monitoring System', description: 'Connected CCTV, POS activity, and analytics in one retail command center.', href: '/projects', image: '/images/smart-monitoring-system.png', imageAlt: 'Smart Monitoring System logo' },
@@ -45,6 +46,7 @@ export default function HomePage() {
           })}
         </div>
       </section>
+      <InnovationOverview />
       <section className="next-callout next-reveal">
         <div className="next-container"><span className="next-eyebrow">Built for better work</span><h2>Technology should feel like an advantage.</h2><p>Every project starts with the people using it, then turns that insight into a reliable digital system.</p><Link href="/contact" className="next-text-link">Start a conversation ↗</Link></div>
       </section>
