@@ -15,10 +15,13 @@ const links = [
   { href: '/contact', label: 'Get in Touch' },
 ];
 
+type AccountUser = { id: string; name: string; email: string };
+
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [accountUser, setAccountUser] = useState<AccountUser | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -26,6 +29,40 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     const nextTheme = savedTheme ?? 'dark';
     setTheme(nextTheme);
     document.documentElement.dataset.theme = nextTheme;
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    async function syncAccount() {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        if (active) setAccountUser(null);
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/auth/check', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await response.json();
+        if (!response.ok || !data.success || !data.data) {
+          localStorage.removeItem('authToken');
+          if (active) setAccountUser(null);
+          return;
+        }
+        if (active) setAccountUser(data.data);
+      } catch {
+        if (active) setAccountUser(null);
+      }
+    }
+
+    void syncAccount();
+    window.addEventListener('jverse-auth-change', syncAccount);
+    return () => {
+      active = false;
+      window.removeEventListener('jverse-auth-change', syncAccount);
+    };
   }, []);
 
   useEffect(() => {
@@ -91,8 +128,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   {link.label}
                 </Link>
               ))}
-              <Link href="/account" className="next-account-link" onClick={() => setMenuOpen(false)}>
-                My Account
+              {accountUser && <span className="next-account-greeting">Hi, {accountUser.name.split(' ')[0]}</span>}
+              <Link href={accountUser ? '/account' : '/account?mode=register'} className="next-account-link" onClick={() => setMenuOpen(false)}>
+                {accountUser ? 'My Account' : 'Sign up'}
               </Link>
             </div>
             <button className="next-theme-button" type="button" onClick={toggleTheme} aria-label="Toggle color theme">

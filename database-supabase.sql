@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS feedback (
   user_name TEXT NOT NULL,
   type TEXT CHECK (type IN ('bug', 'feature', 'improvement', 'other')) DEFAULT 'other',
   message TEXT NOT NULL CHECK (LENGTH(message) >= 10 AND LENGTH(message) <= 5000),
+  rating INTEGER NOT NULL DEFAULT 5 CHECK (rating >= 1 AND rating <= 5),
   status TEXT CHECK (status IN ('pending', 'reviewed', 'resolved')) DEFAULT 'pending',
   timestamp TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

@@ -183,3 +183,55 @@ html[data-theme='light'] .next-brand-logo-light { display: block; }
 .next-auth-callback { min-height: 70vh; display: grid; place-items: center; }
 .next-auth-callback .next-account-card { text-align: center; }
 .next-auth-callback-message { margin: 18px auto 24px; color: var(--muted); }
+
+/* Personal account state and profile settings */
+.next-account-greeting { margin-left: 7px; color: var(--muted); font-size: .76rem; font-weight: 700; white-space: nowrap; }
+.next-account-loading { color: var(--muted); text-align: center; }
+.next-account-dashboard { display: grid; gap: 24px; }
+.next-account-profile-head { display: flex; align-items: center; gap: 16px; }
+.next-account-profile-head h2 { margin: 8px 0 4px; }
+.next-account-profile-head p { margin: 0; color: var(--muted); }
+.next-account-avatar { display: grid; width: 58px; height: 58px; flex: 0 0 auto; place-items: center; border: 1px solid rgba(var(--accent-rgb), .46); border-radius: 18px; color: #fff; background: linear-gradient(135deg, var(--blue), var(--accent-2), var(--accent)); box-shadow: 0 12px 28px rgba(var(--accent-rgb), .22); font-family: 'Space Grotesk', sans-serif; font-size: 1.38rem; font-weight: 800; }
+.next-account-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.next-account-details > div { display: grid; gap: 4px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--surface-strong) 68%, transparent); }
+.next-account-details span { color: var(--muted); font-size: .71rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.next-account-details strong { overflow: hidden; text-overflow: ellipsis; font-size: .88rem; white-space: nowrap; }
+.next-account-settings { padding-top: 22px; border-top: 1px solid var(--line); }
+.next-account-settings h3 { margin: 6px 0 0; font-family: 'Space Grotesk', sans-serif; font-size: 1.08rem; }
+.next-signout-button { justify-self: start; padding: 0; border: 0; color: var(--accent-2); background: none; cursor: pointer; font-size: .84rem; font-weight: 800; }
+.next-signout-button:disabled { cursor: not-allowed; opacity: .65; }
+
+@media (max-width: 960px) { .next-account-greeting { display: block; margin: 12px 12px 0; }.next-account-details { grid-template-columns: 1fr; } }
+
+/* Public community feedback */
+.next-feedback-section { border-top: 1px solid var(--line); }
+.next-feedback-form, .next-feedback-signin { margin-bottom: 26px; padding: clamp(20px, 3vw, 30px); border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: 0 14px 34px rgba(0,0,0,.08); }
+.next-feedback-form { display: grid; gap: 16px; }
+.next-feedback-rating-input { display: grid; gap: 7px; color: var(--text); font-size: .85rem; font-weight: 750; }
+.next-feedback-rating-input > div { display: flex; align-items: center; gap: 3px; }
+.next-feedback-rating-input button { width: 32px; height: 32px; padding: 0; border: 0; color: rgba(var(--accent-rgb), .28); background: transparent; cursor: pointer; font-size: 1.45rem; line-height: 1; transition: color .18s ease, transform .18s ease; }
+.next-feedback-rating-input button:hover, .next-feedback-rating-input button.is-selected { color: var(--accent); transform: translateY(-1px); }
+.next-feedback-rating-input strong { margin-left: 7px; color: var(--muted); font-size: .78rem; }
+.next-feedback-form label { display: grid; gap: 7px; color: var(--text); font-size: .85rem; font-weight: 750; }
+.next-feedback-form select, .next-feedback-form textarea { width: 100%; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; outline: none; color: var(--text); background: var(--surface-strong); transition: .2s ease; }
+.next-feedback-form textarea { resize: vertical; }
+.next-feedback-form select:focus, .next-feedback-form textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .12); }
+.next-feedback-form-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.next-feedback-form-footer span { color: var(--muted); font-size: .78rem; }
+.next-feedback-signin { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.next-feedback-signin div { display: grid; gap: 4px; }
+.next-feedback-signin strong { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; }
+.next-feedback-signin span { color: var(--muted); font-size: .88rem; }
+.next-feedback-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.next-feedback-card { display: grid; grid-template-columns: 36px minmax(0, 1fr); column-gap: 11px; align-content: start; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); box-shadow: 0 14px 34px rgba(0,0,0,.08); }
+.next-feedback-avatar { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 11px; color: #fff; background: linear-gradient(135deg, var(--blue), var(--accent-2), var(--accent)); font-family: 'Space Grotesk', sans-serif; font-size: .85rem; font-weight: 800; }
+.next-feedback-card-head { display: grid; gap: 1px; min-width: 0; }
+.next-feedback-card-head strong { overflow: hidden; text-overflow: ellipsis; font-family: 'Space Grotesk', sans-serif; font-size: .91rem; white-space: nowrap; }
+.next-feedback-card-head span { color: var(--accent-2); font-size: .68rem; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
+.next-feedback-stars { grid-column: 1 / -1; display: flex; gap: 2px; margin-top: 15px; color: rgba(var(--accent-rgb), .24); font-size: .9rem; letter-spacing: 1px; }
+.next-feedback-stars .is-filled { color: var(--accent); }
+.next-feedback-card p { grid-column: 1 / -1; margin: 9px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.6; }
+.next-feedback-empty { grid-column: 1 / -1; margin: 0; padding: 24px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); text-align: center; }
+
+@media (max-width: 800px) { .next-feedback-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .next-feedback-form-footer, .next-feedback-signin { align-items: stretch; flex-direction: column; }.next-feedback-signin .next-button { width: 100%; }.next-feedback-grid { grid-template-columns: 1fr; } }

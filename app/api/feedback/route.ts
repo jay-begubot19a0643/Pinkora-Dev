@@ -6,9 +6,23 @@ export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
   try {
+    const scope = request.nextUrl.searchParams.get('scope');
+    const db = requireSupabase();
+
+    if (scope === 'public') {
+      const { data, error } = await db
+        .from('feedback')
+        .select('id, user_name, type, message, rating, timestamp')
+        .eq('status', 'reviewed')
+        .order('timestamp', { ascending: false })
+        .limit(6);
+      if (error) throw error;
+      return NextResponse.json({ success: true, data });
+    }
+
     const userId = getUserId(request);
     if (!userId) return NextResponse.json({ success: false, message: 'Unauthorized.' }, { status: 401 });
-    const { data, error } = await requireSupabase().from('feedback').select('*').eq('user_id', userId).order('timestamp', { ascending: false }).limit(10);
+    const { data, error } = await db.from('feedback').select('*').eq('user_id', userId).order('timestamp', { ascending: false }).limit(10);
     if (error) throw error;
     return NextResponse.json({ success: true, data });
   } catch (error) {
@@ -21,12 +35,15 @@ export async function POST(request: NextRequest) {
   try {
     const userId = getUserId(request);
     if (!userId) return NextResponse.json({ success: false, message: 'Unauthorized.' }, { status: 401 });
-    const { type, message } = await request.json();
+    const { type, message, rating } = await request.json();
     if (!type || !message || message.trim().length < 10) return NextResponse.json({ success: false, message: 'Please provide a feedback type and a message of at least 10 characters.' }, { status: 400 });
+    if (!['bug', 'feature', 'improvement', 'other'].includes(type)) return NextResponse.json({ success: false, message: 'Please choose a valid feedback type.' }, { status: 400 });
+    if (!Number.isInteger(rating) || rating < 1 || rating > 5) return NextResponse.json({ success: false, message: 'Please select a rating from 1 to 5 stars.' }, { status: 400 });
+    if (message.trim().length > 1000) return NextResponse.json({ success: false, message: 'Feedback must be 1,000 characters or fewer.' }, { status: 400 });
     const db = requireSupabase();
     const { data: user, error: userError } = await db.from('users').select('name, email').eq('id', userId).maybeSingle();
     if (userError || !user) return NextResponse.json({ success: false, message: 'User not found.' }, { status: 404 });
-    const { data, error } = await db.from('feedback').insert([{ user_id: userId, user_email: user.email, user_name: user.name, type, message: message.trim(), status: 'pending' }]).select().single();
+    const { data, error } = await db.from('feedback').insert([{ user_id: userId, user_email: user.email, user_name: user.name, type, message: message.trim(), rating, status: 'reviewed' }]).select().single();
     if (error) throw error;
     return NextResponse.json({ success: true, message: 'Feedback submitted successfully.', data }, { status: 201 });
   } catch (error) {

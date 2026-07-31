@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS feedback (
   user_name VARCHAR(255) NOT NULL,
   type VARCHAR(50) DEFAULT 'other' CHECK (type IN ('bug', 'feature', 'improvement', 'other')),
   message TEXT NOT NULL,
+  rating INTEGER NOT NULL DEFAULT 5 CHECK (rating >= 1 AND rating <= 5),
   status VARCHAR(50) DEFAULT 'pending' CHECK (status IN ('pending', 'reviewed', 'resolved')),
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW(),
