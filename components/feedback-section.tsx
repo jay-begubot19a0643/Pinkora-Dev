@@ -9,7 +9,7 @@ type Feedback = {
   type: 'bug' | 'feature' | 'improvement' | 'other';
   message: string;
   rating: number;
-  timestamp?: string;
+  created_at?: string;
 };
 
 type FeedbackSectionProps = {

@@ -12,9 +12,9 @@ export async function GET(request: NextRequest) {
     if (scope === 'public') {
       const { data, error } = await db
         .from('feedback')
-        .select('id, user_name, type, message, rating, timestamp')
+        .select('id, user_name, type, message, rating, created_at')
         .eq('status', 'reviewed')
-        .order('timestamp', { ascending: false })
+        .order('created_at', { ascending: false })
         .limit(6);
       if (error) throw error;
       return NextResponse.json({ success: true, data });
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
 
     const userId = getUserId(request);
     if (!userId) return NextResponse.json({ success: false, message: 'Unauthorized.' }, { status: 401 });
-    const { data, error } = await db.from('feedback').select('*').eq('user_id', userId).order('timestamp', { ascending: false }).limit(10);
+    const { data, error } = await db.from('feedback').select('*').eq('user_id', userId).order('created_at', { ascending: false }).limit(10);
     if (error) throw error;
     return NextResponse.json({ success: true, data });
   } catch (error) {
