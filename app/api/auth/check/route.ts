@@ -28,7 +28,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: 'Name must be between 2 and 80 characters.' }, { status: 400 });
     }
 
-    const { data: user, error } = await requireSupabase()
+    const db = requireSupabase();
+    const { data: user, error } = await db
       .from('users')
       .update({ name: trimmedName })
       .eq('id', userId)
@@ -36,6 +37,16 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error || !user) throw error ?? new Error('User not found.');
+
+    const [feedbackUpdate, innovationUpdate] = await Promise.all([
+      db.from('feedback').update({ user_name: trimmedName }).eq('user_id', userId),
+      db.from('innovation_answers').update({ username: trimmedName }).eq('user_id', userId),
+    ]);
+
+    if (feedbackUpdate.error || innovationUpdate.error) {
+      throw feedbackUpdate.error ?? innovationUpdate.error;
+    }
+
     return NextResponse.json({ success: true, message: 'Your profile has been updated.', data: user });
   } catch (error) {
     console.error('Profile update error:', error);
