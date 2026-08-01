@@ -11,6 +11,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const db = requireSupabase();
 
+    if (body.privacyAccepted !== true) {
+      return NextResponse.json({ success: false, message: 'Data Privacy Notice consent is required to sign in.' }, { status: 400 });
+    }
+
     if (body.provider === 'google') {
       const accessToken = typeof body.accessToken === 'string' ? body.accessToken : '';
       if (!accessToken) {

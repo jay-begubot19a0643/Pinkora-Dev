@@ -35,12 +35,17 @@ export default function AuthCallbackPage() {
         const session = sessionResult.data.session;
         if (!session) throw new Error('No Google session was returned. Please try again.');
 
+        const privacyAccepted = sessionStorage.getItem('jverse-google-privacy-consent') === 'accepted';
+        if (!privacyAccepted) throw new Error('Please review and accept the Data Privacy Notice before continuing with Google.');
+        sessionStorage.removeItem('jverse-google-privacy-consent');
+
         const response = await fetch('/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             provider: 'google',
             accessToken: session.access_token,
+            privacyAccepted,
           }),
         });
         const result = await response.json();

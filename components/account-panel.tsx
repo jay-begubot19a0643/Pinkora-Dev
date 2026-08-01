@@ -16,6 +16,7 @@ export function AccountPanel() {
   const [checkingAccount, setCheckingAccount] = useState(true);
   const [status, setStatus] = useState('');
   const [pending, setPending] = useState(false);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
 
   async function loadUser() {
     const token = localStorage.getItem('authToken');
@@ -58,10 +59,15 @@ export function AccountPanel() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!privacyAccepted) {
+      setStatus('Please review and accept the Data Privacy Notice before continuing.');
+      return;
+    }
+
     setPending(true);
     setStatus('');
 
-    const values = Object.fromEntries(new FormData(event.currentTarget));
+    const values = { ...Object.fromEntries(new FormData(event.currentTarget)), privacyAccepted: true };
     const response = await fetch(`/api/auth/${mode === 'login' ? 'login' : 'register'}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -81,12 +87,18 @@ export function AccountPanel() {
   async function continueWithGoogle() {
     setStatus('');
 
+    if (!privacyAccepted) {
+      setStatus('Please review and accept the Data Privacy Notice before continuing with Google.');
+      return;
+    }
+
     if (!supabaseBrowser) {
       setStatus('Google sign-in is not configured yet. Add the public Supabase environment variables.');
       return;
     }
 
     setPending(true);
+    sessionStorage.setItem('jverse-google-privacy-consent', 'accepted');
     const { error } = await supabaseBrowser.auth.signInWithOAuth({
       provider: 'google',
       options: { redirectTo: `${window.location.origin}/auth/callback` },
@@ -94,6 +106,7 @@ export function AccountPanel() {
 
     if (error) {
       setPending(false);
+      sessionStorage.removeItem('jverse-google-privacy-consent');
       setStatus(error.message);
     }
   }
@@ -192,6 +205,27 @@ export function AccountPanel() {
         </p>
       </div>
 
+      <section className="next-privacy-consent" aria-labelledby="privacy-consent-title">
+        <div>
+          <span className="next-eyebrow">Data Privacy Act of 2012</span>
+          <h3 id="privacy-consent-title">Privacy notice and consent</h3>
+        </div>
+        <p>JVerse uses your name and email to create and secure your account, personalise your experience, and attribute feedback or Voices of Innovation contributions. Your information is handled only for these legitimate, stated purposes.</p>
+        <details>
+          <summary>Read your privacy rights</summary>
+          <ul>
+            <li>Be informed about how your personal data is collected and used.</li>
+            <li>Request access, correction, erasure or blocking of your personal data.</li>
+            <li>Object to processing for marketing or profiling, and request data portability where applicable.</li>
+            <li>Contact <a href="mailto:jaybe.gubot01@gmail.com">jaybe.gubot01@gmail.com</a> for privacy questions or requests.</li>
+          </ul>
+        </details>
+        <label className="next-privacy-check">
+          <input type="checkbox" checked={privacyAccepted} onChange={(event) => setPrivacyAccepted(event.target.checked)} />
+          <span>I have read this notice and freely give my explicit consent to JVerse processing my account information in accordance with the Data Privacy Act of 2012 (RA 10173).</span>
+        </label>
+      </section>
+
       <button className="next-google-button" type="button" disabled={pending} onClick={continueWithGoogle}>
         <span className="next-google-mark" aria-hidden="true">G</span>
         {mode === 'login' ? 'Continue with Google' : 'Sign up with Google'}
@@ -210,7 +244,7 @@ export function AccountPanel() {
 
       {status && <p className="next-form-message" role="status">{status}</p>}
 
-      <button className="next-switch-button" type="button" onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setStatus(''); }}>
+      <button className="next-switch-button" type="button" onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setPrivacyAccepted(false); setStatus(''); }}>
         {mode === 'login' ? 'Need an account? Sign up' : 'Already have an account? Sign in'}
       </button>
     </section>

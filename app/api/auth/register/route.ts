@@ -7,8 +7,9 @@ export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, password } = await request.json();
+    const { name, email, password, privacyAccepted } = await request.json();
     if (!name || !email || !password) return NextResponse.json({ success: false, message: 'Please provide name, email, and password.' }, { status: 400 });
+    if (privacyAccepted !== true) return NextResponse.json({ success: false, message: 'Data Privacy Notice consent is required to create an account.' }, { status: 400 });
     if (password.length < 6) return NextResponse.json({ success: false, message: 'Password must be at least 6 characters.' }, { status: 400 });
     const db = requireSupabase();
     const normalizedEmail = email.toLowerCase();

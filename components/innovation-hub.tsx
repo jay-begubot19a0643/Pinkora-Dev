@@ -28,6 +28,11 @@ export function InnovationHub() {
   const [loading, setLoading] = useState(true);
   const [pending, setPending] = useState(false);
   const [status, setStatus] = useState('');
+  const [submission, setSubmission] = useState<{ points: number; message: string } | null>(null);
+  const [feedbackRating, setFeedbackRating] = useState(5);
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [feedbackStatus, setFeedbackStatus] = useState('');
+  const [feedbackPending, setFeedbackPending] = useState(false);
 
   async function loadLeaderboard(nextField = field) {
     setLoading(true);
@@ -93,6 +98,10 @@ export function InnovationHub() {
       setStatus(data.message ?? 'Unable to submit your answer.');
       if (response.ok && data.success) {
         form.reset();
+        setFeedbackRating(5);
+        setFeedbackMessage('');
+        setFeedbackStatus('');
+        setSubmission({ points: Number(data.data?.ai_score ?? 0), message: data.message ?? 'Your answer is now on the innovation board.' });
         if (field === data.data.field) void loadLeaderboard(field);
       }
     } catch {
@@ -149,6 +158,33 @@ export function InnovationHub() {
     }
   }
 
+  async function submitContributionFeedback(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const token = localStorage.getItem('authToken');
+    if (!token) return;
+
+    setFeedbackPending(true);
+    setFeedbackStatus('');
+    try {
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ type: 'other', rating: feedbackRating, message: feedbackMessage }),
+      });
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        setFeedbackStatus(data.message ?? 'Unable to share feedback.');
+        return;
+      }
+      setFeedbackStatus('Thank you—your feedback has been shared with the JVerse community.');
+      setFeedbackMessage('');
+    } catch {
+      setFeedbackStatus('Unable to share feedback. Please try again.');
+    } finally {
+      setFeedbackPending(false);
+    }
+  }
+
   return (
     <div className="next-innovation-hub">
       <div className="next-innovation-tabs" role="tablist" aria-label="Innovation fields">
@@ -197,6 +233,29 @@ export function InnovationHub() {
         </div>
         {!loading && answers.length > 3 && <div className="next-innovation-community-ranks next-innovation-full-ranks"><div><span className="next-eyebrow">Community ranks</span><strong>Every contributor in {field}</strong></div><ol>{answers.slice(3).map((answer) => <li key={answer.userId}><b>#{answer.rank}</b><span>{answer.username}</span><small>{answer.answerCount} answer{answer.answerCount === 1 ? '' : 's'}</small><strong>{answer.points} pts</strong></li>)}</ol></div>}
       </section>
+
+      {submission && <div className="next-submission-modal-backdrop" role="presentation">
+        <section className="next-submission-modal" role="dialog" aria-modal="true" aria-labelledby="submission-success-title">
+          <div className="next-submission-success-mark" aria-hidden="true">✓</div>
+          <span className="next-eyebrow">Voices of Innovation</span>
+          <h2 id="submission-success-title">Submitted successfully</h2>
+          <p>{submission.message}</p>
+          {submission.points > 0 && <strong className="next-submission-points">+{submission.points} points added to your rank</strong>}
+          <form className="next-submission-feedback" onSubmit={submitContributionFeedback}>
+            <div>
+              <span className="next-eyebrow">Quick feedback</span>
+              <h3>How was this challenge?</h3>
+            </div>
+            <div className="next-feedback-rating-input">
+              <span>Your rating</span>
+              <div>{[1, 2, 3, 4, 5].map((rating) => <button key={rating} type="button" className={rating <= feedbackRating ? 'is-selected' : ''} onClick={() => setFeedbackRating(rating)} aria-label={`Rate ${rating} out of 5 stars`}>★</button>)}<strong>{feedbackRating}/5</strong></div>
+            </div>
+            <label>Your feedback<textarea required value={feedbackMessage} onChange={(event) => setFeedbackMessage(event.target.value)} minLength={10} maxLength={1000} rows={3} placeholder="Tell us how the challenge or answer experience can improve…" /></label>
+            {feedbackStatus && <p className="next-form-message" role="status">{feedbackStatus}</p>}
+            <div className="next-submission-modal-actions"><button type="button" className="next-button next-button-secondary" onClick={() => setSubmission(null)} disabled={feedbackPending}>Skip for now</button><button className="next-button next-button-primary" disabled={feedbackPending}>{feedbackPending ? 'Sharing…' : 'Share feedback'}</button></div>
+          </form>
+        </section>
+      </div>}
     </div>
   );
 }
