@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
-import { innovationFields, innovationLevels, innovationQuestions, type InnovationField, type InnovationLevel } from '@/lib/innovation';
+import { getInnovationQuickChallenge, innovationFields, innovationLevels, innovationQuestions, type InnovationField, type InnovationLevel } from '@/lib/innovation';
 
 type InnovationLeaderboardEntry = {
   userId: string;
@@ -33,6 +33,9 @@ export function InnovationHub() {
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [feedbackStatus, setFeedbackStatus] = useState('');
   const [feedbackPending, setFeedbackPending] = useState(false);
+  const [quickChallengeRound, setQuickChallengeRound] = useState(1);
+  const [selectedQuickOption, setSelectedQuickOption] = useState('');
+  const quickChallenge = getInnovationQuickChallenge(field, level, quickChallengeRound);
 
   async function loadLeaderboard(nextField = field) {
     setLoading(true);
@@ -158,6 +161,42 @@ export function InnovationHub() {
     }
   }
 
+  async function submitQuickChallenge() {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      setIsSignedIn(false);
+      return;
+    }
+    if (!selectedQuickOption) {
+      setStatus('Choose the answer you believe is best before submitting the quick challenge.');
+      return;
+    }
+
+    setPending(true);
+    setStatus('');
+    try {
+      const response = await fetch('/api/innovation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ action: 'quick-answer', field, level, round: quickChallengeRound, selectedOptionId: selectedQuickOption }),
+      });
+      const data = await response.json();
+      setStatus(data.message ?? 'Unable to submit your quick challenge answer.');
+      if (response.ok && data.success) {
+        setFeedbackRating(5);
+        setFeedbackMessage('');
+        setFeedbackStatus('');
+        setSubmission({ points: Number(data.data?.ai_score ?? 0), message: data.message ?? 'Your quick challenge answer is now recorded.' });
+        setSelectedQuickOption('');
+        void loadLeaderboard(field);
+      }
+    } catch {
+      setStatus('Unable to submit your quick challenge answer. Please try again.');
+    } finally {
+      setPending(false);
+    }
+  }
+
   async function submitContributionFeedback(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const token = localStorage.getItem('authToken');
@@ -189,7 +228,7 @@ export function InnovationHub() {
     <div className="next-innovation-hub">
       <div className="next-innovation-tabs" role="tablist" aria-label="Innovation fields">
         {innovationFields.map((item) => (
-          <button key={item} type="button" role="tab" aria-selected={field === item} className={field === item ? 'is-active' : ''} onClick={() => setField(item)}>{item}</button>
+          <button key={item} type="button" role="tab" aria-selected={field === item} className={field === item ? 'is-active' : ''} onClick={() => { setField(item); setQuickChallengeRound(1); setSelectedQuickOption(''); }}>{item}</button>
         ))}
       </div>
 
@@ -202,7 +241,7 @@ export function InnovationHub() {
         {isSignedIn ? (
           <form className="next-innovation-form" onSubmit={submitAnswer}>
             <div className="next-innovation-levels" aria-label="Challenge level">
-              {innovationLevels.map((item) => <button type="button" className={level === item ? 'is-active' : ''} key={item} onClick={() => setLevel(item)}>{item}</button>)}
+              {innovationLevels.map((item) => <button type="button" className={level === item ? 'is-active' : ''} key={item} onClick={() => { setLevel(item); setQuickChallengeRound(1); setSelectedQuickOption(''); }}>{item}</button>)}
             </div>
             <blockquote>{innovationQuestions[field][level]}</blockquote>
             <label>
@@ -210,6 +249,14 @@ export function InnovationHub() {
               <textarea required name="answer" minLength={30} maxLength={1500} rows={6} placeholder="Share a clear, practical answer grounded in the real world…" />
             </label>
             <div className="next-innovation-form-footer"><span>Your name will appear on the public leaderboard.</span><button className="next-button next-button-primary" disabled={pending}>{pending ? 'Submitting…' : 'Submit answer'}</button></div>
+            <section className="next-quick-challenge" aria-labelledby="quick-challenge-title">
+              <div className="next-quick-challenge-heading"><div><span className="next-eyebrow">Unlimited quick challenges</span><h3 id="quick-challenge-title">Choose the best answer</h3></div><span>{level} · {quickChallenge.points} points</span></div>
+              <p>{quickChallenge.question}</p>
+              <div className="next-quick-challenge-options" role="radiogroup" aria-label="Quick challenge answers">
+                {quickChallenge.options.map((option) => <button key={option.id} type="button" role="radio" aria-checked={selectedQuickOption === option.id} className={selectedQuickOption === option.id ? 'is-selected' : ''} onClick={() => setSelectedQuickOption(option.id)}><b>{option.id.toUpperCase()}</b><span>{option.text}</span></button>)}
+              </div>
+              <div className="next-quick-challenge-actions"><button type="button" className="next-button next-button-secondary" onClick={() => { setQuickChallengeRound((current) => current + 1); setSelectedQuickOption(''); }} disabled={pending}>New challenge</button><button type="button" className="next-button next-button-primary" onClick={submitQuickChallenge} disabled={pending || !selectedQuickOption}>{pending ? 'Checking…' : `Submit for ${quickChallenge.points} points`}</button></div>
+            </section>
           </form>
         ) : (
           <div className="next-innovation-signin"><div><strong>Bring your idea to the board.</strong><span>Sign in to submit answers and vote for the ideas you find most valuable.</span></div><Link href="/my-account?mode=register" className="next-button next-button-primary">Sign up to participate</Link></div>

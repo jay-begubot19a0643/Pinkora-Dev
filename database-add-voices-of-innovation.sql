@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS public.innovation_answers (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
   username TEXT NOT NULL,
-  field TEXT NOT NULL CHECK (field IN ('Business', 'Education', 'Tech', 'Lifestyle')),
+  field TEXT NOT NULL CHECK (field IN ('Business', 'Education', 'Tech', 'Lifestyle', 'Healthcare', 'Agriculture', 'Public Service', 'Creative & Media')),
   level TEXT NOT NULL CHECK (level IN ('Easy', 'Medium', 'Hard', 'Advanced')),
   question TEXT NOT NULL,
   answer TEXT NOT NULL CHECK (char_length(answer) BETWEEN 30 AND 1500),

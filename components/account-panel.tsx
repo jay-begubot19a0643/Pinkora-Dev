@@ -5,6 +5,13 @@ import { supabaseBrowser } from '@/lib/supabase-browser';
 
 type Mode = 'login' | 'register';
 type AccountUser = { id: string; name: string; email: string };
+type AccountDashboard = {
+  stats: { answers: number; points: number; rank: number | null; participants: number; feedback: number; demos: number };
+  badges: Array<{ name: string; description: string }>;
+  answers: Array<{ field: string; level: string; answer: string; votes: number; ai_score: number; created_at: string }>;
+  feedback: Array<{ id: string; type: string; message: string; rating: number; created_at: string }>;
+  demos: Array<{ id: string; subject: string; status: string; created_at: string }>;
+};
 
 function announceAuthChange() {
   window.dispatchEvent(new Event('jverse-auth-change'));
@@ -13,6 +20,7 @@ function announceAuthChange() {
 export function AccountPanel() {
   const [mode, setMode] = useState<Mode>('login');
   const [user, setUser] = useState<AccountUser | null>(null);
+  const [dashboard, setDashboard] = useState<AccountDashboard | null>(null);
   const [checkingAccount, setCheckingAccount] = useState(true);
   const [status, setStatus] = useState('');
   const [pending, setPending] = useState(false);
@@ -22,12 +30,13 @@ export function AccountPanel() {
     const token = localStorage.getItem('authToken');
     if (!token) {
       setUser(null);
+      setDashboard(null);
       setCheckingAccount(false);
       return;
     }
 
     try {
-      const response = await fetch('/api/auth/check', {
+      const response = await fetch('/api/auth/check?include=dashboard', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -35,13 +44,16 @@ export function AccountPanel() {
       if (!response.ok || !data.success || !data.data) {
         localStorage.removeItem('authToken');
         setUser(null);
+        setDashboard(null);
         announceAuthChange();
         return;
       }
 
       setUser(data.data);
+      setDashboard(data.dashboard ?? null);
     } catch {
       setUser(null);
+      setDashboard(null);
     } finally {
       setCheckingAccount(false);
     }
@@ -80,6 +92,7 @@ export function AccountPanel() {
     if (data.success && data.data?.token) {
       localStorage.setItem('authToken', data.data.token);
       setUser({ id: data.data.id, name: data.data.name, email: data.data.email });
+      void loadUser();
       announceAuthChange();
     }
   }
@@ -130,6 +143,7 @@ export function AccountPanel() {
     setStatus(data.message ?? 'Unable to update your profile.');
     if (data.success && data.data) {
       setUser(data.data);
+      void loadUser();
       announceAuthChange();
     }
   }
@@ -143,6 +157,7 @@ export function AccountPanel() {
     await supabaseBrowser?.auth.signOut();
     localStorage.removeItem('authToken');
     setUser(null);
+    setDashboard(null);
     setPending(false);
     setStatus('You have been signed out.');
     announceAuthChange();
@@ -169,6 +184,41 @@ export function AccountPanel() {
           <div><span>Account email</span><strong>{user.email}</strong></div>
           <div><span>Membership</span><strong>JVerse member</strong></div>
         </div>
+
+        {dashboard && <section className="next-user-dashboard" aria-labelledby="user-dashboard-title">
+          <div className="next-user-dashboard-heading">
+            <div><span className="next-eyebrow">Your activity</span><h3 id="user-dashboard-title">Your JVerse dashboard</h3></div>
+            <span>{dashboard.stats.participants > 0 ? `${dashboard.stats.participants} community contributor${dashboard.stats.participants === 1 ? '' : 's'}` : 'Start your first contribution'}</span>
+          </div>
+
+          <div className="next-user-stat-grid">
+            <div><span>Innovation answers</span><strong>{dashboard.stats.answers}</strong></div>
+            <div><span>Points earned</span><strong>{dashboard.stats.points}</strong></div>
+            <div><span>Overall rank</span><strong>{dashboard.stats.rank ? `#${dashboard.stats.rank}` : '—'}</strong></div>
+            <div><span>Feedback shared</span><strong>{dashboard.stats.feedback}</strong></div>
+            <div><span>Demo requests</span><strong>{dashboard.stats.demos}</strong></div>
+          </div>
+
+          <div className="next-user-badges">
+            <span className="next-eyebrow">Your badges</span>
+            {dashboard.badges.length > 0 ? <div>{dashboard.badges.map((badge) => <article key={badge.name}><strong>{badge.name}</strong><span>{badge.description}</span></article>)}</div> : <p>Contribute an answer, feedback, or demo request to start earning badges.</p>}
+          </div>
+
+          <div className="next-user-activity-grid">
+            <article>
+              <div><span className="next-eyebrow">Recent answers</span><strong>Voices of Innovation</strong></div>
+              {dashboard.answers.length > 0 ? <ul>{dashboard.answers.map((answer, index) => <li key={`${answer.created_at}-${index}`}><div><b>{answer.field} · {answer.level}</b><span>{answer.ai_score} pts · {answer.votes} votes</span></div><p>{answer.answer}</p></li>)}</ul> : <p>No answers yet. Join a real-world challenge to build your standing.</p>}
+            </article>
+            <article>
+              <div><span className="next-eyebrow">Your feedback</span><strong>Community voice</strong></div>
+              {dashboard.feedback.length > 0 ? <ul>{dashboard.feedback.map((item) => <li key={item.id}><div><b>{item.rating}/5 ★</b><span>{new Date(item.created_at).toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' })}</span></div><p>{item.message}</p></li>)}</ul> : <p>Share feedback after an innovation answer or in Collaborations.</p>}
+            </article>
+            <article>
+              <div><span className="next-eyebrow">Demo requests</span><strong>Portfolio interest</strong></div>
+              {dashboard.demos.length > 0 ? <ul>{dashboard.demos.map((demo) => <li key={demo.id}><div><b>{demo.subject.replace('Free demo booking — ', '')}</b><span>{demo.status}</span></div><p>{new Date(demo.created_at).toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' })}</p></li>)}</ul> : <p>Book a free Smart Monitoring System or EduKonekta demo from Portfolio.</p>}
+            </article>
+          </div>
+        </section>}
 
         <form className="next-form next-account-settings" onSubmit={saveProfile}>
           <div>

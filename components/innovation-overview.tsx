@@ -48,7 +48,7 @@ export function InnovationOverview() {
       </div>
 
       <div className="next-innovation-benefits">
-        <div><strong>Real-world thinking</strong><span>Questions grounded in business, education, technology, and everyday life.</span></div>
+        <div><strong>Real-world thinking</strong><span>Questions grounded in business, education, technology, community work, and real-world careers.</span></div>
         <div><strong>Visible growth</strong><span>Clear rubric points reward relevance, action, reasoning, detail, and constructive tone.</span></div>
         <div><strong>Shared impact</strong><span>Public leaderboards help strong practical ideas reach more people.</span></div>
       </div>

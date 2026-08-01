@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUserId } from '@/lib/auth';
-import { innovationQuestions, isInnovationField, isInnovationLevel } from '@/lib/innovation';
+import { getInnovationQuickChallenge, innovationQuestions, isInnovationField, isInnovationLevel } from '@/lib/innovation';
 import { scoreInnovationAnswer } from '@/lib/innovation-scoring';
 import { requireSupabase } from '@/lib/supabase';
 
@@ -93,6 +93,50 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true, message: `Your answer earned ${score.points}/10 automatic rubric points and is now on the innovation board.`, data }, { status: 201 });
     }
 
+    if (body.action === 'quick-answer') {
+      const { field, level } = body;
+      const round = Number(body.round);
+      const selectedOptionId = typeof body.selectedOptionId === 'string' ? body.selectedOptionId : '';
+      if (!isInnovationField(field) || !isInnovationLevel(level)) return NextResponse.json({ success: false, message: 'Choose a valid field and level.' }, { status: 400 });
+      if (!Number.isInteger(round) || round < 1 || round > 1_000_000) return NextResponse.json({ success: false, message: 'Choose a valid challenge round.' }, { status: 400 });
+
+      const challenge = getInnovationQuickChallenge(field, level, round);
+      const selectedOption = challenge.options.find((option) => option.id === selectedOptionId);
+      if (!selectedOption) return NextResponse.json({ success: false, message: 'Choose one answer before submitting.' }, { status: 400 });
+
+      const { data: previousAttempt, error: attemptError } = await db
+        .from('innovation_answers')
+        .select('id')
+        .eq('user_id', userId)
+        .eq('field', field)
+        .eq('question', challenge.question)
+        .maybeSingle();
+      if (attemptError) throw attemptError;
+      if (previousAttempt) return NextResponse.json({ success: false, message: 'You have already completed this quick challenge. Choose a new challenge to keep going.' }, { status: 409 });
+
+      const { data: user, error: userError } = await db.from('users').select('name').eq('id', userId).maybeSingle();
+      if (userError || !user) return NextResponse.json({ success: false, message: 'User not found.' }, { status: 404 });
+
+      const correct = selectedOption.id === challenge.correctOptionId;
+      const points = correct ? challenge.points : 0;
+      const { data, error } = await db.from('innovation_answers').insert([{
+        user_id: userId,
+        username: user.name,
+        field,
+        level,
+        question: challenge.question,
+        answer: `Quick challenge selection: ${selectedOption.text}`,
+        votes: 0,
+        ai_score: points,
+        ai_feedback: correct
+          ? `Quick challenge correct: ${challenge.points} points awarded for selecting the strongest practical first step.`
+          : 'Quick challenge completed: this option was not the strongest practical first step. Try a new round to keep learning.',
+      }]).select().single();
+      if (error) throw error;
+
+      return NextResponse.json({ success: true, message: correct ? `Correct—${challenge.points} points added to your rank.` : 'Challenge completed. The best answer focuses on understanding the situation, involving affected people, and testing a practical step.', data }, { status: 201 });
+    }
+
     if (body.action === 'vote') {
       const answerId = typeof body.answerId === 'string' ? body.answerId : '';
       if (!answerId) return NextResponse.json({ success: false, message: 'Choose an answer to vote for.' }, { status: 400 });
@@ -122,7 +166,8 @@ export async function POST(request: NextRequest) {
         .select('id, field, level, question, answer')
         .eq('user_id', userId)
         .eq('field', field)
-        .eq('ai_score', 0);
+        .eq('ai_score', 0)
+        .is('ai_feedback', null);
       if (existingError) throw existingError;
       if (!existingAnswers?.length) return NextResponse.json({ success: false, message: 'You have no unscored answers in this field.' }, { status: 400 });
 
