@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     if (!/^\S+@\S+\.\S+$/.test(email)) return NextResponse.json({ success: false, message: 'Please provide a valid email address.' }, { status: 400 });
 
     const transporter = getMailTransport();
-    const recipient = process.env.CONTACT_RECIPIENT_EMAIL;
+    const recipient = process.env.CONTACT_RECIPIENT_EMAIL ?? 'jaybe.gubot01@gmail.com';
     if (!transporter || !recipient) {
       return NextResponse.json({ success: false, message: 'Contact email delivery is not configured yet. Please email us directly.' }, { status: 503 });
     }
