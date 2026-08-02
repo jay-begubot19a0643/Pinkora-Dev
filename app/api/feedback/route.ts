@@ -14,8 +14,7 @@ export async function GET(request: NextRequest) {
         .from('feedback')
         .select('id, user_name, type, message, rating, created_at')
         .eq('status', 'reviewed')
-        .order('created_at', { ascending: false })
-        .limit(6);
+        .order('created_at', { ascending: false });
       if (error) throw error;
       return NextResponse.json({ success: true, data });
     }

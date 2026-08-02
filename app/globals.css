@@ -235,7 +235,10 @@ html[data-theme='light'] .next-brand-logo-light { display: block; }
 .next-feedback-signin div { display: grid; gap: 4px; }
 .next-feedback-signin strong { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; }
 .next-feedback-signin span { color: var(--muted); font-size: .88rem; }
-.next-feedback-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.next-feedback-count { margin: 0 0 12px; color: var(--muted); font-size: .83rem; }
+.next-feedback-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-height: 720px; overflow-y: auto; padding: 2px 10px 2px 2px; scroll-behavior: smooth; scrollbar-color: rgba(var(--accent-rgb), .7) transparent; scrollbar-width: thin; }
+.next-feedback-grid::-webkit-scrollbar { width: 8px; }
+.next-feedback-grid::-webkit-scrollbar-thumb { border-radius: 999px; background: linear-gradient(var(--blue), var(--accent-2), var(--accent)); }
 .next-feedback-card { display: grid; grid-template-columns: 36px minmax(0, 1fr); column-gap: 11px; align-content: start; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); box-shadow: 0 14px 34px rgba(0,0,0,.08); }
 .next-feedback-avatar { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 11px; color: #fff; background: linear-gradient(135deg, var(--blue), var(--accent-2), var(--accent)); font-family: 'Space Grotesk', sans-serif; font-size: .85rem; font-weight: 800; }
 .next-feedback-card-head { display: grid; gap: 1px; min-width: 0; }

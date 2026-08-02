@@ -92,7 +92,7 @@ export function FeedbackSection({ allowSubmission = false, eyebrow, title, descr
       setStatus(data.message ?? 'Unable to submit feedback.');
 
       if (response.ok && data.success && data.data) {
-        setFeedback((current) => [data.data, ...current].slice(0, 6));
+        setFeedback((current) => [data.data, ...current]);
         form.reset();
       }
     } catch {
@@ -161,7 +161,8 @@ export function FeedbackSection({ allowSubmission = false, eyebrow, title, descr
         )
       )}
 
-      <div className="next-feedback-grid" aria-live="polite">
+      {!loading && feedback.length > 0 && <p className="next-feedback-count">Showing all {feedback.length} community feedback entr{feedback.length === 1 ? 'y' : 'ies'}.</p>}
+      <div className="next-feedback-grid" aria-live="polite" aria-label="All community feedback">
         {loading && <p className="next-feedback-empty">Loading community feedback…</p>}
         {!loading && feedback.length === 0 && <p className="next-feedback-empty">The first JVerse feedback will appear here.</p>}
         {feedback.map((item) => (
