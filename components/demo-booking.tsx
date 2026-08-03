@@ -1,6 +1,7 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import Link from 'next/link';
+import { FormEvent, useEffect, useState } from 'react';
 
 const demoProjects = ['Smart Monitoring System', 'EduKonekta'] as const;
 
@@ -8,6 +9,23 @@ export function DemoBooking({ project }: { project: (typeof demoProjects)[number
   const [open, setOpen] = useState(false);
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState('');
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    async function loadAccount() {
+      try {
+        const response = await fetch('/api/auth/check');
+        const data = await response.json();
+        if (active) setIsSignedIn(Boolean(response.ok && data.success));
+      } catch {
+        if (active) setIsSignedIn(false);
+      }
+    }
+    void loadAccount();
+    window.addEventListener('jverse-auth-change', loadAccount);
+    return () => { active = false; window.removeEventListener('jverse-auth-change', loadAccount); };
+  }, []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -48,8 +66,18 @@ export function DemoBooking({ project }: { project: (typeof demoProjects)[number
     }
   }
 
+  function openBooking() {
+    if (!isSignedIn) {
+      setStatus('Please sign in or create a JVerse account before booking a free demo.');
+      return;
+    }
+    setStatus('');
+    setOpen(true);
+  }
+
   return <>
-    <button className="next-button next-button-primary next-demo-book-button" type="button" onClick={() => { setStatus(''); setOpen(true); }}>Book a free demo</button>
+    <button className="next-button next-button-primary next-demo-book-button" type="button" onClick={openBooking}>Book a free demo</button>
+    {!isSignedIn && status && <p className="next-form-message">{status} <Link href="/my-account?mode=register">Sign up or sign in</Link></p>}
     {open && <div className="next-demo-modal-backdrop" role="presentation">
       <section className="next-demo-modal" role="dialog" aria-modal="true" aria-labelledby={`demo-booking-${project.replace(/ /g, '-').toLowerCase()}`}>
         <button className="next-demo-modal-close" type="button" aria-label="Close demo booking form" onClick={() => setOpen(false)}>×</button>

@@ -240,6 +240,10 @@ html[data-theme='light'] .next-brand-logo-light { display: block; }
 .next-feedback-grid::-webkit-scrollbar { width: 8px; }
 .next-feedback-grid::-webkit-scrollbar-thumb { border-radius: 999px; background: linear-gradient(var(--blue), var(--accent-2), var(--accent)); }
 .next-feedback-load-more { display: block; margin: 18px auto 0; }
+.next-contact-member-message { display: grid; gap: 11px; padding: 24px; border: 1px solid var(--line); border-radius: 16px; color: var(--muted); background: var(--surface); }
+.next-contact-member-message strong { color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 1.04rem; }
+.next-contact-member-message p, .next-contact-member-note { margin: 0; color: var(--muted); font-size: .88rem; }
+.next-contact-member-message .next-button { width: fit-content; }
 .next-feedback-card { display: grid; grid-template-columns: 36px minmax(0, 1fr); column-gap: 11px; align-content: start; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); box-shadow: 0 14px 34px rgba(0,0,0,.08); }
 .next-feedback-avatar { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 11px; color: #fff; background: linear-gradient(135deg, var(--blue), var(--accent-2), var(--accent)); font-family: 'Space Grotesk', sans-serif; font-size: .85rem; font-weight: 800; }
 .next-feedback-card-head { display: grid; gap: 1px; min-width: 0; }

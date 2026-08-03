@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getUserId } from '@/lib/auth';
 import { getMailTransport } from '@/lib/mailer';
 import { checkRateLimit, rateLimitHeaders } from '@/lib/rate-limit';
 import { requireSupabase } from '@/lib/supabase';
@@ -7,14 +8,15 @@ export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {
-    const limit = checkRateLimit(request, 'contact', { limit: 5, windowMs: 60 * 60 * 1_000 });
+    const userId = getUserId(request);
+    if (!userId) return NextResponse.json({ success: false, message: 'Please sign in before sending a message.' }, { status: 401 });
+    const limit = checkRateLimit(request, 'contact', { limit: 5, windowMs: 60 * 60 * 1_000 }, userId);
     if (!limit.allowed) return NextResponse.json({ success: false, message: 'Too many messages from this connection. Please try again later.' }, { status: 429, headers: rateLimitHeaders(limit) });
 
-    const { name, email, phone, subject, message } = await request.json();
-    if (!name || !email || !subject || !message) return NextResponse.json({ success: false, message: 'Please fill in all required fields.' }, { status: 400 });
+    const { phone, subject, message } = await request.json();
+    if (!subject || !message) return NextResponse.json({ success: false, message: 'Please fill in all required fields.' }, { status: 400 });
     if (message.trim().length < 10) return NextResponse.json({ success: false, message: 'Message must be at least 10 characters.' }, { status: 400 });
-    if (message.trim().length > 5_000 || name.trim().length > 120 || subject.trim().length > 180 || (phone && phone.trim().length > 40)) return NextResponse.json({ success: false, message: 'Please shorten the submitted details and try again.' }, { status: 400 });
-    if (!/^\S+@\S+\.\S+$/.test(email)) return NextResponse.json({ success: false, message: 'Please provide a valid email address.' }, { status: 400 });
+    if (message.trim().length > 5_000 || subject.trim().length > 180 || (phone && phone.trim().length > 40)) return NextResponse.json({ success: false, message: 'Please shorten the submitted details and try again.' }, { status: 400 });
 
     const transporter = getMailTransport();
     const recipient = process.env.CONTACT_RECIPIENT_EMAIL ?? 'jaybe.gubot01@gmail.com';
@@ -22,8 +24,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: 'Contact email delivery is not configured yet. Please email us directly.' }, { status: 503 });
     }
 
-    const cleanName = name.trim();
-    const cleanEmail = email.trim().toLowerCase();
+    const { data: user, error: userError } = await requireSupabase().from('users').select('name, email').eq('id', userId).maybeSingle();
+    if (userError || !user) return NextResponse.json({ success: false, message: 'Your account could not be verified.' }, { status: 401 });
+    const cleanName = user.name.trim();
+    const cleanEmail = user.email.trim().toLowerCase();
     const cleanPhone = phone?.trim() || null;
     const cleanSubject = subject.trim();
     const cleanMessage = message.trim();
