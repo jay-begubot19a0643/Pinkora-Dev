@@ -2,12 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getUserId } from '@/lib/auth';
 import { getInnovationQuickChallenge, innovationQuestions, isInnovationField, isInnovationLevel } from '@/lib/innovation';
 import { scoreInnovationAnswer } from '@/lib/innovation-scoring';
+import { checkRateLimit, rateLimitHeaders } from '@/lib/rate-limit';
 import { requireSupabase } from '@/lib/supabase';
 
 export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
   try {
+    const limitResult = checkRateLimit(request, 'innovation-read', { limit: 120, windowMs: 60_000 });
+    if (!limitResult.allowed) return NextResponse.json({ success: false, message: 'Please wait before refreshing the leaderboard.' }, { status: 429, headers: rateLimitHeaders(limitResult) });
     const field = request.nextUrl.searchParams.get('field') ?? 'Business';
     if (!isInnovationField(field)) return NextResponse.json({ success: false, message: 'Invalid field.' }, { status: 400 });
     const requestedLimit = Number(request.nextUrl.searchParams.get('limit') ?? 3);
@@ -52,7 +55,7 @@ export async function GET(request: NextRequest) {
       .map((item, index) => ({ ...item, rank: index + 1 }));
     const viewer = viewerId ? ranked.find((item) => item.userId === viewerId) ?? null : null;
 
-    return NextResponse.json({ success: true, data: ranked.slice(0, limit), totalContributors: ranked.length, viewer: viewer ? { rank: viewer.rank, points: viewer.points, answerCount: viewer.answerCount } : null });
+    return NextResponse.json({ success: true, data: ranked.slice(0, limit), totalContributors: ranked.length, viewer: viewer ? { rank: viewer.rank, points: viewer.points, answerCount: viewer.answerCount } : null }, { headers: rateLimitHeaders(limitResult) });
   } catch (error) {
     console.error('Innovation leaderboard fetch error:', error);
     return NextResponse.json({ success: false, message: 'Unable to load the leaderboard.' }, { status: 500 });
@@ -65,6 +68,18 @@ export async function POST(request: NextRequest) {
     if (!userId) return NextResponse.json({ success: false, message: 'Please sign in to contribute or vote.' }, { status: 401 });
 
     const body = await request.json();
+    const action = typeof body.action === 'string' ? body.action : '';
+    const limitPolicy = action === 'answer'
+      ? { limit: 20, windowMs: 60 * 60 * 1_000 }
+      : action === 'quick-answer'
+        ? { limit: 120, windowMs: 60 * 60 * 1_000 }
+        : action === 'vote'
+          ? { limit: 60, windowMs: 15 * 60 * 1_000 }
+          : action === 'rescore'
+            ? { limit: 10, windowMs: 60 * 60 * 1_000 }
+            : { limit: 10, windowMs: 60 * 60 * 1_000 };
+    const limitResult = checkRateLimit(request, `innovation-${action || 'unknown'}`, limitPolicy, userId);
+    if (!limitResult.allowed) return NextResponse.json({ success: false, message: 'You have reached the activity limit. Please try again later.' }, { status: 429, headers: rateLimitHeaders(limitResult) });
     const db = requireSupabase();
 
     if (body.action === 'answer') {
@@ -90,7 +105,7 @@ export async function POST(request: NextRequest) {
         ai_feedback: score.feedback,
       }]).select().single();
       if (error) throw error;
-      return NextResponse.json({ success: true, message: `Your answer earned ${score.points}/10 automatic rubric points and is now on the innovation board.`, data }, { status: 201 });
+      return NextResponse.json({ success: true, message: `Your answer earned ${score.points}/10 automatic rubric points and is now on the innovation board.`, data }, { status: 201, headers: rateLimitHeaders(limitResult) });
     }
 
     if (body.action === 'quick-answer') {
@@ -134,7 +149,7 @@ export async function POST(request: NextRequest) {
       }]).select().single();
       if (error) throw error;
 
-      return NextResponse.json({ success: true, message: correct ? `Correct—${challenge.points} points added to your rank.` : 'Challenge completed. The best answer focuses on understanding the situation, involving affected people, and testing a practical step.', data }, { status: 201 });
+      return NextResponse.json({ success: true, message: correct ? `Correct—${challenge.points} points added to your rank.` : 'Challenge completed. The best answer focuses on understanding the situation, involving affected people, and testing a practical step.', data }, { status: 201, headers: rateLimitHeaders(limitResult) });
     }
 
     if (body.action === 'vote') {
@@ -154,7 +169,7 @@ export async function POST(request: NextRequest) {
       const { data, error: updateError } = await db.from('innovation_answers').update({ votes: count ?? 0 }).eq('id', answerId).select().single();
       if (updateError) throw updateError;
 
-      return NextResponse.json({ success: true, message: 'Your vote has been counted.', data });
+      return NextResponse.json({ success: true, message: 'Your vote has been counted.', data }, { headers: rateLimitHeaders(limitResult) });
     }
 
     if (body.action === 'rescore') {
@@ -180,7 +195,7 @@ export async function POST(request: NextRequest) {
         totalPoints += score.points;
       }
 
-      return NextResponse.json({ success: true, message: `${existingAnswers.length} existing answer${existingAnswers.length === 1 ? '' : 's'} scored for ${totalPoints} points.`, data: { totalPoints } });
+      return NextResponse.json({ success: true, message: `${existingAnswers.length} existing answer${existingAnswers.length === 1 ? '' : 's'} scored for ${totalPoints} points.`, data: { totalPoints } }, { headers: rateLimitHeaders(limitResult) });
     }
 
     return NextResponse.json({ success: false, message: 'Invalid innovation action.' }, { status: 400 });

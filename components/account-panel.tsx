@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { supabaseBrowser } from '@/lib/supabase-browser';
 
-type Mode = 'login' | 'register';
+type Mode = 'login' | 'register' | 'forgot' | 'reset';
 type AccountUser = { id: string; name: string; email: string };
 type AccountDashboard = {
   stats: { answers: number; points: number; rank: number | null; participants: number; feedback: number; demos: number };
@@ -25,24 +25,16 @@ export function AccountPanel() {
   const [status, setStatus] = useState('');
   const [pending, setPending] = useState(false);
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [resetToken, setResetToken] = useState<string | null>(null);
+  const [pendingVerificationEmail, setPendingVerificationEmail] = useState('');
 
   async function loadUser() {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      setUser(null);
-      setDashboard(null);
-      setCheckingAccount(false);
-      return;
-    }
-
     try {
-      const response = await fetch('/api/auth/check?include=dashboard', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      localStorage.removeItem('authToken');
+      const response = await fetch('/api/auth/check?include=dashboard');
       const data = await response.json();
 
       if (!response.ok || !data.success || !data.data) {
-        localStorage.removeItem('authToken');
         setUser(null);
         setDashboard(null);
         announceAuthChange();
@@ -66,12 +58,43 @@ export function AccountPanel() {
       setStatus('You are signed in securely with Google.');
       window.history.replaceState({}, '', window.location.pathname);
     }
-    loadUser();
+    const verificationToken = params.get('verify');
+    const passwordResetToken = params.get('reset');
+
+    if (passwordResetToken) {
+      setMode('reset');
+      setResetToken(passwordResetToken);
+      setCheckingAccount(false);
+      return;
+    }
+
+    if (verificationToken) {
+      void (async () => {
+        setStatus('Verifying your email address…');
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'verify-email', token: verificationToken }),
+        });
+        const data = await response.json();
+        setStatus(data.message ?? 'Unable to verify your email address.');
+        window.history.replaceState({}, '', window.location.pathname);
+        if (response.ok && data.success) {
+          announceAuthChange();
+          await loadUser();
+        } else {
+          setCheckingAccount(false);
+        }
+      })();
+      return;
+    }
+
+    void loadUser();
   }, []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!privacyAccepted) {
+    if ((mode === 'login' || mode === 'register') && !privacyAccepted) {
       setStatus('Please review and accept the Data Privacy Notice before continuing.');
       return;
     }
@@ -79,22 +102,51 @@ export function AccountPanel() {
     setPending(true);
     setStatus('');
 
-    const values = { ...Object.fromEntries(new FormData(event.currentTarget)), privacyAccepted: true };
-    const response = await fetch(`/api/auth/${mode === 'login' ? 'login' : 'register'}`, {
+    const values = Object.fromEntries(new FormData(event.currentTarget));
+    const password = String(values.password ?? '');
+    if (mode === 'reset' && password !== String(values.confirmPassword ?? '')) {
+      setPending(false);
+      setStatus('The new password and confirmation do not match.');
+      return;
+    }
+
+    const payload = mode === 'forgot'
+      ? { action: 'request-password-reset', email: values.email }
+      : mode === 'reset'
+        ? { action: 'reset-password', token: resetToken, password }
+        : { ...values, privacyAccepted: true };
+    const response = await fetch(`/api/auth/${mode === 'register' ? 'register' : 'login'}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values),
+      body: JSON.stringify(payload),
     });
     const data = await response.json();
 
     setPending(false);
     setStatus(data.message ?? 'Unable to complete your request.');
-    if (data.success && data.data?.token) {
-      localStorage.setItem('authToken', data.data.token);
+    if (data.success && data.data) {
       setUser({ id: data.data.id, name: data.data.name, email: data.data.email });
       void loadUser();
       announceAuthChange();
     }
+    if (mode === 'reset' && data.success) {
+      setResetToken(null);
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+    if (mode === 'login' && data.verificationRequired) setPendingVerificationEmail(String(values.email ?? ''));
+  }
+
+  async function resendVerification() {
+    if (!pendingVerificationEmail) return;
+    setPending(true);
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'resend-verification', email: pendingVerificationEmail }),
+    });
+    const data = await response.json();
+    setPending(false);
+    setStatus(data.message ?? 'Unable to resend the verification email.');
   }
 
   async function continueWithGoogle() {
@@ -126,15 +178,13 @@ export function AccountPanel() {
 
   async function saveProfile(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const token = localStorage.getItem('authToken');
-    if (!token) return;
 
     setPending(true);
     setStatus('');
     const name = String(new FormData(event.currentTarget).get('name') ?? '');
     const response = await fetch('/api/auth/check', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name }),
     });
     const data = await response.json();
@@ -149,13 +199,9 @@ export function AccountPanel() {
   }
 
   async function signOut() {
-    const token = localStorage.getItem('authToken');
     setPending(true);
-    if (token) {
-      await fetch('/api/auth/logout', { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
-    }
+    await fetch('/api/auth/logout', { method: 'POST' });
     await supabaseBrowser?.auth.signOut();
-    localStorage.removeItem('authToken');
     setUser(null);
     setDashboard(null);
     setPending(false);
@@ -248,15 +294,19 @@ export function AccountPanel() {
       <div className="next-account-auth-intro">
         <div>
         <span className="next-eyebrow">JVerse account</span>
-        <h2>{mode === 'login' ? 'Welcome back.' : 'Create your account.'}</h2>
+        <h2>{mode === 'login' ? 'Welcome back.' : mode === 'register' ? 'Create your account.' : mode === 'forgot' ? 'Reset your password.' : 'Choose a new password.'}</h2>
         <p>
           {mode === 'login'
             ? 'Sign in to personalise your JVerse experience.'
-            : 'Create an account to keep track of your work with JVerse.'}
+            : mode === 'register'
+              ? 'Create an account to keep track of your work with JVerse.'
+              : mode === 'forgot'
+                ? 'Enter your verified email address and we will send a secure reset link.'
+                : 'Create a strong new password for your account.'}
         </p>
         </div>
 
-        <section className="next-privacy-consent" aria-labelledby="privacy-consent-title">
+        {(mode === 'login' || mode === 'register') && <section className="next-privacy-consent" aria-labelledby="privacy-consent-title">
         <div>
           <span className="next-eyebrow">Data Privacy Act of 2012</span>
           <h3 id="privacy-consent-title">Privacy notice and consent</h3>
@@ -275,31 +325,32 @@ export function AccountPanel() {
           <input type="checkbox" checked={privacyAccepted} onChange={(event) => setPrivacyAccepted(event.target.checked)} />
           <span>I have read this notice and freely give my explicit consent to JVerse processing my account information in accordance with the Data Privacy Act of 2012 (RA 10173).</span>
         </label>
-        </section>
+        </section>}
       </div>
 
       <div className="next-account-auth-actions">
-        <button className="next-google-button" type="button" disabled={pending} onClick={continueWithGoogle}>
+        {(mode === 'login' || mode === 'register') && <><button className="next-google-button" type="button" disabled={pending} onClick={continueWithGoogle}>
         <span className="next-google-mark" aria-hidden="true">G</span>
         {mode === 'login' ? 'Continue with Google' : 'Sign up with Google'}
         </button>
 
-        <div className="next-auth-divider" aria-hidden="true"><span>or use email</span></div>
+        <div className="next-auth-divider" aria-hidden="true"><span>or use email</span></div></>}
 
         <form className="next-form" onSubmit={submit}>
         {mode === 'register' && <label>Name<input required name="name" placeholder="Your name" /></label>}
-        <label>Email<input required name="email" type="email" placeholder="you@example.com" /></label>
-        <label>Password<input required name="password" type="password" minLength={6} placeholder="At least 6 characters" /></label>
+        {mode !== 'reset' && <label>Email<input required name="email" type="email" autoComplete="email" placeholder="you@example.com" /></label>}
+        {mode !== 'forgot' && <label>Password<input required name="password" type="password" autoComplete={mode === 'login' ? 'current-password' : 'new-password'} minLength={mode === 'login' ? 6 : 12} maxLength={128} placeholder={mode === 'login' ? 'Your password' : '12+ chars, upper, lower, number, symbol'} /></label>}
+        {mode === 'reset' && <label>Confirm new password<input required name="confirmPassword" type="password" autoComplete="new-password" minLength={12} maxLength={128} placeholder="Repeat your new password" /></label>}
         <button className="next-button next-button-primary" disabled={pending}>
-          {pending ? 'Please wait…' : mode === 'login' ? 'Sign in' : 'Create account'}
+          {pending ? 'Please wait…' : mode === 'login' ? 'Sign in' : mode === 'register' ? 'Create account' : mode === 'forgot' ? 'Send reset link' : 'Reset password'}
         </button>
         </form>
 
         {status && <p className="next-form-message" role="status">{status}</p>}
 
-        <button className="next-switch-button" type="button" onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setPrivacyAccepted(false); setStatus(''); }}>
-        {mode === 'login' ? 'Need an account? Sign up' : 'Already have an account? Sign in'}
-        </button>
+        {mode === 'login' && <><button className="next-switch-button" type="button" onClick={() => { setMode('register'); setPrivacyAccepted(false); setStatus(''); }}>Need an account? Sign up</button><button className="next-switch-button" type="button" onClick={() => { setMode('forgot'); setPrivacyAccepted(false); setStatus(''); }}>Forgot password?</button>{pendingVerificationEmail && <button className="next-switch-button" type="button" disabled={pending} onClick={resendVerification}>Resend verification email</button>}</>}
+        {mode === 'register' && <button className="next-switch-button" type="button" onClick={() => { setMode('login'); setPrivacyAccepted(false); setStatus(''); }}>Already have an account? Sign in</button>}
+        {(mode === 'forgot' || mode === 'reset') && <button className="next-switch-button" type="button" onClick={() => { setMode('login'); setResetToken(null); setStatus(''); window.history.replaceState({}, '', window.location.pathname); }}>Back to sign in</button>}
       </div>
     </section>
   );

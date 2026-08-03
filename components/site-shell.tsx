@@ -41,19 +41,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     let active = true;
 
     async function syncAccount() {
-      const token = localStorage.getItem('authToken');
-      if (!token) {
-        if (active) setAccountUser(null);
-        return;
-      }
+      localStorage.removeItem('authToken');
 
       try {
-        const response = await fetch('/api/auth/check', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await fetch('/api/auth/check');
         const data = await response.json();
         if (!response.ok || !data.success || !data.data) {
-          localStorage.removeItem('authToken');
           if (active) setAccountUser(null);
           return;
         }

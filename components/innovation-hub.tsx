@@ -55,13 +55,8 @@ export function InnovationHub() {
   }
 
   async function loadAccount() {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      setIsSignedIn(false);
-      return;
-    }
     try {
-      const response = await fetch('/api/auth/check', { headers: { Authorization: `Bearer ${token}` } });
+      const response = await fetch('/api/auth/check');
       const data = await response.json();
       setIsSignedIn(Boolean(response.ok && data.success));
     } catch {
@@ -82,8 +77,7 @@ export function InnovationHub() {
   async function submitAnswer(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
-    const token = localStorage.getItem('authToken');
-    if (!token) {
+    if (!isSignedIn) {
       setIsSignedIn(false);
       return;
     }
@@ -94,7 +88,7 @@ export function InnovationHub() {
     try {
       const response = await fetch('/api/innovation', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'answer', field, level, answer }),
       });
       const data = await response.json();
@@ -115,8 +109,7 @@ export function InnovationHub() {
   }
 
   async function vote(answerId: string) {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
+    if (!isSignedIn) {
       setIsSignedIn(false);
       return;
     }
@@ -126,7 +119,7 @@ export function InnovationHub() {
     try {
       const response = await fetch('/api/innovation', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'vote', answerId }),
       });
       const data = await response.json();
@@ -140,15 +133,14 @@ export function InnovationHub() {
   }
 
   async function scoreExistingAnswers() {
-    const token = localStorage.getItem('authToken');
-    if (!token) return;
+    if (!isSignedIn) return;
 
     setPending(true);
     setStatus('');
     try {
       const response = await fetch('/api/innovation', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'rescore', field }),
       });
       const data = await response.json();
@@ -162,8 +154,7 @@ export function InnovationHub() {
   }
 
   async function submitQuickChallenge() {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
+    if (!isSignedIn) {
       setIsSignedIn(false);
       return;
     }
@@ -177,7 +168,7 @@ export function InnovationHub() {
     try {
       const response = await fetch('/api/innovation', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'quick-answer', field, level, round: quickChallengeRound, selectedOptionId: selectedQuickOption }),
       });
       const data = await response.json();
@@ -199,15 +190,14 @@ export function InnovationHub() {
 
   async function submitContributionFeedback(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const token = localStorage.getItem('authToken');
-    if (!token) return;
+    if (!isSignedIn) return;
 
     setFeedbackPending(true);
     setFeedbackStatus('');
     try {
       const response = await fetch('/api/feedback', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'other', rating: feedbackRating, message: feedbackMessage }),
       });
       const data = await response.json();

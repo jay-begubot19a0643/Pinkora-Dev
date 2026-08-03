@@ -33,26 +33,32 @@ export function FeedbackSection({ allowSubmission = false, eyebrow, title, descr
   const [pending, setPending] = useState(false);
   const [status, setStatus] = useState('');
   const [rating, setRating] = useState(5);
+  const [page, setPage] = useState(1);
+  const [totalFeedback, setTotalFeedback] = useState(0);
+  const [hasMoreFeedback, setHasMoreFeedback] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
-  async function loadFeedback() {
+  async function loadFeedback(nextPage = 1, append = false) {
+    if (append) setLoadingMore(true);
+    else setLoading(true);
     try {
-      const response = await fetch('/api/feedback?scope=public');
+      const response = await fetch(`/api/feedback?scope=public&page=${nextPage}&limit=12`);
       const data = await response.json();
-      if (response.ok && data.success) setFeedback(data.data ?? []);
+      if (response.ok && data.success) {
+        setFeedback((current) => append ? [...current, ...(data.data ?? [])] : (data.data ?? []));
+        setPage(nextPage);
+        setTotalFeedback(Number(data.pagination?.total ?? 0));
+        setHasMoreFeedback(Boolean(data.pagination?.hasNext));
+      }
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
   }
 
   async function loadAccount() {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      setIsSignedIn(false);
-      return;
-    }
-
     try {
-      const response = await fetch('/api/auth/check', { headers: { Authorization: `Bearer ${token}` } });
+      const response = await fetch('/api/auth/check');
       const data = await response.json();
       setIsSignedIn(Boolean(response.ok && data.success));
     } catch {
@@ -71,8 +77,7 @@ export function FeedbackSection({ allowSubmission = false, eyebrow, title, descr
 
   async function submitFeedback(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const token = localStorage.getItem('authToken');
-    if (!token) {
+    if (!isSignedIn) {
       setIsSignedIn(false);
       return;
     }
@@ -85,7 +90,7 @@ export function FeedbackSection({ allowSubmission = false, eyebrow, title, descr
     try {
       const response = await fetch('/api/feedback', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...values, rating }),
       });
       const data = await response.json();
@@ -93,6 +98,7 @@ export function FeedbackSection({ allowSubmission = false, eyebrow, title, descr
 
       if (response.ok && data.success && data.data) {
         setFeedback((current) => [data.data, ...current]);
+        setTotalFeedback((current) => current + 1);
         form.reset();
       }
     } catch {
@@ -161,7 +167,7 @@ export function FeedbackSection({ allowSubmission = false, eyebrow, title, descr
         )
       )}
 
-      {!loading && feedback.length > 0 && <p className="next-feedback-count">Showing all {feedback.length} community feedback entr{feedback.length === 1 ? 'y' : 'ies'}.</p>}
+      {!loading && feedback.length > 0 && <p className="next-feedback-count">Showing {feedback.length} of {totalFeedback} community feedback entr{totalFeedback === 1 ? 'y' : 'ies'}.</p>}
       <div className="next-feedback-grid" aria-live="polite" aria-label="All community feedback">
         {loading && <p className="next-feedback-empty">Loading community feedback…</p>}
         {!loading && feedback.length === 0 && <p className="next-feedback-empty">The first JVerse feedback will appear here.</p>}
@@ -179,6 +185,7 @@ export function FeedbackSection({ allowSubmission = false, eyebrow, title, descr
           </article>
         ))}
       </div>
+      {hasMoreFeedback && <button className="next-button next-button-secondary next-feedback-load-more" type="button" disabled={loadingMore} onClick={() => void loadFeedback(page + 1, true)}>{loadingMore ? 'Loading…' : 'Load more feedback'}</button>}
     </section>
   );
 }

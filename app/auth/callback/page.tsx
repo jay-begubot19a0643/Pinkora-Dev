@@ -50,11 +50,10 @@ export default function AuthCallbackPage() {
         });
         const result = await response.json();
 
-        if (!response.ok || !result.success || !result.data?.token) {
+        if (!response.ok || !result.success) {
           throw new Error(result.message ?? 'JVerse could not complete your Google sign-in.');
         }
 
-        localStorage.setItem('authToken', result.data.token);
         router.replace('/my-account?google=success');
       } catch (error) {
         setFailed(true);

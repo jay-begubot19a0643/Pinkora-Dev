@@ -1,29 +1,19 @@
-import nodemailer from 'nodemailer';
 import { NextRequest, NextResponse } from 'next/server';
+import { getMailTransport } from '@/lib/mailer';
+import { checkRateLimit, rateLimitHeaders } from '@/lib/rate-limit';
 import { requireSupabase } from '@/lib/supabase';
 
 export const runtime = 'nodejs';
 
-function getMailTransport() {
-  const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASSWORD;
-  if (!host || !user || !pass) return null;
-
-  const port = Number(process.env.SMTP_PORT ?? 465);
-  return nodemailer.createTransport({
-    host,
-    port,
-    secure: process.env.SMTP_SECURE ? process.env.SMTP_SECURE === 'true' : port === 465,
-    auth: { user, pass },
-  });
-}
-
 export async function POST(request: NextRequest) {
   try {
+    const limit = checkRateLimit(request, 'contact', { limit: 5, windowMs: 60 * 60 * 1_000 });
+    if (!limit.allowed) return NextResponse.json({ success: false, message: 'Too many messages from this connection. Please try again later.' }, { status: 429, headers: rateLimitHeaders(limit) });
+
     const { name, email, phone, subject, message } = await request.json();
     if (!name || !email || !subject || !message) return NextResponse.json({ success: false, message: 'Please fill in all required fields.' }, { status: 400 });
     if (message.trim().length < 10) return NextResponse.json({ success: false, message: 'Message must be at least 10 characters.' }, { status: 400 });
+    if (message.trim().length > 5_000 || name.trim().length > 120 || subject.trim().length > 180 || (phone && phone.trim().length > 40)) return NextResponse.json({ success: false, message: 'Please shorten the submitted details and try again.' }, { status: 400 });
     if (!/^\S+@\S+\.\S+$/.test(email)) return NextResponse.json({ success: false, message: 'Please provide a valid email address.' }, { status: 400 });
 
     const transporter = getMailTransport();
@@ -57,7 +47,7 @@ export async function POST(request: NextRequest) {
       ].join('\n'),
     });
 
-    return NextResponse.json({ success: true, message: 'Your message has been sent. Jay-Be will get back to you soon!', data: { id: data.id, createdAt: data.created_at } }, { status: 201 });
+    return NextResponse.json({ success: true, message: 'Your message has been sent. Jay-Be will get back to you soon!', data: { id: data.id, createdAt: data.created_at } }, { status: 201, headers: rateLimitHeaders(limit) });
   } catch (error) {
     console.error('Contact form error:', error);
     return NextResponse.json({ success: false, message: 'We could not deliver your message. Please try again or email Jay-Be directly.' }, { status: 502 });
