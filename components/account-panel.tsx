@@ -27,6 +27,8 @@ export function AccountPanel() {
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [resetToken, setResetToken] = useState<string | null>(null);
   const [pendingVerificationEmail, setPendingVerificationEmail] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   async function loadUser() {
     try {
@@ -339,8 +341,8 @@ export function AccountPanel() {
         <form className="next-form" onSubmit={submit}>
         {mode === 'register' && <label>Name<input required name="name" placeholder="Your name" /></label>}
         {mode !== 'reset' && <label>Email<input required name="email" type="email" autoComplete="email" placeholder="you@example.com" /></label>}
-        {mode !== 'forgot' && <label>Password<input required name="password" type="password" autoComplete={mode === 'login' ? 'current-password' : 'new-password'} minLength={mode === 'login' ? 6 : 12} maxLength={128} placeholder={mode === 'login' ? 'Your password' : '12+ chars, upper, lower, number, symbol'} /></label>}
-        {mode === 'reset' && <label>Confirm new password<input required name="confirmPassword" type="password" autoComplete="new-password" minLength={12} maxLength={128} placeholder="Repeat your new password" /></label>}
+        {mode !== 'forgot' && <label>Password<span className="next-password-input"><input required name="password" type={showPassword ? 'text' : 'password'} autoComplete={mode === 'login' ? 'current-password' : 'new-password'} minLength={mode === 'login' ? 6 : 12} maxLength={128} placeholder={mode === 'login' ? 'Your password' : '12+ chars, upper, lower, number, symbol'} /><button type="button" onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? 'Hide password' : 'Show password'} aria-pressed={showPassword}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.8" />{showPassword && <path d="m4 4 16 16" />}</svg></button></span></label>}
+        {mode === 'reset' && <label>Confirm new password<span className="next-password-input"><input required name="confirmPassword" type={showConfirmation ? 'text' : 'password'} autoComplete="new-password" minLength={12} maxLength={128} placeholder="Repeat your new password" /><button type="button" onClick={() => setShowConfirmation((visible) => !visible)} aria-label={showConfirmation ? 'Hide confirmation password' : 'Show confirmation password'} aria-pressed={showConfirmation}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.8" />{showConfirmation && <path d="m4 4 16 16" />}</svg></button></span></label>}
         <button className="next-button next-button-primary" disabled={pending}>
           {pending ? 'Please wait…' : mode === 'login' ? 'Sign in' : mode === 'register' ? 'Create account' : mode === 'forgot' ? 'Send reset link' : 'Reset password'}
         </button>

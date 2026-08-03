@@ -244,6 +244,11 @@ html[data-theme='light'] .next-brand-logo-light { display: block; }
 .next-contact-member-message strong { color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 1.04rem; }
 .next-contact-member-message p, .next-contact-member-note { margin: 0; color: var(--muted); font-size: .88rem; }
 .next-contact-member-message .next-button { width: fit-content; }
+.next-password-input { position: relative; display: block; margin-top: 7px; }
+.next-password-input input { width: 100%; padding-right: 48px !important; }
+.next-password-input button { position: absolute; top: 50%; right: 7px; display: grid; width: 34px; height: 34px; place-items: center; padding: 0; border: 0; border-radius: 8px; color: var(--muted); background: transparent; cursor: pointer; transform: translateY(-50%); }
+.next-password-input button:hover, .next-password-input button:focus-visible { color: var(--accent); background: rgba(var(--accent-rgb), .1); outline: none; }
+.next-password-input svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
 .next-feedback-card { display: grid; grid-template-columns: 36px minmax(0, 1fr); column-gap: 11px; align-content: start; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); box-shadow: 0 14px 34px rgba(0,0,0,.08); }
 .next-feedback-avatar { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 11px; color: #fff; background: linear-gradient(135deg, var(--blue), var(--accent-2), var(--accent)); font-family: 'Space Grotesk', sans-serif; font-size: .85rem; font-weight: 800; }
 .next-feedback-card-head { display: grid; gap: 1px; min-width: 0; }
