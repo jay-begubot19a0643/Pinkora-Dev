@@ -13,6 +13,12 @@ These actions require access to the Supabase and Vercel dashboards and cannot be
 7. Configure SMTP before enabling new email-password registrations. New registrations require a verification email.
 8. Redeploy Vercel, then test sign-up, verification, login, password reset, feedback, contact, and innovation actions.
 
+## Fix the Supabase function warning
+
+If Supabase reports `authenticated_security_definer_function_executable` for `join_support_circle(text)` or `record_aura_streak()`, run `database-fix-security-linter.sql` once. It revokes `EXECUTE` from `PUBLIC`, `anon`, and `authenticated` without deleting the functions.
+
+Then open Supabase **Authentication -> Configuration -> Password Security** and enable leaked-password protection. Supabase checks new passwords against known compromised passwords. This option may require the Pro plan.
+
 ## Rate-limit note
 
 The application includes an in-memory rate limiter for immediate protection. Serverless instances do not share memory, so it is not a complete distributed DDoS control. Enable Vercel Firewall/WAF rate rules or use a shared store such as Upstash Redis before operating at larger scale.
