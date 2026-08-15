@@ -7,9 +7,9 @@ import { KuyaJayAssistant } from '@/components/kuya-jay-assistant';
 
 const links = [
   { href: '/overview', label: 'Overview Page' },
+  { href: '/who-am-i', label: 'Who Am I' },
   { href: '/solutions', label: 'Solutions' },
   { href: '/collaborations', label: 'Collaborations' },
-  { href: '/who-am-i', label: 'Who Am I' },
   { href: '/tools-and-platforms', label: 'Tools & Platforms' },
   { href: '/get-in-touch', label: 'Get in Touch' },
 ];

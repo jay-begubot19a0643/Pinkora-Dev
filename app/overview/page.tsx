@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 const projects = [
   { title: 'Smart Monitoring System', description: 'Connected CCTV, POS activity, and analytics in one retail command center.', href: '/portfolio', image: '/images/smart-monitoring-system.png', imageAlt: 'Smart Monitoring System logo' },
   { title: 'EduKonekta', description: 'A multi-tenant education platform with a PWA shell, modular API, and secure school-scoped data.', href: '/portfolio', image: '/images/edukonekta.png', imageAlt: 'EduKonekta logo' },
+  { title: 'AuraLink', description: 'A private, local-first reflection app for noticing patterns and choosing a calm next step.', href: '/portfolio#auralink', image: '/images/auralink.png', imageAlt: 'AuraLink logo' },
   { title: 'Custom Web Systems', description: 'Fast, focused applications designed around real workflows and growth.', href: '/get-in-touch' },
 ];
 
@@ -22,30 +23,30 @@ export default function HomePage() {
     <LandingExperience>
       <HeroVideo />
       <section className="next-home-intro next-container next-reveal">
-        <span className="next-eyebrow">Hi, I&apos;m Jay-Be Gubot</span>
-        <h1>Welcome to my JVerse.</h1>
-        <p>I design business systems that transform complexity into clear, scalable experiences for teams and customers.</p>
+        <span className="next-eyebrow">Built around real outcomes</span>
+        <h2>Less manual work. More room to grow.</h2>
+        <p>From internal operations to customer-facing experiences, I turn complicated workflows into practical systems people can use with ease.</p>
         <div className="next-actions">
-          <Link href="/portfolio" className="next-button next-button-primary">View portfolio</Link>
-          <Link href="/solutions" className="next-button next-button-secondary">Explore solutions</Link>
+          <Link href="/solutions" className="next-button next-button-primary">Explore solutions</Link>
+          <Link href="/portfolio" className="next-button next-button-secondary">See proven work</Link>
         </div>
         <div className="next-proof-grid">
-          <div><strong>01</strong><span>Strategy-led builds</span></div>
-          <div><strong>02</strong><span>Human-first experiences</span></div>
-          <div><strong>03</strong><span>Built to scale</span></div>
+          <div><strong>01</strong><span>Clearer daily operations</span></div>
+          <div><strong>02</strong><span>Better customer experiences</span></div>
+          <div><strong>03</strong><span>Systems ready to scale</span></div>
         </div>
       </section>
       <section className="next-section next-container next-reveal">
         <div className="next-section-heading">
-          <div><span className="next-eyebrow">Selected work</span><h2>Projects with a purpose.</h2></div>
-          <p>Systems and experiences that make everyday work clearer, faster, and more useful.</p>
+          <div><span className="next-eyebrow">Selected work</span><h2>Solutions designed for measurable progress.</h2></div>
+          <p>Explore the systems I have built to improve visibility, reduce friction, and support confident decisions.</p>
         </div>
         <div className="next-card-grid next-project-grid">
           {projects.map((project, index) => {
             const { title, description, href } = project;
             return (
             <Link className="next-project-card next-reveal" href={href} key={title} style={{ transitionDelay: `${index * 90}ms` }}>
-              <div className={`next-project-art art-${index + 1} ${project.image ? 'has-logo' : ''}`}>{project.image ? <Image className="next-project-logo" src={project.image} alt={project.imageAlt ?? ''} fill sizes="(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 33vw" /> : <span>0{index + 1}</span>}</div>
+              <div className={`next-project-art art-${index + 1} ${project.image ? 'has-logo' : ''}`}>{project.image ? <Image className="next-project-logo" src={project.image} alt={project.imageAlt ?? ''} fill sizes="(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 25vw" /> : <span>0{index + 1}</span>}</div>
               <div><h3>{title}</h3><p>{description}</p><span className="next-text-link">Explore project →</span></div>
             </Link>
             );

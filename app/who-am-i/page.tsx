@@ -44,7 +44,7 @@ export default function AboutPage() {
 
       <section className="next-section next-container next-about-intro">
         <div>
-          <span className="next-label">Full-stack developer · mobile &amp; web</span>
+          <span className="next-label">Full-Stack Developer &amp; Innovator</span>
           <h2>Hi, I&apos;m Jay-Be Gubot.</h2>
           <p>I&apos;m driven by the belief that technology should make life simpler, smarter, and more connected. My work focuses on systems that bridge the gap between everyday operations and the possibilities of modern software.</p>
           <p>From point-of-sale terminals to business dashboards and video monitoring tools, I create products that are practical, accessible, and ready to grow.</p>

@@ -20,5 +20,5 @@ If Supabase reports `authenticated_security_definer_function_executable` for `jo
 Then open Supabase **Authentication -> Configuration -> Password Security** and enable leaked-password protection. Supabase checks new passwords against known compromised passwords. This option may require the Pro plan.
 
 ## Rate-limit note
-
+    
 The application includes an in-memory rate limiter for immediate protection. Serverless instances do not share memory, so it is not a complete distributed DDoS control. Enable Vercel Firewall/WAF rate rules or use a shared store such as Upstash Redis before operating at larger scale.
