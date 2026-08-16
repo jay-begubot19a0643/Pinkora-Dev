@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { ContentCopyDeterrent } from '@/components/content-copy-deterrent';
 import { DemoBooking } from '@/components/demo-booking';
 import { PageHero } from '@/components/page-hero';
 
@@ -40,7 +41,8 @@ const auraLinkFeatures = [
 
 export default function ProjectsPage() {
   return (
-    <main>
+    <ContentCopyDeterrent>
+      <main>
       <PageHero eyebrow="Portfolio" title="Practical technology, thoughtfully connected." description="Solutions that enhance visibility, strengthen operations, and help teams move with confidence." />
 
       <section className="next-section next-container next-edu-project-intro">
@@ -127,6 +129,7 @@ export default function ProjectsPage() {
       <section className="next-section next-container">
         <div className="next-cta-card"><span className="next-eyebrow">Your next system</span><h2>Need a solution shaped around your workflow?</h2><p>Let&apos;s design the tools that make your team more capable every day.</p><Link href="/get-in-touch" className="next-button next-button-primary">Discuss a project</Link></div>
       </section>
-    </main>
+      </main>
+    </ContentCopyDeterrent>
   );
 }
