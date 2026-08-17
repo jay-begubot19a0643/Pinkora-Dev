@@ -10,7 +10,6 @@ const links = [
   { href: '/who-am-i', label: 'Who Am I' },
   { href: '/solutions', label: 'Solutions' },
   { href: '/collaborations', label: 'Collaborations' },
-  { href: '/tools-and-platforms', label: 'Tools & Platforms' },
   { href: '/get-in-touch', label: 'Get in Touch' },
 ];
 
