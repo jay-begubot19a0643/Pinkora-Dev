@@ -33,7 +33,8 @@ export function DemoBooking({ project }: { project: (typeof demoProjects)[number
     const values = new FormData(form);
     const selectedProject = String(values.get('project') ?? project);
     const organization = String(values.get('organization') ?? '').trim();
-    const preferredSchedule = String(values.get('preferredSchedule') ?? '').trim();
+    const preferredDate = String(values.get('preferredDate') ?? '').trim();
+    const preferredTime = String(values.get('preferredTime') ?? '').trim();
     const message = String(values.get('message') ?? '').trim();
 
     setSending(true);
@@ -46,11 +47,12 @@ export function DemoBooking({ project }: { project: (typeof demoProjects)[number
           name: values.get('name'),
           email: values.get('email'),
           phone: values.get('phone'),
+          preferredDate,
+          preferredTime,
           subject: `Free demo booking — ${selectedProject}`,
           message: [
             `Project selected: ${selectedProject}`,
             `Organization: ${organization || 'Not provided'}`,
-            `Preferred demo schedule: ${preferredSchedule || 'Not provided'}`,
             '',
             message,
           ].join('\n'),
@@ -94,7 +96,10 @@ export function DemoBooking({ project }: { project: (typeof demoProjects)[number
             <label>Phone <span>Optional</span><input name="phone" placeholder="+63 900 000 0000" /></label>
             <label>Organization <span>Optional</span><input name="organization" placeholder="Business or school" /></label>
           </div>
-          <label>Preferred schedule <span>Optional</span><input name="preferredSchedule" placeholder="e.g. Weekdays after 3 PM" /></label>
+          <div className="next-demo-form-grid">
+            <label>Preferred date <span>Philippine Time</span><input required type="date" name="preferredDate" min={new Date().toISOString().slice(0, 10)} /></label>
+            <label>Preferred time <span>Philippine Time</span><input required type="time" name="preferredTime" /></label>
+          </div>
           <label>What would you like to see?<textarea required name="message" minLength={10} rows={4} placeholder="Tell us about your goals, workflow, or questions for the demo…" /></label>
           {status && <p className="next-form-message" role="status">{status}</p>}
           <button className="next-button next-button-primary" disabled={sending}>{sending ? 'Sending request…' : 'Send demo request'}</button>

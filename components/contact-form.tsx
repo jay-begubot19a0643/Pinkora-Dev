@@ -42,8 +42,19 @@ export function ContactForm() {
     if (response.ok) event.currentTarget.reset();
   }
 
-  if (checking) return <p className="next-contact-member-message">Checking your member access…</p>;
+  if (checking) return <p className="next-contact-member-message">Checking your member access...</p>;
   if (!user) return <div className="next-contact-member-message"><strong>JVerse member access required</strong><p>Create an account or sign in to send a secure message. You can still use the direct email shown beside this form.</p><Link className="next-button next-button-primary" href="/my-account?mode=register">Sign up or sign in</Link></div>;
 
-  return <form className="next-form" onSubmit={submit}><p className="next-contact-member-note">Sending as <strong>{user.name}</strong> ({user.email})</p><label>Phone <span>Optional</span><input name="phone" maxLength={40} placeholder="+63 123 456 7890" /></label><label>Subject<input required name="subject" maxLength={180} placeholder="What would you like to build?" /></label><label>Message<textarea required minLength={10} maxLength={5000} name="message" rows={6} placeholder="Tell us more about your project or inquiry..." /></label><button className="next-button next-button-primary" disabled={sending}>{sending ? 'Sending…' : 'Send message'}</button>{message && <p className="next-form-message">{message}</p>}</form>;
+  return <form className="next-form" onSubmit={submit}>
+    <p className="next-contact-member-note">Sending as <strong>{user.name}</strong> ({user.email})</p>
+    <label>Phone <span>Optional</span><input name="phone" maxLength={40} placeholder="+63 123 456 7890" /></label>
+    <label>Subject<input required name="subject" maxLength={180} placeholder="What would you like to build?" /></label>
+    <div className="next-schedule-grid">
+      <label>Preferred date <span>Optional · Philippine Time</span><input type="date" name="preferredDate" min={new Date().toISOString().slice(0, 10)} /></label>
+      <label>Preferred time <span>Optional · Philippine Time</span><input type="time" name="preferredTime" /></label>
+    </div>
+    <label>Message<textarea required minLength={10} maxLength={5000} name="message" rows={6} placeholder="Tell us more about your project or inquiry..." /></label>
+    <button className="next-button next-button-primary" disabled={sending}>{sending ? 'Sending...' : 'Send message'}</button>
+    {message && <p className="next-form-message">{message}</p>}
+  </form>;
 }
